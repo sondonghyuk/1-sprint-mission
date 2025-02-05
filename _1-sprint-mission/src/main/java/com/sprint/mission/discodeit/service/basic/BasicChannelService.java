@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.service.ChannelService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 public class BasicChannelService implements ChannelService {
@@ -22,10 +23,9 @@ public class BasicChannelService implements ChannelService {
     }
 
     @Override
-    public Channel find(UUID channelId) {
-        Channel channel = channelRepository.findById(channelId);
-        if (channel == null) throw new NoSuchElementException("Channel not found with ID: " + channelId);
-        return channel;
+    public Channel findById(UUID channelId) {
+        return channelRepository.findById(channelId)
+                .orElseThrow(()-> new NoSuchElementException("ChannelId not found"));
     }
 
     @Override
@@ -34,10 +34,20 @@ public class BasicChannelService implements ChannelService {
     }
 
     @Override
-    public Channel update(UUID channelId, String newChannelDescription) {
-        Channel channel = find(channelId);
-        channel.updateDescription(newChannelDescription);
-        return channelRepository.create(channel);
+    public Channel update(UUID channelId, String field,Object value) {
+        Channel channel = channelRepository.findById(channelId)
+                        .orElseThrow(()-> new NoSuchElementException("ChannelId not found"));
+            switch (field) {
+                case "channelName":
+                    channel.setChannelName((String) value);
+                    break;
+                case "description":
+                    channel.setDescription((String) value);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid field: " + field);
+            }
+            return channelRepository.create(channel);
     }
 
     @Override

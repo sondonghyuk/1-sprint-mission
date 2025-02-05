@@ -24,8 +24,8 @@ public class JCFChannelRepository implements ChannelRepository {
     }
     //단일조회
     @Override
-    public Channel findById(UUID channelId) {
-        return channelData.get(channelId);
+    public Optional<Channel> findById(UUID channelId) {
+        return Optional.ofNullable(this.channelData.get(channelId));
     }
     //다중조회
     @Override
@@ -35,9 +35,6 @@ public class JCFChannelRepository implements ChannelRepository {
     //삭제
     @Override
     public void delete(UUID channelId) {
-        if(!channelData.containsKey(channelId)){
-            throw new NoSuchElementException("UserId not found");
-        }
         channelData.remove(channelId);
     }
 }

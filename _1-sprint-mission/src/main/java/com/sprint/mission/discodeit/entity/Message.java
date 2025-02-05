@@ -9,15 +9,25 @@ public class Message extends Common implements Serializable {
     //필드
     private String content; //메세지내용
     private UUID channelId; // 채널 id
-    private UUID authorId; // 작성자 id
+    private UUID userId; // 작성자 id
 
     //생성자
-
-    public Message(String content, UUID channelId, UUID authorId) {
+    public Message(String content, UUID channelId, UUID userId) {
         super();
+        // 검증
+        if (content == null || content.trim().isEmpty() || content.length() > 500) {
+            throw new IllegalArgumentException("메시지 내용은 1~500자 사이여야 합니다.");
+        }
+        if (channelId == null) {
+            throw new IllegalArgumentException("채널 ID는 필수입니다.");
+        }
+        if (userId == null) {
+            throw new IllegalArgumentException("작성자 ID는 필수입니다.");
+        }
+
         this.content = content;
         this.channelId = channelId;
-        this.authorId = authorId;
+        this.userId = userId;
     }
 
     //Getter
@@ -29,15 +39,27 @@ public class Message extends Common implements Serializable {
         return channelId;
     }
 
-    public UUID getAuthorId() {
-        return authorId;
+    public UUID getUserId() {
+        return userId;
+    }
+    //Setter
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setChannelId(UUID channelId) {
+        this.channelId = channelId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
         return  "content='" + content + '\'' +
                 ", channelId=" + channelId +
-                ", authorId=" + authorId;
+                ", userId=" + userId;
     }
 
     // update 메소드

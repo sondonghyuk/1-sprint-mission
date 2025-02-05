@@ -8,11 +8,12 @@ import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MessageRepository {
     Message create(Message message);
-    Message findById(UUID messageId);
+    Optional<Message> findById(UUID messageId);
     List<Message> findAll();
     void delete(UUID messageId);
     }

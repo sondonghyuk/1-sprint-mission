@@ -27,8 +27,8 @@ public class JCFMessageRepository implements MessageRepository {
 
     //단일조회
     @Override
-    public Message findById(UUID messageId) {
-        return messageData.get(messageId);
+    public Optional<Message> findById(UUID messageId) {
+        return Optional.ofNullable(this.messageData.get(messageId));
     }
 
     //다중조회
@@ -39,9 +39,6 @@ public class JCFMessageRepository implements MessageRepository {
     //삭제
     @Override
     public void delete(UUID messageId) {
-        if (!messageData.containsKey(messageId)) {
-            throw new NoSuchElementException("Message with ID " + messageId + " not found");
-        }
         messageData.remove(messageId);
     }
 }

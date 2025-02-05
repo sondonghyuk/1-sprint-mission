@@ -22,8 +22,8 @@ public class JCFUserRepository implements UserRepository {
     }
     // 단일 조회
     @Override
-    public User findById(UUID userId){
-        return userData.get(userId);
+    public Optional<User> findById(UUID userId){
+        return Optional.ofNullable(this.userData.get(userId));
     }
     // 다중 조회
     @Override
@@ -33,9 +33,6 @@ public class JCFUserRepository implements UserRepository {
     //삭제
     @Override
     public void delete(UUID userId){
-        if(!userData.containsKey(userId)){
-            throw new NoSuchElementException("UserId not found");
-        }
         userData.remove(userId);
     }
 }
