@@ -89,19 +89,10 @@ public class User extends Common implements Serializable {
 
     @Override
     public String toString() {//비밀번호 제외
-        return "이름='" + username + '\'' +
-                ", 이메일='" + email + '\'' +
-                ", 전화번호='" + phoneNumber + '\'' +
-                ", 주소='" + address + '\'' +
-                ", 생성='"+ getCreatedAt();
-    }
-
-    public String toStringUpdate() {
-        return "이름='" + username + '\'' +
-                ", 이메일='" + email + '\'' +
-                ", 전화번호='" + phoneNumber + '\'' +
-                ", 주소='" + address + '\'' +
-                ", 수정='"+ getUpdatedAt();
+        return String.format(
+                "User { username=%s , email=%s , phoneNumber=%s , address=%s , createdAt=%s , updatedAt=%s }",
+                username, email, phoneNumber, address,getCreatedAt(),getUpdatedAt()
+        );
     }
 
     // update 메소드

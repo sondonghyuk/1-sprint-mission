@@ -57,7 +57,7 @@ public class Channel extends Common implements Serializable {
     @Override
     public String toString() {
         return String.format(
-                "Channel{ channelType=%s , channelName=%s , decription=%s}",
+                "Channel{ channelType=%s , channelName=%s , description=%s}",
                 channelType , channelName ,description
         );
     }
