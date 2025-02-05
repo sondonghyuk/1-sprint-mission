@@ -106,23 +106,23 @@ public class User extends Common implements Serializable {
 
     // update 메소드
     public void update(String newUsername, String newEmail, String newPassword, String newPhoneNumber, String newAddress) {
-        if (newUsername != null && !newUsername.equals(this.username)) {
+        if (newUsername != null && !newUsername.trim().isEmpty() && !newUsername.equals(this.username)) {
             this.username = newUsername;
             updateTimestamp();
         }
-        if (newEmail != null && !newEmail.equals(this.email)) {
+        if (newEmail != null && !newEmail.trim().isEmpty() && !newEmail.equals(this.email)) {
             this.email = newEmail;
             updateTimestamp();
         }
-        if (newPassword != null && !newPassword.equals(this.password)) {
+        if (newPassword != null && !newPassword.trim().isEmpty() && !newPassword.equals(this.password)) {
             this.password = newPassword;
             updateTimestamp();
         }
-        if(newPhoneNumber !=null && !newPhoneNumber.equals(this.phoneNumber)){
+        if(newPhoneNumber !=null && !newPassword.trim().isEmpty() && !newPhoneNumber.equals(this.phoneNumber)){
             this.phoneNumber = newPhoneNumber;
             updateTimestamp();
         }
-        if (newAddress != null && !newAddress.equals(this.address)) {
+        if (newAddress != null && !newAddress.trim().isEmpty() && !newAddress.equals(this.address)) {
             this.address = newAddress;
             updateTimestamp();
         }

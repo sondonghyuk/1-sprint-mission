@@ -56,20 +56,19 @@ public class Channel extends Common implements Serializable {
 
     @Override
     public String toString() {
-        return "Channel{" +
-                "channelType=" + channelType +
-                ", channelName='" + channelName + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+        return String.format(
+                "Channel{ channelType=%s , channelName=%s , decription=%s}",
+                channelType , channelName ,description
+        );
     }
 
     // update 메소드
     public void updateChannel(String newChannelName, String newDescription) {
-        if(newChannelName!=null && !newChannelName.equals(this.channelName)){
+        if(newChannelName!=null && !newChannelName.trim().isEmpty() &&!newChannelName.equals(this.channelName)){
             this.channelName = newChannelName;
             updateTimestamp();
         }
-        if(newDescription!=null && !newDescription.equals(this.description)){
+        if(newDescription!=null && !newDescription.trim().isEmpty() && !newDescription.equals(this.description)){
             this.description = newDescription;
             updateTimestamp();
         }

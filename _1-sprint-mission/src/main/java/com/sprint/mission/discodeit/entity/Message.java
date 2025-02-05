@@ -57,14 +57,15 @@ public class Message extends Common implements Serializable {
 
     @Override
     public String toString() {
-        return  "content='" + content + '\'' +
-                ", channelId=" + channelId +
-                ", userId=" + userId;
+        return String.format(
+                "Message { messageId=%s, content='%s', channelId=%s, userId=%s }",
+                getId(), content, channelId, userId
+        );
     }
 
     // update 메소드
     public void updateContent(String newContent) {
-        if (newContent != null && !newContent.equals(this.content)) {
+        if (newContent != null && !newContent.trim().isEmpty() && !newContent.equals(this.content)) {
             this.content = newContent;
             updateTimestamp();
         }
