@@ -108,23 +108,23 @@ public class User extends Common implements Serializable {
     public void update(String newUsername, String newEmail, String newPassword, String newPhoneNumber, String newAddress) {
         if (newUsername != null && !newUsername.equals(this.username)) {
             this.username = newUsername;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
         if (newEmail != null && !newEmail.equals(this.email)) {
             this.email = newEmail;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
         if (newPassword != null && !newPassword.equals(this.password)) {
             this.password = newPassword;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
         if(newPhoneNumber !=null && !newPhoneNumber.equals(this.phoneNumber)){
             this.phoneNumber = newPhoneNumber;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
         if (newAddress != null && !newAddress.equals(this.address)) {
             this.address = newAddress;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
     }
 

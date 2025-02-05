@@ -32,7 +32,7 @@ public abstract class Common implements Serializable {
     }
 
     //update 메소드
-    public void setUpdatedAt(Long updatedAt) {
-        this.updatedAt = updatedAt;
+    public void updateTimestamp() {
+        this.updatedAt = Instant.now().getEpochSecond();
     }
 }

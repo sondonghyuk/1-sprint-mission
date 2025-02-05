@@ -67,11 +67,11 @@ public class Channel extends Common implements Serializable {
     public void updateChannel(String newChannelName, String newDescription) {
         if(newChannelName!=null && !newChannelName.equals(this.channelName)){
             this.channelName = newChannelName;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
         if(newDescription!=null && !newDescription.equals(this.description)){
             this.description = newDescription;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
     }
 

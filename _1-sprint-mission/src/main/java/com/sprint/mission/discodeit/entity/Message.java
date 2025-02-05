@@ -66,7 +66,7 @@ public class Message extends Common implements Serializable {
     public void updateContent(String newContent) {
         if (newContent != null && !newContent.equals(this.content)) {
             this.content = newContent;
-            setUpdatedAt(Instant.now().getEpochSecond());
+            updateTimestamp();
         }
     }
 }
