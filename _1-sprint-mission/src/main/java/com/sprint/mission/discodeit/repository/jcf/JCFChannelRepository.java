@@ -18,7 +18,7 @@ public class JCFChannelRepository implements ChannelRepository {
     }
     //생성
     @Override
-    public Channel create(Channel channel) {
+    public Channel save(Channel channel) {
         channelData.put(channel.getId(), channel);
         return channel;
     }
@@ -32,9 +32,14 @@ public class JCFChannelRepository implements ChannelRepository {
     public List<Channel> findAll() {
         return new ArrayList<>(channelData.values());
     }
+    @Override
+    public boolean existsById(UUID channelId) {
+        return channelData.containsKey(channelId);
+    }
+
     //삭제
     @Override
-    public void delete(UUID channelId) {
+    public void deleteById(UUID channelId) {
         channelData.remove(channelId);
     }
 }

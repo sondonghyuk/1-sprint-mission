@@ -20,7 +20,7 @@ public class JCFMessageRepository implements MessageRepository {
     }
     //생성,수정
     @Override
-    public Message create(Message message) {
+    public Message save(Message message) {
         messageData.put(message.getId(),message);
         return message;
     }
@@ -36,9 +36,17 @@ public class JCFMessageRepository implements MessageRepository {
     public List<Message> findAll() {
         return new ArrayList<>(messageData.values());
     }
+
+    @Override
+    public boolean existsById(UUID messageId) {
+        return messageData.containsKey(messageId);
+    }
+
     //삭제
     @Override
-    public void delete(UUID messageId) {
+    public void deleteById(UUID messageId) {
         messageData.remove(messageId);
     }
+
+
 }

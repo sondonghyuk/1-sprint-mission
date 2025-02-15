@@ -1,11 +1,9 @@
 package com.sprint.mission.discodeit.service.file;
 
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.file.FileUserRepository;
 import com.sprint.mission.discodeit.service.UserService;
 
-import java.io.*;
 import java.util.*;
 
 public class FileUserService implements UserService {
@@ -17,7 +15,7 @@ public class FileUserService implements UserService {
 
     public User create(String username,String email,String password,String phoneNumber,String address){
         User user = new User(username,email,password,phoneNumber,address);
-        return fileuserRepository.create(user);
+        return fileuserRepository.create(user, userStatus);
     }
     public User findById(UUID id){
         return fileuserRepository.findById(id)
@@ -51,7 +49,7 @@ public class FileUserService implements UserService {
                 default:
                     throw new IllegalArgumentException("Invalid field: " + field);
             }
-            return fileuserRepository.create(user);
+            return fileuserRepository.create(user, userStatus);
         }
         return null;
     }

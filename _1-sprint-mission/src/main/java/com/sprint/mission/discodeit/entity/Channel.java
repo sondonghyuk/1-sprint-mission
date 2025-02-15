@@ -1,11 +1,23 @@
 package com.sprint.mission.discodeit.entity;
 
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.UUID;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+@Entity
+@Getter
+@NoArgsConstructor
 public class Channel extends Common implements Serializable {
     private static final long serialVersionUID = 1L; //직렬화 버전
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
     //필드
     public enum ChannelType {
         PUBLIC,PRIVATE
@@ -14,6 +26,11 @@ public class Channel extends Common implements Serializable {
     private String channelName; // 채널 이름
     private String description; // 채널 설명
 
+    //ReadStatus와 다대일 관계
+    @OneToMany(mappedBy = "channel",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ReadStatus> readStatuses = new ArrayList<>();
+
+    // PUBLIC 전용 생성자
     public Channel(ChannelType channelType,String channelName, String description) {
         super();
         //검증
@@ -30,28 +47,21 @@ public class Channel extends Common implements Serializable {
         this.channelName = channelName;
         this.description = description;
     }
-
-    public ChannelType getChannelType() {
-        return channelType;
-    }
-    public String getChannelName() {
-        return channelName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setChannelType(ChannelType channelType) {
+    //PRIVATE 전용 생성자
+    public Channel(ChannelType channelType) {
+        super();
+        //검증
+        if (channelType == null) {
+            throw new IllegalArgumentException("채널 타입은 필수입니다.(PUBLIC,PRIVATE)");
+        }
         this.channelType = channelType;
     }
-
-    public void setChannelName(String channelName) {
-        this.channelName = channelName;
+    //팩토리 메서드
+    public static Channel createPublicChannel(String name,String description) {
+        return new Channel(ChannelType.PUBLIC,name,description);
     }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public static Channel createPrivateChannel() {
+        return new Channel(ChannelType.PRIVATE,null,null);
     }
 
     @Override

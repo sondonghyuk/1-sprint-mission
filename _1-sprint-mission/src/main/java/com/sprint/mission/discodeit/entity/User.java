@@ -1,20 +1,43 @@
 package com.sprint.mission.discodeit.entity;
 
-import java.io.Serial;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class User extends Common implements Serializable {
     private static final long serialVersionUID = 1L; //직렬화 버전
     //필드
+    @Id
+    @GeneratedValue
+    private UUID id;
+
     private String username; //유저이름
     private String email; //이메일(아이디)
     private transient String password;//비밀번호
     private String phoneNumber;//전화번호
     private String address; //주소
+
+    @OneToOne
+    @JoinColumn(name = "profile_image_id")
+    private BinaryContent profileImage;//프로필 이미지
+
+    //ReadStatus와 다대일 관계
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ReadStatus> readStatuses = new ArrayList<>();
+    //UserStatus와 일대일 관계
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserStatus userStatus;
 
     //사용자 검사 필드(클래스에서 변경되지 않는 공용 데이터)
     // 전화번호 010-0000-0000 만 허용
@@ -25,7 +48,7 @@ public class User extends Common implements Serializable {
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$");
 
     //생성자
-    public User(String username,String email,String password,String phoneNumber,String address){
+    public User(String username, String email, String password, String phoneNumber, String address, BinaryContent profileImage){
         super();
         //검증
         if (username == null || username.length() > 20) {
@@ -48,43 +71,7 @@ public class User extends Common implements Serializable {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.address = address;
-    }
-
-    //Getter
-    public String getUsername() {
-        return username;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-    public String getAddress() {
-        return address;
-    }
-    //Setter
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+        this.profileImage = profileImage;
     }
 
     @Override
@@ -96,7 +83,7 @@ public class User extends Common implements Serializable {
     }
 
     // update 메소드
-    public void update(String newUsername, String newEmail, String newPassword, String newPhoneNumber, String newAddress) {
+    public void update(String newUsername, String newEmail, String newPassword, String newPhoneNumber, String newAddress,BinaryContent newProfile) {
         if (newUsername != null && !newUsername.trim().isEmpty() && !newUsername.equals(this.username)) {
             this.username = newUsername;
             updateTimestamp();
@@ -115,6 +102,10 @@ public class User extends Common implements Serializable {
         }
         if (newAddress != null && !newAddress.trim().isEmpty() && !newAddress.equals(this.address)) {
             this.address = newAddress;
+            updateTimestamp();
+        }
+        if (newProfile != null){
+            this.profileImage = newProfile;
             updateTimestamp();
         }
     }

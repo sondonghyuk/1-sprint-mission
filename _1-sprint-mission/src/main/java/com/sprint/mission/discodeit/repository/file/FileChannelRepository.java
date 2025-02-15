@@ -1,13 +1,16 @@
 package com.sprint.mission.discodeit.repository.file;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
+import org.springframework.stereotype.Repository;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
+@Repository
 public class FileChannelRepository implements ChannelRepository {
     private final Path DIRECTORY;
     private final String EXTENSION = ".ser";
@@ -28,7 +31,7 @@ public class FileChannelRepository implements ChannelRepository {
     }
 
     @Override
-    public Channel create(Channel channel) {
+    public Channel save(Channel channel) {
         Path path = resolvePath(channel.getId());
         try(
                 FileOutputStream fos = new FileOutputStream(path.toFile());
@@ -79,12 +82,20 @@ public class FileChannelRepository implements ChannelRepository {
         }
     }
 
+
+    //존재하는지 확인
     @Override
-    public void delete(UUID channelId) {
+    public boolean existsById(UUID channelId) {
+        Path path = resolvePath(channelId);
+        return Files.exists(path);
+    }
+
+    @Override
+    public void deleteById(UUID channelId) {
         Path path = resolvePath(channelId);
         try {
             Files.delete(path);
-        } catch (IOException e) {
+        }catch (IOException e){
             throw new RuntimeException(e);
         }
     }

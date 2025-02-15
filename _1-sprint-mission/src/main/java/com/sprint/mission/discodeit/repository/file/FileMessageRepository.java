@@ -2,13 +2,15 @@ package com.sprint.mission.discodeit.repository.file;
 
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.entity.Message;
+import org.springframework.stereotype.Repository;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.*;
-
+@Repository
 public class FileMessageRepository implements MessageRepository {
 
     private final Path DIRECTORY;
@@ -30,7 +32,7 @@ public class FileMessageRepository implements MessageRepository {
     }
 
     @Override
-    public Message create(Message message) {
+    public Message save(Message message) {
         Path path = resolvePath(message.getId());
         try (
                 FileOutputStream fos = new FileOutputStream(path.toFile());
@@ -80,9 +82,13 @@ public class FileMessageRepository implements MessageRepository {
             throw new RuntimeException(e);
         }
     }
-
     @Override
-    public void delete(UUID id) {
+    public boolean existsById(UUID messageId) {
+        Path path = resolvePath(messageId);
+        return Files.exists(path);
+    }
+    @Override
+    public void deleteById(UUID id) {
         Path path = resolvePath(id);
         try {
             Files.delete(path);
@@ -90,4 +96,6 @@ public class FileMessageRepository implements MessageRepository {
             throw new RuntimeException(e);
         }
     }
+
+
 }
