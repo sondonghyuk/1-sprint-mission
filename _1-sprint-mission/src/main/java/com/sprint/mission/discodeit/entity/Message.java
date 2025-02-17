@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -19,39 +18,32 @@ public class Message extends Common implements Serializable {
     @Id
     @GeneratedValue
     private UUID id;
-    //필드
+
     private String content; //메세지내용
+    private UUID userId; // 메시지를 보낸 사용자
+    private UUID channelId; // 메시지가 속한 채널
 
-    @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private User user; // 메시지를 보낸 사용자
-
-    @ManyToOne
-    @JoinColumn(name = "channel_id",nullable = false)
-    private Channel channel; // 메시지가 속한 채널
-
-    @OneToMany
-    @JoinColumn(name="attachment_id")
-    private List<BinaryContent> attachments;
+    //BinaryContent 참조 필드
+    private List<UUID> attachmentIds;
 
     //생성자
-    public Message(String content, User user, Channel channel, List<BinaryContent> attachments) {
+    public Message(String content, UUID userId, UUID channelId, List<UUID> attachmentIds) {
         super();
         // 검증
         if (content == null || content.trim().isEmpty() || content.length() > 500) {
             throw new IllegalArgumentException("메시지 내용은 1~500자 사이여야 합니다.");
         }
-        if (channel.getId() == null) {
+        if (channelId == null) {
             throw new IllegalArgumentException("채널 ID는 필수입니다.");
         }
-        if (user.getId() == null) {
+        if (userId == null) {
             throw new IllegalArgumentException("작성자 ID는 필수입니다.");
         }
 
         this.content = content;
-        this.user = user;
-        this.channel = channel;
-        this.attachments = attachments;
+        this.userId = userId;
+        this.channelId = channelId;
+        this.attachmentIds = attachmentIds;
     }
 
     // update 메소드
@@ -62,9 +54,9 @@ public class Message extends Common implements Serializable {
         }
     }
 
-    //첨부파일 추가 메서드
-    public void attachFile(BinaryContent file){
-        this.attachments = file;
-        updateTimestamp();
-    }
+//    //첨부파일 추가 메서드
+//    public void attachFile(BinaryContent file){
+//        this.attachments = file;
+//        updateTimestamp();
+//    }
 }

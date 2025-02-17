@@ -1,17 +1,13 @@
 package com.sprint.mission.discodeit.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 import lombok.Getter;
-
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
+
 @MappedSuperclass // 이 클래스를 직접 Entity로 사용하지 않음
 @Getter
 public abstract class Common implements Serializable {

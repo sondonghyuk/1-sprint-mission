@@ -33,8 +33,8 @@ public class JCFMessageRepository implements MessageRepository {
 
     //다중조회
     @Override
-    public List<Message> findAll() {
-        return new ArrayList<>(messageData.values());
+    public List<Message> findAllByChannelId(UUID channelId) {
+        return this.messageData.values().stream().filter(message -> message.getChannelId().equals(channelId)).toList();
     }
 
     @Override
@@ -47,6 +47,10 @@ public class JCFMessageRepository implements MessageRepository {
     public void deleteById(UUID messageId) {
         messageData.remove(messageId);
     }
-
+    @Override
+    public void deleteAllByChannelId(UUID channelId) {
+        this.findAllByChannelId(channelId)
+                .forEach(message -> this.deleteById(message.getId()));
+    }
 
 }

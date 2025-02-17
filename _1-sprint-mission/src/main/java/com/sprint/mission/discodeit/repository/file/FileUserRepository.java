@@ -96,28 +96,6 @@ public class FileUserRepository implements UserRepository {
         }
     }
 
-    @Override
-    public List<User> findAllById(List<UUID> uuids) {
-        try{
-            return Files.list(DIRECTORY)//경로에 있는 파일 목록을 스트림 형태로 반환
-                    .filter(path->path.toString().endsWith(EXTENSION))
-                    .map(path -> {
-                        try(
-                                FileInputStream fis = new FileInputStream(path.toFile());
-                                ObjectInputStream ois = new ObjectInputStream(fis)
-                        ){
-                            return (User)ois.readObject();
-                        }catch (IOException | ClassNotFoundException e){
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .filter(user -> uuids.contains(user.getId()))
-                    .toList();
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    }
-
     //존재하는지 확인
     @Override
     public boolean existsById(UUID id) {

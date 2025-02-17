@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,19 +25,22 @@ public class BinaryContent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
-    private String fileName; // 파일명
-    private String contentType; // 타입
-
-    private byte[] data; // 바이너리 데이터
-
     private Instant createdAt; //생성 시점
 
-    public BinaryContent(String fileName, String contentType, byte[] data) {
-        this.fileName = fileName;
-        this.contentType = contentType;
-        this.data = data;
+    //메타 정보
+    private String fileName; // 파일명
+    private Long size; //파일 사이즈
+    private String contentType; // 타입
+    private byte[] bytes; // 바이너리 데이터
+
+    public BinaryContent(String fileName, long length, String contentType, byte[] bytes) {
+        this.id = UUID.randomUUID();
         this.createdAt = Instant.now();
+
+        this.fileName = fileName;
+        this.size = length;
+        this.contentType = contentType;
+        this.bytes = bytes;
     }
 }
 

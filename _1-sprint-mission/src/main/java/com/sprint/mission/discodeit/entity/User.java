@@ -27,17 +27,9 @@ public class User extends Common implements Serializable {
     private transient String password;//비밀번호
     private String phoneNumber;//전화번호
     private String address; //주소
-
-    @OneToOne
-    @JoinColumn(name = "profile_image_id")
-    private BinaryContent profileImage;//프로필 이미지
-
-    //ReadStatus와 다대일 관계
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ReadStatus> readStatuses = new ArrayList<>();
-    //UserStatus와 일대일 관계
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private UserStatus userStatus;
+    
+    //BinaryContent 참조 필드
+    private UUID profileId;//프로필 이미지 아이디
 
     //사용자 검사 필드(클래스에서 변경되지 않는 공용 데이터)
     // 전화번호 010-0000-0000 만 허용
@@ -48,7 +40,7 @@ public class User extends Common implements Serializable {
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$");
 
     //생성자
-    public User(String username, String email, String password, String phoneNumber, String address, BinaryContent profileImage){
+    public User(String username, String email, String password, String phoneNumber, String address, UUID profileId){
         super();
         //검증
         if (username == null || username.length() > 20) {
@@ -71,7 +63,7 @@ public class User extends Common implements Serializable {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.profileImage = profileImage;
+        this.profileId = profileId;
     }
 
     @Override
@@ -83,7 +75,7 @@ public class User extends Common implements Serializable {
     }
 
     // update 메소드
-    public void update(String newUsername, String newEmail, String newPassword, String newPhoneNumber, String newAddress,BinaryContent newProfile) {
+    public void update(String newUsername, String newEmail, String newPassword, String newPhoneNumber, String newAddress, UUID newProfileId) {
         if (newUsername != null && !newUsername.trim().isEmpty() && !newUsername.equals(this.username)) {
             this.username = newUsername;
             updateTimestamp();
@@ -104,8 +96,8 @@ public class User extends Common implements Serializable {
             this.address = newAddress;
             updateTimestamp();
         }
-        if (newProfile != null){
-            this.profileImage = newProfile;
+        if (newProfileId != null){
+            this.profileId = newProfileId;
             updateTimestamp();
         }
     }

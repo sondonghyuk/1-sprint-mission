@@ -1,2 +1,3 @@
-spring.application.name=discodeit
-file.upload-dir= C:\coding\codeit-bootcamp-spring
+spring:
+  application:
+    name: discodeit

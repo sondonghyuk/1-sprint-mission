@@ -67,26 +67,27 @@ public class FileBinaryContentRepository implements BinaryContentRepository {
     }
 
     @Override
-    public List<BinaryContent> findAllById(List<UUID> binaryContentIds) {
-        try{
-            return Files.list(DIRECTORY)//경로에 있는 파일 목록을 스트림 형태로 반환
-                    .filter(path->path.toString().endsWith(EXTENSION))
+    public List<BinaryContent> findAllByIdIn(List<UUID> binaryContentIds) {
+        try {
+            return Files.list(DIRECTORY)
+                    .filter(path -> path.toString().endsWith(EXTENSION))
                     .map(path -> {
-                        try(
+                        try (
                                 FileInputStream fis = new FileInputStream(path.toFile());
                                 ObjectInputStream ois = new ObjectInputStream(fis)
-                        ){
-                            return (BinaryContent)ois.readObject();
-                        }catch (IOException | ClassNotFoundException e){
+                        ) {
+                            return (BinaryContent) ois.readObject();
+                        } catch (IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
                     })
-                    .filter(binaryContent -> binaryContentIds.contains(binaryContent.getId()))
+                    .filter(content -> binaryContentIds.contains(content.getId()))
                     .toList();
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public void deleteById(UUID binaryContentId) {
