@@ -39,7 +39,7 @@ public class UserController {
     }
     //사용자 수정
     @RequestMapping(path="update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<User> update(@RequestPart UUID userId,
+    public ResponseEntity<User> update(@RequestParam("userId") UUID userId,
                                        @RequestPart UserUpdateDto userUpdateDto,
                                        @RequestPart(value = "profile",required = false) MultipartFile profile){
         Optional<BinaryContentCreateDto> profileDto = Optional.ofNullable(profile).flatMap(this::resolveProfileDto);
@@ -49,7 +49,7 @@ public class UserController {
 
     //사용자 삭제
     @RequestMapping(path="delete")
-    public ResponseEntity<Void> delete(@RequestParam UUID userId){
+    public ResponseEntity<Void> delete(@RequestParam("userId") UUID userId){
         userService.deleteById(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); //응답 데이터에 정보가 없음
     }
