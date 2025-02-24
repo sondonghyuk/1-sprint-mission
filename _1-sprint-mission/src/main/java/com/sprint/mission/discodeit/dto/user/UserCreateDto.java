@@ -1,14 +1,18 @@
 package com.sprint.mission.discodeit.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 
 import java.util.UUID;
 
 //요청
 public record UserCreateDto(
-        String username,
-        String email,
-        String password,
-        String phoneNumber,
-        String address
-) { }
+    String username,
+    String email,
+    @JsonIgnore //JSON 응답에서 제외
+    String password,
+    String phoneNumber,
+    String address
+) {
+
+}
