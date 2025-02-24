@@ -8,10 +8,11 @@ import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-
+@Repository
 public class JCFMessageRepository implements MessageRepository {
     //데이터 저장
     private final Map<UUID,Message> messageData;
