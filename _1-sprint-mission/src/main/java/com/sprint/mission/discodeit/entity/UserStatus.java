@@ -1,33 +1,22 @@
 package com.sprint.mission.discodeit.entity;
 
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
 //사용자 별 마지막으로 확인된 접속 시간을 표현하는 도메인 모델
 //사용자의 온라인 상태를 확인하기 위해 활용
 public class UserStatus extends Common {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private UUID id;
-
     private UUID userId; // 사용자 별로 관리하는 데이터
     private Instant lastConnectTime; //사용자의 마지막 접속 시간
 
     public UserStatus(UUID userId, Instant now) {
-        super();
+        super(UUID.randomUUID(), Instant.now());
         this.userId = userId;
         this.lastConnectTime = now;
     }

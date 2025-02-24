@@ -1,23 +1,16 @@
 package com.sprint.mission.discodeit.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Message extends Common implements Serializable {
     private static final long serialVersionUID = 1L; //직렬화 버전
-    @Id
-    @GeneratedValue
-    private UUID id;
 
     private String content; //메세지내용
     private UUID userId; // 메시지를 보낸 사용자
@@ -28,7 +21,7 @@ public class Message extends Common implements Serializable {
 
     //생성자
     public Message(String content, UUID userId, UUID channelId, List<UUID> attachmentIds) {
-        super();
+        super(UUID.randomUUID(), Instant.now());
         // 검증
         if (content == null || content.trim().isEmpty() || content.length() > 500) {
             throw new IllegalArgumentException("메시지 내용은 1~500자 사이여야 합니다.");
@@ -53,10 +46,4 @@ public class Message extends Common implements Serializable {
             updateTimestamp();
         }
     }
-
-//    //첨부파일 추가 메서드
-//    public void attachFile(BinaryContent file){
-//        this.attachments = file;
-//        updateTimestamp();
-//    }
 }

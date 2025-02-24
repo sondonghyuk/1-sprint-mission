@@ -1,12 +1,6 @@
 package com.sprint.mission.discodeit.repository;
 
 import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.entity.UserStatus;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.lang.NonNullApi;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,4 +13,6 @@ public interface UserRepository {
     List<User> findAll();
     boolean existsById(UUID userId);
     void deleteById(UUID userId);
+    boolean existsByEmail(String email);
+    boolean existsByUsername(String username);
 }

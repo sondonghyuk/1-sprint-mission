@@ -114,15 +114,11 @@ public class BasicUserService implements UserService {
     }
     //username, email 다른 유저와 같은지 체크
     public void validationUsernameAndEmail(String username, String email) {
-        User existingUserByUsername = userRepository.findByUsername(username)
-                .orElseThrow(()-> new NoSuchElementException("User Username not found"));
-        User existingUserByEmail = userRepository.findByEmail(email)
-                .orElseThrow(() -> new NoSuchElementException("User Email not found"));
-        if(existingUserByUsername.getUsername().equals(username)) {
-            throw new IllegalArgumentException("이미 사용 중인 username 입니다.");
+        if (userRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("User with email " + email + " already exists");
         }
-        if(existingUserByEmail.getEmail().equals(email)) {
-            throw new IllegalArgumentException("이미 사용중인 email 입니다.");
+        if (userRepository.existsByUsername(username)) {
+            throw new IllegalArgumentException("User with username " + username + " already exists");
         }
     }
     //entity -> dto

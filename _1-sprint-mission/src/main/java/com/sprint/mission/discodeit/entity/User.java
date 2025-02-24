@@ -1,27 +1,18 @@
 package com.sprint.mission.discodeit.entity;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-@Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class User extends Common implements Serializable {
     private static final long serialVersionUID = 1L; //직렬화 버전
     //필드
-    @Id
-    @GeneratedValue
-    private UUID id;
-
     private String username; //유저이름
     private String email; //이메일(아이디)
     private transient String password;//비밀번호
@@ -41,7 +32,7 @@ public class User extends Common implements Serializable {
 
     //생성자
     public User(String username, String email, String password, String phoneNumber, String address, UUID profileId){
-        super();
+        super(UUID.randomUUID(), Instant.now());
         //검증
         if (username == null || username.length() > 20) {
             throw new IllegalArgumentException("이름은 최대 20자까지 가능합니다.");
@@ -64,14 +55,6 @@ public class User extends Common implements Serializable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.profileId = profileId;
-    }
-
-    @Override
-    public String toString() {//비밀번호 제외
-        return String.format(
-                "User { username=%s , email=%s , phoneNumber=%s , address=%s , createdAt=%s , updatedAt=%s }",
-                username, email, phoneNumber, address,getCreatedAt(),getUpdatedAt()
-        );
     }
 
     // update 메소드
