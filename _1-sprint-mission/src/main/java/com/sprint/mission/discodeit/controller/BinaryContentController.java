@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
+import com.sprint.mission.discodeit.apidocs.BinaryContentApiDocs;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,26 +19,25 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/binaryContent")
+@RequestMapping("/api/binaryContents")
 @RequiredArgsConstructor
-@Tag(name = "BinaryContent", description = "첨부 파일 API")
-public class BinaryContentController {
+public class BinaryContentController implements BinaryContentApiDocs {
 
   private final BinaryContentService binaryContentService;
 
   //파일 단건 조회
-  //@RequestMapping(path = "find")
-  @GetMapping("/find/{binaryContentId}")
+  @GetMapping("/{binaryContentId}")
+  @Override
   public ResponseEntity<BinaryContent> find(@PathVariable UUID binaryContentId) {
     BinaryContent binaryContent = binaryContentService.findById(binaryContentId);
     return ResponseEntity.status(HttpStatus.OK).body(binaryContent);
   }
 
   //파일 다건 조회
-  //@RequestMapping(path = "findAllByIdIn")
-  @GetMapping("/findAllByIdIn/{binaryContentIds}")
+  @GetMapping
+  @Override
   public ResponseEntity<List<BinaryContent>> findAllByIdIn(
-      @PathVariable List<UUID> binaryContentIds) {
+      @RequestParam List<UUID> binaryContentIds) {
     List<BinaryContent> binaryContents = binaryContentService.findAllByIdIn(binaryContentIds);
     return ResponseEntity.status(HttpStatus.OK).body(binaryContents);
   }

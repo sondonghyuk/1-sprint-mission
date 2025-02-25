@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
+import com.sprint.mission.discodeit.apidocs.ChannelApiDocs;
 import com.sprint.mission.discodeit.dto.channel.ChannelDto;
 import com.sprint.mission.discodeit.dto.channel.PrivateChannelCreateDto;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateDto;
@@ -29,17 +30,15 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/channeㄴ")
+@RequestMapping("/api/channels")
 @RequiredArgsConstructor
-@Tag(name = "Channel", description = "Channel API")
-public class ChannelController {
+public class ChannelController implements ChannelApiDocs {
 
   private final ChannelService channelService;
 
   //공개 채널 생성
   @PostMapping("/public")
-  @Tag(name = "Channel")
-  @Operation(summary = "Public Channel 생성")
+  @Override
   public ResponseEntity<Channel> createPublic(
       @Valid @RequestBody PublicChannelCreateDto publicChannelDto) {
     Channel publicChannel = channelService.create(publicChannelDto);
@@ -48,8 +47,7 @@ public class ChannelController {
 
   //비공개 채널 생성
   @PostMapping("/private")
-  @Tag(name = "Channel")
-  @Operation(summary = "Private Channel 생성")
+  @Override
   public ResponseEntity<Channel> createPrivate(
       @Valid @RequestBody PrivateChannelCreateDto privateChannelDto) {
     Channel privateChannel = channelService.create(privateChannelDto);
@@ -58,8 +56,7 @@ public class ChannelController {
 
   //공개 채널 정보 수정
   @PatchMapping("/{channelId}")
-  @Tag(name = "Channel")
-  @Operation(summary = "Channel 정보 수정")
+  @Override
   public ResponseEntity<Channel> update(@PathVariable UUID channelId,
       @Valid @RequestBody PublicChannelUpdateDto publicChannelUpdateDto) {
     Channel updatedChannel = channelService.update(channelId, publicChannelUpdateDto);
@@ -68,17 +65,15 @@ public class ChannelController {
 
   //채널 삭제
   @DeleteMapping("/{channelId}")
-  @Tag(name = "Channel")
-  @Operation(summary = "Channel 삭제")
+  @Override
   public ResponseEntity<Void> delete(@PathVariable UUID channelId) {
     channelService.deleteById(channelId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
   //채널 목록 조회
-  @GetMapping()
-  @Tag(name = "Channel")
-  @Operation(summary = "User가 참여 중인 Channel 목록 조회")
+  @GetMapping
+  @Override
   public ResponseEntity<List<ChannelDto>> findAll(@RequestParam(value = "userId") UUID userId) {
     List<ChannelDto> channels = channelService.findAllByUserId(userId);
     return ResponseEntity.status(HttpStatus.OK).body(channels);

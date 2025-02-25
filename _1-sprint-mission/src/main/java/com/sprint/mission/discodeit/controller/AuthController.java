@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
+import com.sprint.mission.discodeit.apidocs.AuthApiDocs;
 import com.sprint.mission.discodeit.dto.login.LoginDto;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.service.AuthService;
@@ -20,13 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Tag(name = "Auth", description = "인증 API")
-public class AuthController {
+public class AuthController implements AuthApiDocs {
 
   private final AuthService authService;
 
-  //@RequestMapping(path = "login")
   @PostMapping("/login")
+  @Override
   public ResponseEntity<User> login(@Valid @RequestBody LoginDto loginDto) {
     User loginUser = authService.login(loginDto);
     return ResponseEntity.status(HttpStatus.OK).body(loginUser);
