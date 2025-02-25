@@ -6,6 +6,8 @@ import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateDto;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateDto;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.service.ChannelService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,15 +29,17 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/channel")
+@RequestMapping("/api/channeㄴ")
 @RequiredArgsConstructor
+@Tag(name = "Channel", description = "Channel API")
 public class ChannelController {
 
   private final ChannelService channelService;
 
   //공개 채널 생성
-  //@RequestMapping(path = "createPublic")
-  @PostMapping("/createPublic")
+  @PostMapping("/public")
+  @Tag(name = "Channel")
+  @Operation(summary = "Public Channel 생성")
   public ResponseEntity<Channel> createPublic(
       @Valid @RequestBody PublicChannelCreateDto publicChannelDto) {
     Channel publicChannel = channelService.create(publicChannelDto);
@@ -42,8 +47,9 @@ public class ChannelController {
   }
 
   //비공개 채널 생성
-  //@RequestMapping(path = "createPrivate")
-  @PostMapping("/createPrivate")
+  @PostMapping("/private")
+  @Tag(name = "Channel")
+  @Operation(summary = "Private Channel 생성")
   public ResponseEntity<Channel> createPrivate(
       @Valid @RequestBody PrivateChannelCreateDto privateChannelDto) {
     Channel privateChannel = channelService.create(privateChannelDto);
@@ -51,8 +57,9 @@ public class ChannelController {
   }
 
   //공개 채널 정보 수정
-  //@RequestMapping(path = "update")
-  @PutMapping("/update/{channelId}")
+  @PatchMapping("/{channelId}")
+  @Tag(name = "Channel")
+  @Operation(summary = "Channel 정보 수정")
   public ResponseEntity<Channel> update(@PathVariable UUID channelId,
       @Valid @RequestBody PublicChannelUpdateDto publicChannelUpdateDto) {
     Channel updatedChannel = channelService.update(channelId, publicChannelUpdateDto);
@@ -60,17 +67,19 @@ public class ChannelController {
   }
 
   //채널 삭제
-  //@RequestMapping(path = "delete")
-  @DeleteMapping("/delete/{channelId}")
+  @DeleteMapping("/{channelId}")
+  @Tag(name = "Channel")
+  @Operation(summary = "Channel 삭제")
   public ResponseEntity<Void> delete(@PathVariable UUID channelId) {
     channelService.deleteById(channelId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
   //채널 목록 조회
-  //@RequestMapping(path = "findAll")
-  @GetMapping("/findAll/{userId}")
-  public ResponseEntity<List<ChannelDto>> findAll(@PathVariable UUID userId) {
+  @GetMapping()
+  @Tag(name = "Channel")
+  @Operation(summary = "User가 참여 중인 Channel 목록 조회")
+  public ResponseEntity<List<ChannelDto>> findAll(@RequestParam(value = "userId") UUID userId) {
     List<ChannelDto> channels = channelService.findAllByUserId(userId);
     return ResponseEntity.status(HttpStatus.OK).body(channels);
   }

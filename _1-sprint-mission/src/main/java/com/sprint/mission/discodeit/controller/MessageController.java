@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.dto.message.MessageCreateDto;
 import com.sprint.mission.discodeit.dto.message.MessageUpdateDto;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.service.MessageService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/message")
 @RequiredArgsConstructor
+@Tag(name = "Message", description = "Message API")
 public class MessageController {
 
   private final MessageService messageService;

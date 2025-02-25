@@ -5,73 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_classic_1_5_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__ch_qos_logback_logback_core_1_5_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_annotations_2_18_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_core_2_18_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_core_jackson_databind_2_18_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_18_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_18_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_fasterxml_jackson_module_jackson_module_parameter_names_2_18_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_jayway_jsonpath_json_path_2_9_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_micrometer_micrometer_commons_1_14_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_micrometer_micrometer_observation_1_14_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__jakarta_activation_jakarta_activation_api_2_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__jakarta_annotation_jakarta_annotation_api_2_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__jakarta_xml_bind_jakarta_xml_bind_api_4_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_bytebuddy_byte_buddy_1_15_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_bytebuddy_byte_buddy_agent_1_15_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_accessors_smart_2_5_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minidev_json_smart_2_5_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_api_2_24_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_to_slf4j_2_24_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_core_10_1_33.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_el_10_1_33.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_tomcat_embed_tomcat_embed_websocket_10_1_33.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apiguardian_apiguardian_api_1_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_assertj_assertj_core_3_26_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_awaitility_awaitility_4_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_5_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_api_5_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_engine_5_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_jupiter_junit_jupiter_params_5_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_commons_1_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_engine_1_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_junit_platform_junit_platform_launcher_1_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mockito_mockito_core_5_14_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_mockito_mockito_junit_jupiter_5_14_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_objenesis_objenesis_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_opentest4j_opentest4j_1_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_9_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_projectlombok_lombok_1_18_36.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_skyscreamer_jsonassert_1_5_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_jul_to_slf4j_2_0_16.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_slf4j_api_2_0_16.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_autoconfigure_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_json_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_logging_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_test_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_tomcat_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_starter_web_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_boot_spring_boot_test_autoconfigure_3_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_aop_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_beans_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_context_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_core_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_expression_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_jcl_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_test_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_web_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_springframework_spring_webmvc_6_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_xmlunit_xmlunit_core_2_10_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_yaml_snakeyaml_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/discodeit.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/checksums/md5-checksums.bin" afterDir="false" />
@@ -82,26 +15,11 @@
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/BinaryContentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/BinaryContentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/ChannelController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/ChannelController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/MessageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/ReadStatusController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/ReadStatusController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/dto/user/UserCreateDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/dto/user/UserCreateDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/dto/user/UserUpdateDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/dto/user/UserUpdateDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/compileTransaction/stash-dir/UserController.class.uniqueId0" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/compileTransaction/stash-dir/UserController.class.uniqueId0" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/resources/main/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/resources/main/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/user/UserCreateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/user/UserCreateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/user/UserUpdateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/user/UserUpdateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file-data-map/User/9e5ab9f2-f606-4d89-b188-9847e694e42c.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file-data-map/User/e15bbf84-4b34-44e2-91f0-95872692ae0c.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file-data-map/binary-content/e81726cb-4d5a-47bc-a112-99fefe8c7bf5.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file-data-map/binary-content/f53f2224-1afa-4e7d-a74a-00e5c01680c8.ser" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,7 +197,7 @@
       <workItem from="1740370213085" duration="230000" />
       <workItem from="1740370455236" duration="14846000" />
       <workItem from="1740385384821" duration="5162000" />
-      <workItem from="1740446846623" duration="10990000" />
+      <workItem from="1740446846623" duration="12009000" />
     </task>
     <servers />
   </component>

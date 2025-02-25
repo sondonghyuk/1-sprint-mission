@@ -15,15 +15,15 @@ public class SwaggerConfig {
   public OpenAPI customOpenAPI() {
     return new OpenAPI()
         .info(new Info()
-            .title("springdoc-openapi")
+            .title("Discodeit API 문서")
             .version("1.0")
-            .description("springdoc-openapi swagger-ui 화면"));
+            .description("Discodeit 프로젝트의 Swagger API 문서입니다."));
   }
 
   @Bean
   public GroupedOpenApi api() {
-    String[] paths = {"/api/v1/**"};
-    String[] packagesToScan = {"com.example.springdoc"};
+    String[] paths = {"/api/**"};
+    String[] packagesToScan = {"com.sprint.mission.discodeit"};
     return GroupedOpenApi.builder().group("springdoc-openapi")
         .pathsToMatch(paths)
         .packagesToScan(packagesToScan).build();

@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateDto;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateDto;
 import com.sprint.mission.discodeit.entity.ReadStatus;
 import com.sprint.mission.discodeit.service.ReadStatusService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/readStatus")
 @RequiredArgsConstructor
+@Tag(name = "ReadStatus", description = "Message 읽음 상태 API")
 public class ReadStatusController {
 
   private final ReadStatusService readStatusService;
