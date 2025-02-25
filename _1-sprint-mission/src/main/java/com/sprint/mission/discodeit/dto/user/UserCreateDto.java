@@ -9,7 +9,6 @@ import java.util.UUID;
 public record UserCreateDto(
     String username,
     String email,
-    @JsonIgnore //JSON 응답에서 제외
     String password,
     String phoneNumber,
     String address

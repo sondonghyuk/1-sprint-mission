@@ -32,11 +32,10 @@ public class UserController {
   private final UserStatusService userStatusService;
 
   //사용자 생성
-  //@RequestMapping(path = "create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-  //post 요청 , Content-Type이 multipart/form-data
   @PostMapping("/create")
-  public ResponseEntity<User> create(@Valid @RequestBody UserCreateDto userCreateDto,
-      @Valid @RequestBody(required = false) MultipartFile profile) {
+  public ResponseEntity<User> create(
+      @RequestPart("user") @Valid UserCreateDto userCreateDto,
+      @RequestPart(value = "profile", required = false) MultipartFile profile) {
     Optional<BinaryContentCreateDto> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
     User createdUser = userService.create(userCreateDto, profileDto);
@@ -44,11 +43,11 @@ public class UserController {
   }
 
   //사용자 수정
-  //@RequestMapping(path = "update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   @PutMapping("/update/{userId}")
-  public ResponseEntity<User> update(@PathVariable UUID userId,
-      @Valid @RequestBody UserUpdateDto userUpdateDto,
-      @Valid @RequestBody(required = false) MultipartFile profile) {
+  public ResponseEntity<User> update(
+      @PathVariable UUID userId,
+      @Valid @RequestPart("user") UserUpdateDto userUpdateDto,
+      @Valid @RequestPart(value = "profile", required = false) MultipartFile profile) {
     Optional<BinaryContentCreateDto> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
     User updatedUser = userService.update(userId, userUpdateDto, profileDto);
@@ -56,7 +55,6 @@ public class UserController {
   }
 
   //사용자 삭제
-  //@RequestMapping(path = "delete")
   @DeleteMapping("/delete/{userId}")
   public ResponseEntity<Void> delete(@PathVariable UUID userId) {
     userService.deleteById(userId);
@@ -64,7 +62,6 @@ public class UserController {
   }
 
   //사용자 다건 조회
-  //@RequestMapping(path = "findAll")
   @GetMapping("/findAll")
   public ResponseEntity<List<UserDto>> findAll() {
     List<UserDto> users = userService.findAll();
@@ -72,8 +69,7 @@ public class UserController {
   }
 
   //사용자 온라인 상태 업데이트
-  //@RequestMapping(path = "updateUserStatusByUserId")
-  @PutMapping("/updateUserStatusByUserId/{userId}")
+  @PutMapping("/update/status/{userId}")
   public ResponseEntity<UserStatus> updateUserStatusByUserId(@PathVariable UUID userId,
       @Valid @RequestBody UserStatusUpdateDto status) {
     UserStatus updatedUserStatus = userStatusService.updateByUserId(userId, status);
@@ -93,7 +89,7 @@ public class UserController {
         );
         return Optional.of(binaryContentCreateDto);
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new RuntimeException("파일을 처리하는 동안 오류 발생", e);
       }
     }
   }
