@@ -2,6 +2,7 @@ package com.sprint.mission.discodeit.controller;
 
 import com.sprint.mission.discodeit.apidocs.AuthApiDocs;
 import com.sprint.mission.discodeit.dto.login.LoginDto;
+import com.sprint.mission.discodeit.dto.login.LoginResponseDto;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +28,13 @@ public class AuthController implements AuthApiDocs {
 
   @PostMapping("/login")
   @Override
-  public ResponseEntity<User> login(@Valid @RequestBody LoginDto loginDto) {
+  public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
     User loginUser = authService.login(loginDto);
-    return ResponseEntity.status(HttpStatus.OK).body(loginUser);
+    LoginResponseDto response = new LoginResponseDto(
+        loginUser.getUsername(),
+        loginUser.getEmail(),
+        loginUser.getAddress(),
+        loginUser.getAddress());
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 }
