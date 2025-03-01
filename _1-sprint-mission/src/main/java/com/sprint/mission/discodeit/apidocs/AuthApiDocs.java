@@ -27,5 +27,5 @@ public interface AuthApiDocs {
       @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음",
           content = @Content(mediaType = "*/*",
               schema = @Schema(example = "User with username {username} not found")))})
-  public ResponseEntity<User> login(@Valid @RequestBody LoginRequest loginRequest);
+  ResponseEntity<User> login(@Valid @RequestBody LoginRequest loginRequest);
 }
