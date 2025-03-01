@@ -1,12 +1,11 @@
 package com.sprint.mission.discodeit.service.basic;
 
-import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateDto;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,38 +14,41 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BasicBinaryContentService implements BinaryContentService {
-    private final BinaryContentRepository binaryContentRepository;
 
-    public BinaryContent create(BinaryContentCreateDto binaryContentCreateDto) {
-        if(binaryContentCreateDto.fileName() == null || binaryContentCreateDto.contentType() == null){
-            throw new NoSuchElementException("BinaryContent is null");
-        }
+  private final BinaryContentRepository binaryContentRepository;
 
-        BinaryContent binaryContent = new BinaryContent(
-                binaryContentCreateDto.fileName(),
-                (long) binaryContentCreateDto.bytes().length,
-                binaryContentCreateDto.contentType(),
-                binaryContentCreateDto.bytes()
-        );
-
-        return binaryContentRepository.save(binaryContent);
+  public BinaryContent create(BinaryContentCreateRequest binaryContentCreateRequest) {
+    if (binaryContentCreateRequest.fileName() == null
+        || binaryContentCreateRequest.contentType() == null) {
+      throw new NoSuchElementException("BinaryContent is null");
     }
 
-    public BinaryContent findById(UUID binaryContentId) {
-        return binaryContentRepository.findById(binaryContentId)
-                .orElseThrow(() -> new NoSuchElementException("BinaryContent with id " + binaryContentId + " not found"));
-    }
+    BinaryContent binaryContent = new BinaryContent(
+        binaryContentCreateRequest.fileName(),
+        (long) binaryContentCreateRequest.bytes().length,
+        binaryContentCreateRequest.contentType(),
+        binaryContentCreateRequest.bytes()
+    );
 
-    @Override
-    public List<BinaryContent> findAllByIdIn(List<UUID> binaryContentIds) {
-        return binaryContentRepository.findAllByIdIn(binaryContentIds).stream()
-                .toList();
-    }
+    return binaryContentRepository.save(binaryContent);
+  }
 
-    public void deleteById(UUID binaryContentId){
-        if(!binaryContentRepository.existsById(binaryContentId)){
-            throw new NoSuchElementException("BinaryContent with id " + binaryContentId + " not found");
-        }
-        binaryContentRepository.deleteById(binaryContentId);
+  public BinaryContent findById(UUID binaryContentId) {
+    return binaryContentRepository.findById(binaryContentId)
+        .orElseThrow(() -> new NoSuchElementException(
+            "BinaryContent with id " + binaryContentId + " not found"));
+  }
+
+  @Override
+  public List<BinaryContent> findAllByIdIn(List<UUID> binaryContentIds) {
+    return binaryContentRepository.findAllByIdIn(binaryContentIds).stream()
+        .toList();
+  }
+
+  public void deleteById(UUID binaryContentId) {
+    if (!binaryContentRepository.existsById(binaryContentId)) {
+      throw new NoSuchElementException("BinaryContent with id " + binaryContentId + " not found");
     }
+    binaryContentRepository.deleteById(binaryContentId);
+  }
 }

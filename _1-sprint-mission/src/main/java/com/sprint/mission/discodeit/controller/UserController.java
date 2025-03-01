@@ -1,17 +1,15 @@
 package com.sprint.mission.discodeit.controller;
 
 import com.sprint.mission.discodeit.apidocs.UserApiDocs;
-import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateDto;
-import com.sprint.mission.discodeit.dto.user.UserCreateDto;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
+import com.sprint.mission.discodeit.dto.user.UserCreateRequst;
 import com.sprint.mission.discodeit.dto.user.UserDto;
-import com.sprint.mission.discodeit.dto.user.UserUpdateDto;
-import com.sprint.mission.discodeit.dto.userstatus.UserStatusUpdateDto;
+import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
+import com.sprint.mission.discodeit.dto.userstatus.UserStatusUpdateRequest;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,11 +42,11 @@ public class UserController implements UserApiDocs {
   @PostMapping()
   @Override
   public ResponseEntity<User> create(
-      @RequestPart("user") @Valid UserCreateDto userCreateDto,
+      @RequestPart("user") @Valid UserCreateRequst userCreateRequst,
       @RequestPart(value = "profile", required = false) MultipartFile profile) {
-    Optional<BinaryContentCreateDto> profileDto = Optional.ofNullable(profile)
+    Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
-    User createdUser = userService.create(userCreateDto, profileDto);
+    User createdUser = userService.create(userCreateRequst, profileDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
   }
 
@@ -58,11 +56,11 @@ public class UserController implements UserApiDocs {
   @Override
   public ResponseEntity<User> update(
       @PathVariable UUID userId,
-      @Valid @RequestPart("user") UserUpdateDto userUpdateDto,
+      @Valid @RequestPart("user") UserUpdateRequest userUpdateRequest,
       @Valid @RequestPart(value = "profile", required = false) MultipartFile profile) {
-    Optional<BinaryContentCreateDto> profileDto = Optional.ofNullable(profile)
+    Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
-    User updatedUser = userService.update(userId, userUpdateDto, profileDto);
+    User updatedUser = userService.update(userId, userUpdateRequest, profileDto);
     return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
   }
 
@@ -79,23 +77,23 @@ public class UserController implements UserApiDocs {
   @PatchMapping("/{userId}/userStatus")
   @Override
   public ResponseEntity<UserStatus> updateUserStatusByUserId(@PathVariable UUID userId,
-      @Valid @RequestBody UserStatusUpdateDto status) {
+      @Valid @RequestBody UserStatusUpdateRequest status) {
     UserStatus updatedUserStatus = userStatusService.updateByUserId(userId, status);
     return ResponseEntity.status(HttpStatus.OK).body(updatedUserStatus);
   }
 
   //프로필 이미지 처리 메서드
-  private Optional<BinaryContentCreateDto> resolveProfileDto(MultipartFile profileFile) {
+  private Optional<BinaryContentCreateRequest> resolveProfileDto(MultipartFile profileFile) {
     if (profileFile.isEmpty()) {
       return Optional.empty();
     } else {
       try {
-        BinaryContentCreateDto binaryContentCreateDto = new BinaryContentCreateDto(
+        BinaryContentCreateRequest binaryContentCreateRequest = new BinaryContentCreateRequest(
             profileFile.getOriginalFilename(),
             profileFile.getContentType(),
             profileFile.getBytes()
         );
-        return Optional.of(binaryContentCreateDto);
+        return Optional.of(binaryContentCreateRequest);
       } catch (IOException e) {
         throw new RuntimeException("파일을 처리하는 동안 오류 발생", e);
       }

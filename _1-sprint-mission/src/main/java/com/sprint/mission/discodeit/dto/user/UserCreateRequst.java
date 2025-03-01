@@ -1,12 +1,7 @@
 package com.sprint.mission.discodeit.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sprint.mission.discodeit.entity.BinaryContent;
-
-import java.util.UUID;
-
 //요청
-public record UserCreateDto(
+public record UserCreateRequst(
     String username,
     String email,
     String password,

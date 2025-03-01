@@ -1,7 +1,7 @@
 package com.sprint.mission.discodeit.apidocs;
 
-import com.sprint.mission.discodeit.dto.message.MessageCreateDto;
-import com.sprint.mission.discodeit.dto.message.MessageUpdateDto;
+import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
+import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
 import com.sprint.mission.discodeit.entity.Message;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +24,7 @@ public interface MessageApiDocs {
       @ApiResponse(responseCode = "404", description = "Channel 또는 User를 찾을 수 없음"),
       @ApiResponse(responseCode = "201", description = "Message가 성공적으로 생성됨")
   })
-  ResponseEntity<Message> create(@Valid @RequestParam MessageCreateDto messageCreateDto,
+  ResponseEntity<Message> create(@Valid @RequestParam MessageCreateRequest messageCreateRequest,
       @Valid @RequestBody(required = false) List<MultipartFile> attachments);
 
   @Operation(summary = "Channel의 Message 목록 조회")
@@ -37,7 +37,7 @@ public interface MessageApiDocs {
       @ApiResponse(responseCode = "404", description = "Message를 찾을 수 없음")
   })
   ResponseEntity<Message> update(@PathVariable UUID messageId,
-      @Valid @RequestBody MessageUpdateDto messageUpdateDto);
+      @Valid @RequestBody MessageUpdateRequest messageUpdateRequest);
 
   @Operation(summary = "Message 삭제")
   @ApiResponses({

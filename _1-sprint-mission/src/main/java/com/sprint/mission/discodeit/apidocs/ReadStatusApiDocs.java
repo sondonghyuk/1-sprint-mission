@@ -1,7 +1,7 @@
 package com.sprint.mission.discodeit.apidocs;
 
-import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateDto;
-import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateDto;
+import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateRequest;
+import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateRequest;
 import com.sprint.mission.discodeit.entity.ReadStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +24,8 @@ public interface ReadStatusApiDocs {
       @ApiResponse(responseCode = "400", description = "이미 읽음 상태가 존재함"),
       @ApiResponse(responseCode = "201", description = "Message 읽음 상태가 성공적으로 생성됨")
   })
-  ResponseEntity<ReadStatus> create(@Valid @RequestBody ReadStatusCreateDto readStatusCreateDto);
+  ResponseEntity<ReadStatus> create(
+      @Valid @RequestBody ReadStatusCreateRequest readStatusCreateRequest);
 
   @Operation(summary = "User의 Message 읽음 상태 목록 조회")
   @ApiResponse(responseCode = "200", description = "Message 읽음 상태 목록 조회 성공")
@@ -37,6 +38,6 @@ public interface ReadStatusApiDocs {
       @ApiResponse(responseCode = "404", description = "Message 읽음 상태를 찾을 수 없음")
   })
   ResponseEntity<ReadStatus> update(@PathVariable UUID readStatusId,
-      @Valid @RequestBody ReadStatusUpdateDto readStatusUpdateDto);
+      @Valid @RequestBody ReadStatusUpdateRequest readStatusUpdateRequest);
 
 }

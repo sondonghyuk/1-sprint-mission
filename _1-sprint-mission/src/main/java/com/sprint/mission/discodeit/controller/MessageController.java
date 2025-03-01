@@ -1,18 +1,15 @@
 package com.sprint.mission.discodeit.controller;
 
 import com.sprint.mission.discodeit.apidocs.MessageApiDocs;
-import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateDto;
-import com.sprint.mission.discodeit.dto.message.MessageCreateDto;
-import com.sprint.mission.discodeit.dto.message.MessageUpdateDto;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
+import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
+import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.service.MessageService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,13 +29,14 @@ public class MessageController implements MessageApiDocs {
   //메시지 생성
   @PostMapping
   @Override
-  public ResponseEntity<Message> create(@Valid @RequestParam MessageCreateDto messageCreateDto,
+  public ResponseEntity<Message> create(
+      @Valid @RequestParam MessageCreateRequest messageCreateRequest,
       @Valid @RequestBody(required = false) List<MultipartFile> attachments) {
-    List<BinaryContentCreateDto> attachmentList = Optional.ofNullable(attachments)
+    List<BinaryContentCreateRequest> attachmentList = Optional.ofNullable(attachments)
         .map(files -> files.stream()
             .map(file -> {
               try {
-                return new BinaryContentCreateDto(
+                return new BinaryContentCreateRequest(
                     file.getOriginalFilename(),
                     file.getContentType(),
                     file.getBytes()
@@ -49,7 +47,7 @@ public class MessageController implements MessageApiDocs {
             })
             .toList())
         .orElse(new ArrayList<>());
-    Message createdMessage = messageService.create(messageCreateDto, attachmentList);
+    Message createdMessage = messageService.create(messageCreateRequest, attachmentList);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdMessage);
   }
 
@@ -65,8 +63,8 @@ public class MessageController implements MessageApiDocs {
   @PatchMapping("/{messageId}")
   @Override
   public ResponseEntity<Message> update(@PathVariable UUID messageId,
-      @Valid @RequestBody MessageUpdateDto messageUpdateDto) {
-    Message updatedMessage = messageService.update(messageId, messageUpdateDto);
+      @Valid @RequestBody MessageUpdateRequest messageUpdateRequest) {
+    Message updatedMessage = messageService.update(messageId, messageUpdateRequest);
     return ResponseEntity.status(HttpStatus.OK).body(updatedMessage);
   }
 

@@ -12,12 +12,17 @@
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/ReadStatusController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/ReadStatusController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/exception/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/exception/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/dto/login/LoginDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/basic/BasicAuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/basic/BasicAuthService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/apidocs/AuthApiDocs.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/apidocs/AuthApiDocs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/apidocs/BinaryContentApiDocs.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/apidocs/BinaryContentApiDocs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/login/LoginDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/login/LoginRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicAuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicAuthService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,9 +55,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
-        <option value="Record" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -196,7 +201,9 @@
       <workItem from="1740370455236" duration="14846000" />
       <workItem from="1740385384821" duration="5162000" />
       <workItem from="1740446846623" duration="25324000" />
-      <workItem from="1740528739152" duration="3118000" />
+      <workItem from="1740528739152" duration="9162000" />
+      <workItem from="1740560519324" duration="1479000" />
+      <workItem from="1740576903034" duration="437000" />
     </task>
     <servers />
   </component>

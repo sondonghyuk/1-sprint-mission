@@ -1,9 +1,9 @@
 package com.sprint.mission.discodeit.apidocs;
 
 import com.sprint.mission.discodeit.dto.channel.ChannelDto;
-import com.sprint.mission.discodeit.dto.channel.PrivateChannelCreateDto;
-import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateDto;
-import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateDto;
+import com.sprint.mission.discodeit.dto.channel.PrivateChannelCreateRequest;
+import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateRequest;
+import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateRequest;
 import com.sprint.mission.discodeit.entity.Channel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,12 +22,13 @@ public interface ChannelApiDocs {
 
   @Operation(summary = "Public Channel 생성")
   @ApiResponse(responseCode = "201", description = "Public Channel이 성공적으로 생성됨")
-  ResponseEntity<Channel> createPublic(@Valid @RequestBody PublicChannelCreateDto publicChannelDto);
+  ResponseEntity<Channel> createPublic(
+      @Valid @RequestBody PublicChannelCreateRequest publicChannelDto);
 
   @Operation(summary = "Private Channel 생성")
   @ApiResponse(responseCode = "201", description = "Private Channel이 성공적으로 생성됨")
   ResponseEntity<Channel> createPrivate(
-      @Valid @RequestBody PrivateChannelCreateDto privateChannelDto);
+      @Valid @RequestBody PrivateChannelCreateRequest privateChannelDto);
 
   @Operation(summary = "User가 참여 중인 Channel 목록 조회")
   @ApiResponse(responseCode = "200", description = "Channel 목록 조회 성공")
@@ -40,7 +41,7 @@ public interface ChannelApiDocs {
       @ApiResponse(responseCode = "204", description = "Channel이 성공적으로 수정됨")
   })
   ResponseEntity<Channel> update(@PathVariable UUID channelId,
-      @Valid @RequestBody PublicChannelUpdateDto publicChannelUpdateDto);
+      @Valid @RequestBody PublicChannelUpdateRequest publicChannelUpdateRequest);
 
 
   @Operation(summary = "Channel 삭제")

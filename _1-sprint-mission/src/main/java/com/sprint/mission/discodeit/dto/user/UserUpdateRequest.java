@@ -1,8 +1,6 @@
 package com.sprint.mission.discodeit.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-public record UserUpdateDto(
+public record UserUpdateRequest(
     String newUsername,
     String newEmail,
     String newPassword,

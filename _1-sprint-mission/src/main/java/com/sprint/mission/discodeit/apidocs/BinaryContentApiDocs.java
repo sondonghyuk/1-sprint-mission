@@ -2,6 +2,7 @@ package com.sprint.mission.discodeit.apidocs;
 
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,6 +24,7 @@ public interface BinaryContentApiDocs {
 
   @Operation(summary = "여러 첨부 파일 조회")
   @ApiResponse(responseCode = "200", description = "첨부 파일 목록 조회 성공")
-  ResponseEntity<List<BinaryContent>> findAllByIdIn(@RequestParam List<UUID> binaryContentIds);
+  ResponseEntity<List<BinaryContent>> findAllByIdIn(
+      @Parameter(description = "조회할 첨부 파일 ID 목록") @RequestParam List<UUID> binaryContentIds);
 
 }
