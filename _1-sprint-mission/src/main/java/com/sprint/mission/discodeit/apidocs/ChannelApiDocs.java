@@ -7,6 +7,7 @@ import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateRequest;
 import com.sprint.mission.discodeit.entity.Channel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +28,10 @@ public interface ChannelApiDocs {
       @Valid @RequestBody PublicChannelCreateRequest publicChannelDto);
 
   @Operation(summary = "Private Channel 생성")
-  @ApiResponse(responseCode = "201", description = "Private Channel이 성공적으로 생성됨")
+  @ApiResponse(responseCode = "201",
+      description = "Private Channel이 성공적으로 생성됨",
+      content = @Content(mediaType = "application/json")
+  )
   ResponseEntity<Channel> createPrivate(
       @Valid @RequestBody PrivateChannelCreateRequest privateChannelDto);
 
