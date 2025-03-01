@@ -30,6 +30,10 @@ public class BinaryContentController implements BinaryContentApiDocs {
   @Override
   public ResponseEntity<BinaryContent> find(@PathVariable UUID binaryContentId) {
     BinaryContent binaryContent = binaryContentService.findById(binaryContentId);
+    if (binaryContent == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+          .body(null);
+    }
     return ResponseEntity.status(HttpStatus.OK).body(binaryContent);
   }
 

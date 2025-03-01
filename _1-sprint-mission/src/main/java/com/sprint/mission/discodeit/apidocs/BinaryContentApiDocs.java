@@ -28,7 +28,6 @@ public interface BinaryContentApiDocs {
               )
           )
       )
-
   })
   ResponseEntity<BinaryContent> find(@Parameter(description = "조회할 첨부 파일 ID") UUID binaryContentId);
 
