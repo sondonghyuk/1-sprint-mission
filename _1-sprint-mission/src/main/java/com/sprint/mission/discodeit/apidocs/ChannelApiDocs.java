@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateRequest;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateRequest;
 import com.sprint.mission.discodeit.entity.Channel;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,7 +33,8 @@ public interface ChannelApiDocs {
 
   @Operation(summary = "User가 참여 중인 Channel 목록 조회")
   @ApiResponse(responseCode = "200", description = "Channel 목록 조회 성공")
-  ResponseEntity<List<ChannelDto>> findAll(@RequestParam(value = "userId") UUID userId);
+  ResponseEntity<List<ChannelDto>> findAll(
+      @Parameter(description = "조회할 User ID") @RequestParam(value = "userId") UUID userId);
 
   @Operation(summary = "Channel 정보 수정")
   @ApiResponses({
