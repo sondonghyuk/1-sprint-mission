@@ -30,8 +30,8 @@ public class MessageController implements MessageApiDocs {
   @PostMapping
   @Override
   public ResponseEntity<Message> create(
-      @Valid @RequestParam MessageCreateRequest messageCreateRequest,
-      @Valid @RequestBody(required = false) List<MultipartFile> attachments) {
+      @RequestPart("messageCreateRequest") MessageCreateRequest messageCreateRequest,
+      @RequestPart(value = "attachments", required = false) List<MultipartFile> attachments) {
     List<BinaryContentCreateRequest> attachmentList = Optional.ofNullable(attachments)
         .map(files -> files.stream()
             .map(file -> {
@@ -62,7 +62,8 @@ public class MessageController implements MessageApiDocs {
   //메시지 수정
   @PatchMapping("/{messageId}")
   @Override
-  public ResponseEntity<Message> update(@PathVariable UUID messageId,
+  public ResponseEntity<Message> update(
+      @PathVariable UUID messageId,
       @Valid @RequestBody MessageUpdateRequest messageUpdateRequest) {
     Message updatedMessage = messageService.update(messageId, messageUpdateRequest);
     return ResponseEntity.status(HttpStatus.OK).body(updatedMessage);
