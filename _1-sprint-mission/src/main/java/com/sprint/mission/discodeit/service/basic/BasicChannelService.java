@@ -26,7 +26,7 @@ public class BasicChannelService implements ChannelService {
   @Override
   public Channel create(PublicChannelCreateRequest publicChannelCreateRequest) {
     Channel channel = new Channel(
-        Channel.ChannelType.PUBLIC,
+        ChannelType.PUBLIC,
         publicChannelCreateRequest.channelName(),
         publicChannelCreateRequest.description()
     );
@@ -35,7 +35,7 @@ public class BasicChannelService implements ChannelService {
 
   @Override
   public Channel create(PrivateChannelCreateRequest privateChannelCreateRequest) {
-    Channel channel = new Channel(Channel.ChannelType.PRIVATE, null, null);
+    Channel channel = new Channel(ChannelType.PRIVATE, null, null);
     Channel createdChannel = channelRepository.save(channel);
 
     privateChannelCreateRequest.participantIds().stream()
@@ -60,7 +60,7 @@ public class BasicChannelService implements ChannelService {
         .map(ReadStatus::getChannelId)
         .toList();
     return channelRepository.findAll().stream()
-        .filter(channel -> channel.getChannelType().equals(Channel.ChannelType.PUBLIC)
+        .filter(channel -> channel.getChannelType().equals(ChannelType.PUBLIC)
             || mySubscribedChannelIds.contains(channel.getId()))
         .map(channel -> toDto(channel))
         .toList();
@@ -70,7 +70,7 @@ public class BasicChannelService implements ChannelService {
   public Channel update(UUID channelId, PublicChannelUpdateRequest channelUpdateDto) {
     Channel channel = channelRepository.findById(channelId)
         .orElseThrow(() -> new NoSuchElementException("Channel not found"));
-    if (channel.getChannelType() == Channel.ChannelType.PRIVATE) {
+    if (channel.getChannelType() == ChannelType.PRIVATE) {
       throw new UnsupportedOperationException("Private channel cannot be updated");
     }
     channel.updateChannel(channelUpdateDto.newChannelName(), channelUpdateDto.newDescription());
@@ -110,7 +110,7 @@ public class BasicChannelService implements ChannelService {
   public ChannelDto toDto(Channel channel) {
     Instant lastMessageAt = getLastMessageTime(channel);
     List<UUID> participantIds = new ArrayList<>();
-    if (channel.getChannelType().equals(Channel.ChannelType.PRIVATE)) {
+    if (channel.getChannelType().equals(ChannelType.PRIVATE)) {
       readStatusRepository.findAllByChannelId(channel.getId())
           .stream()
           .map(ReadStatus::getUserId)
