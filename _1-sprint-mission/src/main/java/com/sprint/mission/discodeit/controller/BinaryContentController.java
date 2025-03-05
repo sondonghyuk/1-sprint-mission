@@ -25,20 +25,18 @@ public class BinaryContentController implements BinaryContentApi {
   //파일 단건 조회
   @GetMapping("/{binaryContentId}")
   @Override
-  public ResponseEntity<BinaryContent> find(@PathVariable UUID binaryContentId) {
+  public ResponseEntity<BinaryContent> find(@PathVariable("binaryContentId") UUID binaryContentId) {
     BinaryContent binaryContent = binaryContentService.findById(binaryContentId);
-    if (binaryContent == null) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .body(null);
-    }
-    return ResponseEntity.status(HttpStatus.OK).body(binaryContent);
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(binaryContent);
   }
 
   //파일 다건 조회
   @GetMapping
   @Override
   public ResponseEntity<List<BinaryContent>> findAllByIdIn(
-      @RequestParam List<UUID> binaryContentIds) {
+      @RequestParam("binaryContentIds") List<UUID> binaryContentIds) {
     List<BinaryContent> binaryContents = binaryContentService.findAllByIdIn(binaryContentIds);
     return ResponseEntity.status(HttpStatus.OK).body(binaryContents);
   }
