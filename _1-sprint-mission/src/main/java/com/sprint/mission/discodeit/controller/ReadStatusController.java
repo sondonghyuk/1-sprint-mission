@@ -28,29 +28,28 @@ public class ReadStatusController implements ReadStatusApi {
 
   private final ReadStatusService readStatusService;
 
-  //메시지 수신 정보 생성
+  //메시지 읽음 상태 생성
   @PostMapping
   @Override
-  public ResponseEntity<ReadStatus> create(
-      @Valid @RequestBody ReadStatusCreateRequest readStatusDto) {
+  public ResponseEntity<ReadStatus> create(@RequestBody ReadStatusCreateRequest readStatusDto) {
     ReadStatus createdReadStatus = readStatusService.create(readStatusDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdReadStatus);
   }
 
-  //메시지 수신 정보 목록 조회
+  //메시지 읽음 상태 목록 조회
   @GetMapping
   @Override
-  public ResponseEntity<List<ReadStatus>> findAllByUserId(@RequestParam UUID userId) {
+  public ResponseEntity<List<ReadStatus>> findAllByUserId(@RequestParam("userId") UUID userId) {
     List<ReadStatus> readStatuses = readStatusService.findAllByUserId(userId);
     return ResponseEntity.status(HttpStatus.OK).body(readStatuses);
   }
 
 
-  //메시지 수신 정보 수정
+  //메시지 읽음 상태 수정
   @PatchMapping("/{readStatusId}")
   @Override
-  public ResponseEntity<ReadStatus> update(@PathVariable UUID readStatusId,
-      @Valid @RequestBody ReadStatusUpdateRequest readStatusUpdateRequest) {
+  public ResponseEntity<ReadStatus> update(@PathVariable("readStatusId") UUID readStatusId,
+      @RequestBody ReadStatusUpdateRequest readStatusUpdateRequest) {
     ReadStatus updatedReadStatus = readStatusService.update(readStatusId, readStatusUpdateRequest);
     return ResponseEntity.status(HttpStatus.OK).body(updatedReadStatus);
   }
