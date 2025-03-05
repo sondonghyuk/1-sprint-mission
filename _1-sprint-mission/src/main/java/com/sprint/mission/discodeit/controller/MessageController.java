@@ -9,6 +9,7 @@ import com.sprint.mission.discodeit.service.MessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,7 @@ public class MessageController implements MessageApi {
   private final MessageService messageService;
 
   //메시지 생성
-  @PostMapping
+  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   @Override
   public ResponseEntity<Message> create(
       @RequestPart("messageCreateRequest") MessageCreateRequest messageCreateRequest,
@@ -54,7 +55,8 @@ public class MessageController implements MessageApi {
   //메시지 목록 조회
   @GetMapping
   @Override
-  public ResponseEntity<List<Message>> findAllByChannelId(@RequestParam UUID channelId) {
+  public ResponseEntity<List<Message>> findAllByChannelId(
+      @RequestParam("channelId") UUID channelId) {
     List<Message> messages = messageService.findAllByChannelId(channelId);
     return ResponseEntity.status(HttpStatus.OK).body(messages);
   }
@@ -63,8 +65,8 @@ public class MessageController implements MessageApi {
   @PatchMapping("/{messageId}")
   @Override
   public ResponseEntity<Message> update(
-      @PathVariable UUID messageId,
-      @Valid @RequestBody MessageUpdateRequest messageUpdateRequest) {
+      @PathVariable("messageId") UUID messageId,
+      @RequestBody MessageUpdateRequest messageUpdateRequest) {
     Message updatedMessage = messageService.update(messageId, messageUpdateRequest);
     return ResponseEntity.status(HttpStatus.OK).body(updatedMessage);
   }
@@ -72,7 +74,7 @@ public class MessageController implements MessageApi {
   //메시지 삭제
   @DeleteMapping("/{messageId}")
   @Override
-  public ResponseEntity<Void> delete(@PathVariable UUID messageId) {
+  public ResponseEntity<Void> delete(@PathVariable("messageId") UUID messageId) {
     messageService.delete(messageId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
