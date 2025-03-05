@@ -107,7 +107,7 @@ public interface UserApi {
   @ApiResponses({
       @ApiResponse(responseCode = "404",
           description = "해당 User의 UserStatus를 찾을 수 없음",
-          content = @Content(examples = @ExampleObject("User with userID {userId} not found"))
+          content = @Content(examples = @ExampleObject("UserStatus with userId {userId} not found"))
       ),
       @ApiResponse(
           responseCode = "200", description = "User 온라인 상태가 성공적으로 업데이트됨",
