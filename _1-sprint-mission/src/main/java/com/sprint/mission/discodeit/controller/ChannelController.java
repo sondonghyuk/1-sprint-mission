@@ -36,8 +36,8 @@ public class ChannelController implements ChannelApi {
   //공개 채널 생성
   @PostMapping("/public")
   @Override
-  public ResponseEntity<Channel> createPublic(
-      @Valid @RequestBody PublicChannelCreateRequest publicChannelDto) {
+  public ResponseEntity<Channel> create(
+      @RequestBody PublicChannelCreateRequest publicChannelDto) {
     Channel publicChannel = channelService.create(publicChannelDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(publicChannel);
   }
@@ -45,8 +45,8 @@ public class ChannelController implements ChannelApi {
   //비공개 채널 생성
   @PostMapping("/private")
   @Override
-  public ResponseEntity<Channel> createPrivate(
-      @Valid @RequestBody PrivateChannelCreateRequest privateChannelDto) {
+  public ResponseEntity<Channel> create(
+      @RequestBody PrivateChannelCreateRequest privateChannelDto) {
     Channel privateChannel = channelService.create(privateChannelDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(privateChannel);
   }
@@ -55,7 +55,7 @@ public class ChannelController implements ChannelApi {
   @GetMapping
   @Override
   public ResponseEntity<List<ChannelDto>> findAll(
-      @Parameter(description = "조회할 User ID") @RequestParam(value = "userId") UUID userId) {
+      @RequestParam("userId") UUID userId) {
     List<ChannelDto> channels = channelService.findAllByUserId(userId);
     return ResponseEntity.status(HttpStatus.OK).body(channels);
   }
@@ -64,31 +64,19 @@ public class ChannelController implements ChannelApi {
   @PatchMapping("/{channelId}")
   @Override
   public ResponseEntity<Channel> update(
-      @Parameter(description = "수정할 Channel ID")
-      @PathVariable UUID channelId,
-      @Valid @RequestBody PublicChannelUpdateRequest publicChannelUpdateRequest) {
+      @PathVariable("channelId") UUID channelId,
+      @RequestBody PublicChannelUpdateRequest publicChannelUpdateRequest) {
     Channel updatedChannel = channelService.update(channelId, publicChannelUpdateRequest);
-    if (updatedChannel == null) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }
-    if (updatedChannel.getChannelType().equals(ChannelType.PRIVATE)) {  // 비공개 채널 수정 시 처리
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    }
     return ResponseEntity.status(HttpStatus.OK).body(updatedChannel);
   }
 
   //채널 삭제
   @DeleteMapping("/{channelId}")
   @Override
-  public ResponseEntity<Void> delete(
-      @Parameter(description = "삭제할 Channel ID") @PathVariable UUID channelId) {
-    try {
-      channelService.deleteById(channelId);  // 삭제 수행
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).build();  // 삭제 성공 시 204 No Content 반환
-    } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .build();  // 채널을 찾을 수 없는 경우 404 Not Found 반환
-    }
+  public ResponseEntity<Void> delete(@PathVariable UUID channelId) {
+    channelService.deleteById(channelId);
+    return ResponseEntity
+        .status(HttpStatus.NO_CONTENT)
+        .build();
   }
-
 }
