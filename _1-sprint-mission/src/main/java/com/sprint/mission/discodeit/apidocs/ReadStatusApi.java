@@ -17,10 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 
 @Tag(name = "ReadStatus", description = "Message 읽음 상태 API")
-public interface ReadStatusApiDocs {
+public interface ReadStatusApi {
 
   @Operation(summary = "Message 읽음 상태 생성")
   @ApiResponses({

@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Auth", description = "Auth API")
-public interface AuthApiDocs {
+public interface AuthApi {
 
   @Operation(summary = "로그인")
   @ApiResponses({

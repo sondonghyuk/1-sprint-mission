@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.models.examples.Example;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Channel", description = "Channel API")
-public interface ChannelApiDocs {
+public interface ChannelApi {
 
   //공개 채널 생성
   @Operation(summary = "Public Channel 생성")

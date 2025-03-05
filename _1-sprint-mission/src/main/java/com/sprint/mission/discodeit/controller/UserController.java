@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.apidocs.UserApiDocs;
+import com.sprint.mission.discodeit.apidocs.UserApi;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.dto.user.UserCreateRequst;
 import com.sprint.mission.discodeit.dto.user.UserDto;
@@ -13,6 +13,7 @@ import com.sprint.mission.discodeit.service.UserStatusService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,24 +26,16 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UserController implements UserApiDocs {
+public class UserController implements UserApi {
 
   private final UserService userService;
   private final UserStatusService userStatusService;
 
-  //사용자 다중 조회
-  @GetMapping()
-  @Override
-  public ResponseEntity<List<UserDto>> findAll() {
-    List<UserDto> users = userService.findAll();
-    return ResponseEntity.status(HttpStatus.OK).body(users);
-  }
-
   //사용자 생성
-  @PostMapping()
+  @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   @Override
   public ResponseEntity<User> create(
-      @RequestPart("user") @Valid UserCreateRequst userCreateRequst,
+      @RequestPart("userCreateRequest") UserCreateRequst userCreateRequst,
       @RequestPart(value = "profile", required = false) MultipartFile profile) {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
@@ -51,12 +44,21 @@ public class UserController implements UserApiDocs {
   }
 
 
+  //사용자 다중 조회
+  @GetMapping
+  @Override
+  public ResponseEntity<List<UserDto>> findAll() {
+    List<UserDto> users = userService.findAll();
+    return ResponseEntity.status(HttpStatus.OK).body(users);
+  }
+
+
   //사용자 수정
-  @PatchMapping("/{userId}")
+  @PatchMapping(path = "/{userId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   @Override
   public ResponseEntity<User> update(
-      @PathVariable UUID userId,
-      @Valid @RequestPart("user") UserUpdateRequest userUpdateRequest,
+      @PathVariable("userId") UUID userId,
+      @Valid @RequestPart("userUpdateRequest") UserUpdateRequest userUpdateRequest,
       @Valid @RequestPart(value = "profile", required = false) MultipartFile profile) {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
@@ -67,7 +69,7 @@ public class UserController implements UserApiDocs {
   //사용자 삭제
   @DeleteMapping("/{userId}")
   @Override
-  public ResponseEntity<Void> delete(@PathVariable UUID userId) {
+  public ResponseEntity<Void> delete(@PathVariable("userId") UUID userId) {
     userService.deleteById(userId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); //응답 데이터에 정보가 없음
   }
@@ -76,8 +78,8 @@ public class UserController implements UserApiDocs {
   //사용자 온라인 상태 업데이트
   @PatchMapping("/{userId}/userStatus")
   @Override
-  public ResponseEntity<UserStatus> updateUserStatusByUserId(@PathVariable UUID userId,
-      @Valid @RequestBody UserStatusUpdateRequest status) {
+  public ResponseEntity<UserStatus> updateUserStatusByUserId(@PathVariable("userId") UUID userId,
+      @RequestBody UserStatusUpdateRequest status) {
     UserStatus updatedUserStatus = userStatusService.updateByUserId(userId, status);
     return ResponseEntity.status(HttpStatus.OK).body(updatedUserStatus);
   }
