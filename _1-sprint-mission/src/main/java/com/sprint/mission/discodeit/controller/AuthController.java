@@ -22,7 +22,7 @@ public class AuthController implements AuthApi {
 
   @PostMapping("/login")
   @Override
-  public ResponseEntity<User> login(@Valid @RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest) {
     User loginUser = authService.login(loginRequest);
     return ResponseEntity.status(HttpStatus.OK).body(loginUser);
   }
