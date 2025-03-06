@@ -43,14 +43,13 @@ public class BasicUserService implements UserService {
         userCreateRequst.username(),
         userCreateRequst.email(),
         userCreateRequst.password(),
-        userCreateRequst.phoneNumber(),
-        userCreateRequst.address(),
         profileId);
     User createdUser = userRepository.save(user);
 
     //UserStatus 생성
     Instant now = Instant.now();
     UserStatus userStatus = new UserStatus(createdUser.getId(), now);
+    userStatusRepository.save(userStatus);
     return createdUser;
   }
 
@@ -82,8 +81,8 @@ public class BasicUserService implements UserService {
         userUpdateRequest.newUsername(),
         userUpdateRequest.newEmail(),
         userUpdateRequest.newPassword(),
-        userUpdateRequest.newPhonenumber(),
-        userUpdateRequest.newAddress(),
+        //userUpdateRequest.newPhonenumber(),
+        //userUpdateRequest.newAddress(),
         profileId
     );
 
@@ -138,8 +137,8 @@ public class BasicUserService implements UserService {
         user.getUpdatedAt(),
         user.getUsername(),
         user.getEmail(),
-        user.getPhoneNumber(),
-        user.getAddress(),
+        //user.getPhoneNumber(),
+        //user.getAddress(),
         user.getProfileId(),
         online
     );

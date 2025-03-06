@@ -1,6 +1,6 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.apidocs.UserApi;
+import com.sprint.mission.discodeit.api.UserApi;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.dto.user.UserCreateRequst;
 import com.sprint.mission.discodeit.dto.user.UserDto;
