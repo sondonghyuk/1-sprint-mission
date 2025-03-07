@@ -21,4 +21,6 @@ public interface UserStatusService {
   UserStatusDto updateByUserId(UUID userId, UserStatusUpdateRequest userStatusUpdateRequest);
 
   void delete(UUID userStatusId);
+
+  UserStatusDto toDto(UserStatus userStatus);
 }

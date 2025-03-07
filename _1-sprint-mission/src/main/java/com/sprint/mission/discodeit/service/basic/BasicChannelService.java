@@ -10,6 +10,7 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
+import com.sprint.mission.discodeit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class BasicChannelService implements ChannelService {
   private final ChannelRepository channelRepository;
   private final ReadStatusRepository readStatusRepository;
   private final MessageRepository messageRepository;
-  private final BasicUserService basicUserService;
-  private final BasicUserStatusService basicUserStatusService;
+  private final UserService userService;
+
 
   @Override
   public ChannelDto create(PublicChannelCreateRequest publicChannelCreateRequest) {
@@ -104,6 +105,7 @@ public class BasicChannelService implements ChannelService {
   }
 
   //entity->dto
+  @Override
   public ChannelDto toDto(Channel channel) {
     Instant lastMessageAt = getLastMessageAt(channel);
 
@@ -116,7 +118,7 @@ public class BasicChannelService implements ChannelService {
     }
 
     List<UserDto> participants = participantIds.stream()
-        .map(basicUserService::findById)
+        .map(userService::findById)
         .toList();
 
     return new ChannelDto(

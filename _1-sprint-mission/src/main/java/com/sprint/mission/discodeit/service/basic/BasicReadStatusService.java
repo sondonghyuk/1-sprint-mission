@@ -80,6 +80,7 @@ public class BasicReadStatusService implements ReadStatusService {
     readStatusRepository.deleteById(readStatusId);
   }
 
+  @Override
   public ReadStatusDto toDto(ReadStatus readStatus) {
     return new ReadStatusDto(
         readStatus.getId(),

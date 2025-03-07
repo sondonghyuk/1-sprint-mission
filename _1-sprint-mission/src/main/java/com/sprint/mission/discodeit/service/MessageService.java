@@ -21,4 +21,6 @@ public interface MessageService {
   MessageDto update(UUID messageId, MessageUpdateRequest messageUpdateRequest); // 메시지 수정
 
   void delete(UUID messageId); //메시지 삭제
+
+  MessageDto toDto(Message message);
 }

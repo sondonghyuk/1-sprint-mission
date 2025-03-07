@@ -33,8 +33,6 @@ public class BasicUserService implements UserService {
   private final BinaryContentRepository binaryContentRepository;
   private final UserStatusRepository userStatusRepository;
   private final BinaryContentService binaryContentService;
-  private final UserStatusService userStatusService;
-  private final BasicUserStatusService basicUserStatusService;
 
   @Override
   public UserDto create(UserCreateRequst userCreateRequst,
@@ -133,6 +131,7 @@ public class BasicUserService implements UserService {
   }
 
   //entity -> dto
+  @Override
   public UserDto toDto(User user) {
     Boolean online = userStatusRepository.findById(user.getId())
         .map(userStatus -> userStatus.isOnline())

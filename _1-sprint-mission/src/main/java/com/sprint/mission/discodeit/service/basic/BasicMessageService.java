@@ -113,6 +113,7 @@ public class BasicMessageService implements MessageService {
     return attachmentIds;
   }
 
+  @Override
   public MessageDto toDto(Message message) {
     UserDto author = userService.findById(message.getAuthorId());
     List<BinaryContentDto> attachments = binaryContentService.findAllByIdIn(

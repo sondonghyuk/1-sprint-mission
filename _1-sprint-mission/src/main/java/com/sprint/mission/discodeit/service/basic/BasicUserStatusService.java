@@ -75,10 +75,7 @@ public class BasicUserStatusService implements UserStatusService {
     userStatus.updateLastActiveAt(userStatus.getLastActiveAt());
 
     UserStatus savedUserStatus = userStatusRepository.save(userStatus);
-    User user = userRepository.findById(savedUserStatus.getUserId())
-        .orElseThrow(() -> new NoSuchElementException(
-            "User with id " + savedUserStatus.getUserId() + " not found"));
-    return this.toDto(user);
+    return this.toDto(savedUserStatus);
   }
 
   @Override
@@ -89,10 +86,8 @@ public class BasicUserStatusService implements UserStatusService {
     userStatusRepository.deleteById(userStatusId);
   }
 
-  public UserStatusDto toDto(User user) {
-    UserStatus userStatus = userStatusRepository.findByUserId(user.getId()).orElseThrow(
-        () -> new NoSuchElementException("User with id " + user.getId() + " not found"));
-
+  @Override
+  public UserStatusDto toDto(UserStatus userStatus) {
     return new UserStatusDto(
         userStatus.getId(),
         userStatus.getUserId(),

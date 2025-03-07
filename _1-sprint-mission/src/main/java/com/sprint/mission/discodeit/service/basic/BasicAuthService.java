@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.AuthService;
+import com.sprint.mission.discodeit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.NoSuchElementException;
 public class BasicAuthService implements AuthService {
 
   private final UserRepository userRepository;
-  private final BasicUserService basicUserService;
+  private final UserService userService;
 
   @Override
   public UserDto login(LoginRequest loginRequest) {
@@ -24,6 +25,6 @@ public class BasicAuthService implements AuthService {
     if (!user.getPassword().equals(loginRequest.password())) {
       throw new NoSuchElementException("Username or password is incorrect");
     }
-    return basicUserService.toDto(user);
+    return userService.toDto(user);
   }
 }
