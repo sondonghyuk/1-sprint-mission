@@ -31,5 +31,5 @@ public interface AuthApi {
           content = @Content(examples = @ExampleObject(value = "Wrong password"))
       )
   })
-  ResponseEntity<User> login(@Parameter(description = "로그인 정보") LoginRequest loginRequest);
+  ResponseEntity<UserDto> login(@Parameter(description = "로그인 정보") LoginRequest loginRequest);
 }

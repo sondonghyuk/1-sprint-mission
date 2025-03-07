@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.login.LoginRequest;
+import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.AuthService;
@@ -14,14 +15,15 @@ import java.util.NoSuchElementException;
 public class BasicAuthService implements AuthService {
 
   private final UserRepository userRepository;
+  private final BasicUserService basicUserService;
 
   @Override
-  public User login(LoginRequest loginRequest) {
+  public UserDto login(LoginRequest loginRequest) {
     User user = userRepository.findByUsername(loginRequest.username())
         .orElseThrow(() -> new NoSuchElementException("user not found"));
     if (!user.getPassword().equals(loginRequest.password())) {
       throw new NoSuchElementException("Username or password is incorrect");
     }
-    return user;
+    return basicUserService.toDto(user);
   }
 }
