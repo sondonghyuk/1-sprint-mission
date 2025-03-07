@@ -34,15 +34,13 @@ public class BasicReadStatusService implements ReadStatusService {
           "Channel with id " + readStatusCreateRequest.channelId() + " does not exist");
     }
     //이미 존재하는 경우 예외 발생
-    Optional<ReadStatus> existReadStatus = readStatusRepository.findByUserIdAndChannelId(
-        readStatusCreateRequest.userId(), readStatusCreateRequest.channelId()
-    );
-    if (existReadStatus.isPresent()) {
+    if (readStatusRepository.findAllByUserId(readStatusCreateRequest.userId()).stream()
+        .anyMatch(
+            readStatus -> readStatus.getChannelId().equals(readStatusCreateRequest.channelId()))) {
       throw new IllegalArgumentException(
           "ReadStatus with userId " + readStatusCreateRequest.userId() + " and channelId "
               + readStatusCreateRequest.channelId() + " already exists");
     }
-
     ReadStatus readStatus = new ReadStatus(readStatusCreateRequest.userId(),
         readStatusCreateRequest.channelId(), readStatusCreateRequest.lastReadAt());
 
@@ -63,13 +61,13 @@ public class BasicReadStatusService implements ReadStatusService {
     ReadStatus readStatus = readStatusRepository.findById(readStatusId)
         .orElseThrow(
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
-    readStatus.updateLastReadTime();
+    readStatus.updateLastReadAt(readStatusUpdateRequest.newLastReadAt());
     return readStatusRepository.save(readStatus);
   }
 
   public void delete(UUID readStatusId) {
     if (!readStatusRepository.existsById(readStatusId)) {
-      throw new NoSuchElementException("Read status not found");
+      throw new NoSuchElementException("ReadStatus with id " + readStatusId + " not found");
     }
     readStatusRepository.deleteById(readStatusId);
   }

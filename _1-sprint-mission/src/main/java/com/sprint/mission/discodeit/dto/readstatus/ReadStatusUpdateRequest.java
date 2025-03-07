@@ -8,7 +8,7 @@ import java.util.UUID;
 public record ReadStatusUpdateRequest(
     UUID userId,
     UUID channelId,
-    Instant lastRead
+    Instant newLastReadAt
 ) {
 
 }
