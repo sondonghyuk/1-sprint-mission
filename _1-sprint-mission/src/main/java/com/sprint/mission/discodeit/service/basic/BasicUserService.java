@@ -33,7 +33,7 @@ public class BasicUserService implements UserService {
   public User create(UserCreateRequst userCreateRequst,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
     //username,email 중복 확인
-    validationUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
+    validateUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
 
     //프로필 이미지 Id 체크
     UUID profileId = profileIdCheck(profileCreateRequest);
@@ -74,7 +74,7 @@ public class BasicUserService implements UserService {
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
-    validationUsernameAndEmail(userUpdateRequest.newUsername(), userUpdateRequest.newEmail());
+    validateUsernameAndEmail(userUpdateRequest.newUsername(), userUpdateRequest.newEmail());
     UUID profileId = profileIdCheck(profileCreateRequest);
 
     user.update(
@@ -115,7 +115,7 @@ public class BasicUserService implements UserService {
   }
 
   //username, email 다른 유저와 같은지 체크
-  public void validationUsernameAndEmail(String username, String email) {
+  public void validateUsernameAndEmail(String username, String email) {
     if (userRepository.existsByEmail(email)) {
       throw new IllegalArgumentException("User with email " + email + " already exists");
     }
