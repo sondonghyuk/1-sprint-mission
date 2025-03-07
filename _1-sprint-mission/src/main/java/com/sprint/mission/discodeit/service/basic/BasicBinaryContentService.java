@@ -36,15 +36,19 @@ public class BasicBinaryContentService implements BinaryContentService {
   }
 
   @Override
-  public BinaryContent findById(UUID binaryContentId) {
-    return binaryContentRepository.findById(binaryContentId)
+  public BinaryContentDto findById(UUID binaryContentId) {
+    BinaryContent binaryContent = binaryContentRepository.findById(binaryContentId)
         .orElseThrow(() -> new NoSuchElementException(
             "BinaryContent with id " + binaryContentId + " not found"));
+    return this.toDto(binaryContent);
   }
 
   @Override
-  public List<BinaryContent> findAllByIdIn(List<UUID> binaryContentIds) {
-    return binaryContentRepository.findAllByIdIn(binaryContentIds).stream()
+  public List<BinaryContentDto> findAllByIdIn(List<UUID> binaryContentIds) {
+    List<BinaryContent> binaryContents = binaryContentRepository.findAllByIdIn(binaryContentIds)
+        .stream().toList();
+    return binaryContents.stream()
+        .map(this::toDto)
         .toList();
   }
 
