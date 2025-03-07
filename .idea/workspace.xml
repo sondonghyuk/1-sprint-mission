@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/channel/ChannelDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/channel/ChannelDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/channel/PublicChannelCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/channel/PublicChannelCreateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/channel/PublicChannelUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/dto/channel/PublicChannelUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicChannelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicChannelService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +54,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="19d666760168da639f1196c47ff7dccbe9ba8b4c" />
+        <entry key="$PROJECT_DIR$" value="part2-손동혁-sprint6" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,9 +88,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.DiscodeitApplication.executor": "Run",
-    "git-widget-placeholder": "part2-손동혁-sprint6",
+    "git-widget-placeholder": "part2-손동혁-sprint5",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/coding/codeit-bootcamp-spring/1-sprint-mission",
+    "last_opened_file_path": "C:/coding/스프린트 미션 답/0-sprint-mission-s6-base",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -198,7 +201,7 @@
       <workItem from="1741148659211" duration="12572000" />
       <workItem from="1741237545956" duration="2061000" />
       <workItem from="1741240847178" duration="532000" />
-      <workItem from="1741306391926" duration="441000" />
+      <workItem from="1741306391926" duration="4117000" />
     </task>
     <servers />
   </component>
