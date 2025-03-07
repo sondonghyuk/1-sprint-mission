@@ -31,12 +31,12 @@ public class BasicUserService implements UserService {
 
   @Override
   public User create(UserCreateRequst userCreateRequst,
-      Optional<BinaryContentCreateRequest> profileDto) {
+      Optional<BinaryContentCreateRequest> profileCreateRequest) {
     //username,email 중복 확인
     validationUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
 
     //프로필 이미지 Id 체크
-    UUID profileId = profileIdCheck(profileDto);
+    UUID profileId = profileIdCheck(profileCreateRequest);
 
     //User 생성
     User user = new User(
@@ -58,7 +58,7 @@ public class BasicUserService implements UserService {
   public UserDto findById(UUID userId) {
     return userRepository.findById(userId)
         .map(user -> toDto(user))
-        .orElseThrow(() -> new NoSuchElementException("User not found"));
+        .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
   }
 
   @Override
@@ -71,18 +71,16 @@ public class BasicUserService implements UserService {
 
   @Override
   public User update(UUID userId, UserUpdateRequest userUpdateRequest,
-      Optional<BinaryContentCreateRequest> profileDto) {
+      Optional<BinaryContentCreateRequest> profileCreateRequest) {
     User user = userRepository.findById(userId)
-        .orElseThrow(() -> new NoSuchElementException("UserId not found"));
+        .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
     validationUsernameAndEmail(userUpdateRequest.newUsername(), userUpdateRequest.newEmail());
-    UUID profileId = profileIdCheck(profileDto);
+    UUID profileId = profileIdCheck(profileCreateRequest);
 
     user.update(
         userUpdateRequest.newUsername(),
         userUpdateRequest.newEmail(),
         userUpdateRequest.newPassword(),
-        //userUpdateRequest.newPhonenumber(),
-        //userUpdateRequest.newAddress(),
         profileId
     );
 
@@ -92,7 +90,7 @@ public class BasicUserService implements UserService {
   @Override
   public void deleteById(UUID userId) {
     User user = userRepository.findById(userId)
-        .orElseThrow(() -> new NoSuchElementException("userId not found"));
+        .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
     //관련된 프로필 이미지 삭제
     if (user.getProfileId() != null) {
       binaryContentRepository.deleteById(user.getProfileId());
@@ -104,8 +102,8 @@ public class BasicUserService implements UserService {
   }
 
   //프로필 이미지 Id 체크
-  public UUID profileIdCheck(Optional<BinaryContentCreateRequest> profileDto) {
-    UUID profileId = profileDto.map(p -> {
+  public UUID profileIdCheck(Optional<BinaryContentCreateRequest> profileCreateRequest) {
+    UUID profileId = profileCreateRequest.map(p -> {
       String fileName = p.fileName();
       String contentType = p.contentType();
       byte[] bytes = p.bytes();
@@ -137,8 +135,6 @@ public class BasicUserService implements UserService {
         user.getUpdatedAt(),
         user.getUsername(),
         user.getEmail(),
-        //user.getPhoneNumber(),
-        //user.getAddress(),
         user.getProfileId(),
         online
     );
