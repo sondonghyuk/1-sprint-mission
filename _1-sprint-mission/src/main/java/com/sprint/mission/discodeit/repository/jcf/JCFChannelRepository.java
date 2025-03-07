@@ -11,37 +11,41 @@ import java.util.*;
 @Repository
 public class JCFChannelRepository implements ChannelRepository {
 
-    //데이터 저장
-    private final Map<UUID,Channel> channelData;
+  //데이터 저장
+  private final Map<UUID, Channel> channelData;
 
-    //의존성 주입
-    public JCFChannelRepository() {
-        this.channelData = new HashMap<>();
-    }
-    //생성
-    @Override
-    public Channel save(Channel channel) {
-        channelData.put(channel.getId(), channel);
-        return channel;
-    }
-    //단일조회
-    @Override
-    public Optional<Channel> findById(UUID channelId) {
-        return Optional.ofNullable(this.channelData.get(channelId));
-    }
-    //다중조회
-    @Override
-    public List<Channel> findAll() {
-        return new ArrayList<>(channelData.values());
-    }
-    @Override
-    public boolean existsById(UUID channelId) {
-        return channelData.containsKey(channelId);
-    }
+  //의존성 주입
+  public JCFChannelRepository() {
+    this.channelData = new HashMap<>();
+  }
 
-    //삭제
-    @Override
-    public void deleteById(UUID channelId) {
-        channelData.remove(channelId);
-    }
+  //생성
+  @Override
+  public Channel save(Channel channel) {
+    this.channelData.put(channel.getId(), channel);
+    return channel;
+  }
+
+  //단일조회
+  @Override
+  public Optional<Channel> findById(UUID channelId) {
+    return Optional.ofNullable(this.channelData.get(channelId));
+  }
+
+  //다중조회
+  @Override
+  public List<Channel> findAll() {
+    return new ArrayList<>(this.channelData.values());
+  }
+
+  @Override
+  public boolean existsById(UUID channelId) {
+    return this.channelData.containsKey(channelId);
+  }
+
+  //삭제
+  @Override
+  public void deleteById(UUID channelId) {
+    this.channelData.remove(channelId);
+  }
 }

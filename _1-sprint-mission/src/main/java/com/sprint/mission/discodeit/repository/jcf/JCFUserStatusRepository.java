@@ -9,45 +9,48 @@ import java.util.*;
 
 @Repository
 public class JCFUserStatusRepository implements UserStatusRepository {
-    private final Map<UUID, UserStatus> userStatusData;
-    public JCFUserStatusRepository() {
-        this.userStatusData = new HashMap<>();
-    }
-    @Override
-    public UserStatus save(UserStatus userStatus) {
-        userStatusData.put(userStatus.getId(), userStatus);
-        return userStatus;
-    }
 
-    @Override
-    public Optional<UserStatus> findById(UUID id) {
-        return Optional.ofNullable(userStatusData.get(id));
-    }
+  private final Map<UUID, UserStatus> userStatusData;
 
-    @Override
-    public Optional<UserStatus> findByUserId(UUID userId) {
-        return findAll().stream()
-                .filter(us->us.getUserId().equals(userId))
-                .findFirst();
-    }
+  public JCFUserStatusRepository() {
+    this.userStatusData = new HashMap<>();
+  }
 
-    @Override
-    public List<UserStatus> findAll() {
-        return new ArrayList<>(userStatusData.values());
-    }
+  @Override
+  public UserStatus save(UserStatus userStatus) {
+    this.userStatusData.put(userStatus.getId(), userStatus);
+    return userStatus;
+  }
 
-    @Override
-    public void deleteById(UUID id) {
-        userStatusData.remove(id);
-    }
+  @Override
+  public Optional<UserStatus> findById(UUID id) {
+    return Optional.ofNullable(this.userStatusData.get(id));
+  }
 
-    @Override
-    public void deleteByUserId(UUID userId) {
-        findByUserId(userId).ifPresent(userStatus -> userStatusData.remove(userId));
-    }
+  @Override
+  public Optional<UserStatus> findByUserId(UUID userId) {
+    return findAll().stream()
+        .filter(us -> us.getUserId().equals(userId))
+        .findFirst();
+  }
 
-    @Override
-    public boolean existsById(UUID userId) {
-        return userStatusData.containsKey(userId);
-    }
+  @Override
+  public List<UserStatus> findAll() {
+    return new ArrayList<>(this.userStatusData.values());
+  }
+
+  @Override
+  public void deleteById(UUID id) {
+    this.userStatusData.remove(id);
+  }
+
+  @Override
+  public void deleteByUserId(UUID userId) {
+    findByUserId(userId).ifPresent(userStatus -> this.userStatusData.remove(userId));
+  }
+
+  @Override
+  public boolean existsById(UUID userId) {
+    return this.userStatusData.containsKey(userId);
+  }
 }
