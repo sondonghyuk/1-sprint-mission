@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit.controller;
 import com.sprint.mission.discodeit.api.MessageApi;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
+import com.sprint.mission.discodeit.dto.message.MessageDto;
 import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.service.MessageService;
@@ -29,7 +30,7 @@ public class MessageController implements MessageApi {
   //메시지 생성
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   @Override
-  public ResponseEntity<Message> create(
+  public ResponseEntity<MessageDto> create(
       @RequestPart("messageCreateRequest") MessageCreateRequest messageCreateRequest,
       @RequestPart(value = "attachments", required = false) List<MultipartFile> attachments) {
     List<BinaryContentCreateRequest> attachmentList = Optional.ofNullable(attachments)
@@ -47,7 +48,7 @@ public class MessageController implements MessageApi {
             })
             .toList())
         .orElse(new ArrayList<>());
-    Message createdMessage = messageService.create(messageCreateRequest, attachmentList);
+    MessageDto createdMessage = messageService.create(messageCreateRequest, attachmentList);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdMessage);
   }
 
@@ -63,10 +64,10 @@ public class MessageController implements MessageApi {
   //메시지 수정
   @PatchMapping("/{messageId}")
   @Override
-  public ResponseEntity<Message> update(
+  public ResponseEntity<MessageDto> update(
       @PathVariable("messageId") UUID messageId,
       @RequestBody MessageUpdateRequest messageUpdateRequest) {
-    Message updatedMessage = messageService.update(messageId, messageUpdateRequest);
+    MessageDto updatedMessage = messageService.update(messageId, messageUpdateRequest);
     return ResponseEntity.status(HttpStatus.OK).body(updatedMessage);
   }
 

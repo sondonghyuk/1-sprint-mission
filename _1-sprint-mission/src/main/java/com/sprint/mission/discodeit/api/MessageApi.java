@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.api;
 
 import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
+import com.sprint.mission.discodeit.dto.message.MessageDto;
 import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
 import com.sprint.mission.discodeit.entity.Message;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,15 +27,15 @@ public interface MessageApi {
   @ApiResponses({
       @ApiResponse(responseCode = "404",
           description = "Channel 또는 User를 찾을 수 없음",
-          content = @Content(examples = @ExampleObject("Channel | Author with id {channelId | authorId} not found"))
+          content = @Content(examples = @ExampleObject("Channel | Author with id {channelId | author} not found"))
       ),
       @ApiResponse(
           responseCode = "201",
           description = "Message가 성공적으로 생성됨",
-          content = @Content(schema = @Schema(implementation = Message.class))
+          content = @Content(schema = @Schema(implementation = MessageDto.class))
       )
   })
-  ResponseEntity<Message> create(
+  ResponseEntity<MessageDto> create(
       @Parameter(
           description = "Message 생성 정보",
           content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
@@ -62,7 +63,7 @@ public interface MessageApi {
       @ApiResponse(
           responseCode = "200",
           description = "Message가 성공적으로 수정됨",
-          content = @Content(schema = @Schema(implementation = Message.class))
+          content = @Content(schema = @Schema(implementation = MessageDto.class))
       ),
       @ApiResponse(
           responseCode = "404",
@@ -70,7 +71,7 @@ public interface MessageApi {
           content = @Content(examples = @ExampleObject("Message with id {messageId} not found"))
       )
   })
-  ResponseEntity<Message> update(
+  ResponseEntity<MessageDto> update(
       @Parameter(description = "수정할 Message ID") UUID messageId,
       @Parameter(description = "수정할 Message 내용") MessageUpdateRequest request
   );

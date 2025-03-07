@@ -1,15 +1,20 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
+import com.sprint.mission.discodeit.dto.message.MessageDto;
 import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
+import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
+import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.MessageService;
+import com.sprint.mission.discodeit.service.UserService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,9 +31,11 @@ public class BasicMessageService implements MessageService {
   private final UserRepository userRepository;
   private final ChannelRepository channelRepository;
   private final BinaryContentRepository binaryContentRepository;
+  private final UserService userService;
+  private final BinaryContentService binaryContentService;
 
   @Override
-  public Message create(MessageCreateRequest messageCreateRequest,
+  public MessageDto create(MessageCreateRequest messageCreateRequest,
       List<BinaryContentCreateRequest> binaryContentCreateRequests) {
     UUID channelId = messageCreateRequest.channelId();
     UUID authorId = messageCreateRequest.authorId();
@@ -42,7 +49,8 @@ public class BasicMessageService implements MessageService {
         messageCreateRequest.authorId(),
         attachmentIds
     );
-    return messageRepository.save(message);
+    Message savedMessage = messageRepository.save(message);
+    return this.toDto(savedMessage);
   }
 
   @Override
@@ -58,13 +66,15 @@ public class BasicMessageService implements MessageService {
   }
 
   @Override
-  public Message update(UUID messageId, MessageUpdateRequest updateMessageDto) {
+  public MessageDto update(UUID messageId, MessageUpdateRequest updateMessageDto) {
     Message message = messageRepository.findById(messageId)
         .orElseThrow(
             () -> new NoSuchElementException("Message with id " + messageId + " not found"));
     message.updateContent(updateMessageDto.newContent());
-    return messageRepository.save(message);
+    Message savedMessage = messageRepository.save(message);
+    return this.toDto(savedMessage);
   }
+
 
   @Override
   public void delete(UUID messageId) {
@@ -102,4 +112,21 @@ public class BasicMessageService implements MessageService {
         }).toList();
     return attachmentIds;
   }
+
+  public MessageDto toDto(Message message) {
+    UserDto author = userService.findById(message.getAuthorId());
+    List<BinaryContentDto> attachments = binaryContentService.findAllByIdIn(
+        message.getAttachmentIds());
+
+    return new MessageDto(
+        message.getId(),
+        message.getCreatedAt(),
+        message.getUpdatedAt(),
+        message.getContent(),
+        message.getChannelId(),
+        author,
+        attachments
+    );
+  }
+
 }
