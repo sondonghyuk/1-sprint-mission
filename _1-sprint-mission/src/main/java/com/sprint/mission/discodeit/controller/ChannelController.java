@@ -33,18 +33,18 @@ public class ChannelController implements ChannelApi {
   //공개 채널 생성
   @PostMapping("/public")
   @Override
-  public ResponseEntity<Channel> create(
+  public ResponseEntity<ChannelDto> create(
       @RequestBody PublicChannelCreateRequest publicChannelDto) {
-    Channel publicChannel = channelService.create(publicChannelDto);
+    ChannelDto publicChannel = channelService.create(publicChannelDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(publicChannel);
   }
 
   //비공개 채널 생성
   @PostMapping("/private")
   @Override
-  public ResponseEntity<Channel> create(
+  public ResponseEntity<ChannelDto> create(
       @RequestBody PrivateChannelCreateRequest privateChannelDto) {
-    Channel privateChannel = channelService.create(privateChannelDto);
+    ChannelDto privateChannel = channelService.create(privateChannelDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(privateChannel);
   }
 
@@ -60,10 +60,10 @@ public class ChannelController implements ChannelApi {
   //공개 채널 정보 수정
   @PatchMapping("/{channelId}")
   @Override
-  public ResponseEntity<Channel> update(
+  public ResponseEntity<ChannelDto> update(
       @PathVariable("channelId") UUID channelId,
       @RequestBody PublicChannelUpdateRequest publicChannelUpdateRequest) {
-    Channel updatedChannel = channelService.update(channelId, publicChannelUpdateRequest);
+    ChannelDto updatedChannel = channelService.update(channelId, publicChannelUpdateRequest);
     return ResponseEntity.status(HttpStatus.OK).body(updatedChannel);
   }
 

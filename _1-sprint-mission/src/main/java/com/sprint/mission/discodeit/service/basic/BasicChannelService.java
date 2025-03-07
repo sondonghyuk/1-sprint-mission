@@ -27,17 +27,18 @@ public class BasicChannelService implements ChannelService {
   private final BasicUserStatusService basicUserStatusService;
 
   @Override
-  public Channel create(PublicChannelCreateRequest publicChannelCreateRequest) {
+  public ChannelDto create(PublicChannelCreateRequest publicChannelCreateRequest) {
     Channel channel = new Channel(
         ChannelType.PUBLIC,
         publicChannelCreateRequest.name(),
         publicChannelCreateRequest.description()
     );
-    return channelRepository.save(channel);
+    Channel savedChannel = channelRepository.save(channel);
+    return this.toDto(savedChannel);
   }
 
   @Override
-  public Channel create(PrivateChannelCreateRequest privateChannelCreateRequest) {
+  public ChannelDto create(PrivateChannelCreateRequest privateChannelCreateRequest) {
     Channel channel = new Channel(ChannelType.PRIVATE, null, null);
     Channel createdChannel = channelRepository.save(channel);
 
@@ -45,7 +46,8 @@ public class BasicChannelService implements ChannelService {
         .map(userId -> new ReadStatus(userId, createdChannel.getId(), channel.getCreatedAt()))
         .forEach(readStatus -> readStatusRepository.save(readStatus));
 
-    return createdChannel;
+    Channel savedChannel = channelRepository.save(channel);
+    return this.toDto(savedChannel);
   }
 
 
@@ -72,7 +74,7 @@ public class BasicChannelService implements ChannelService {
   }
 
   @Override
-  public Channel update(UUID channelId, PublicChannelUpdateRequest channelUpdateDto) {
+  public ChannelDto update(UUID channelId, PublicChannelUpdateRequest channelUpdateDto) {
     Channel channel = channelRepository.findById(channelId)
         .orElseThrow(
             () -> new NoSuchElementException("Channel with id " + channelId + " not found"));
@@ -80,7 +82,8 @@ public class BasicChannelService implements ChannelService {
       throw new UnsupportedOperationException("Private channel cannot be updated");
     }
     channel.updateChannel(channelUpdateDto.newName(), channelUpdateDto.newDescription());
-    return channelRepository.save(channel);
+    Channel savedChannel = channelRepository.save(channel);
+    return this.toDto(savedChannel);
   }
 
   @Override
