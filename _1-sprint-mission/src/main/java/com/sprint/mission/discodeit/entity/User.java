@@ -15,7 +15,9 @@ public class User extends Common implements Serializable {
   //필드
   private String username; //유저이름
   private String email; //이메일(아이디)
-  private transient String password;//비밀번호
+  private String password;//비밀번호
+
+//  private transient String password;//비밀번호
   //프론트 조건에 맞춰야 하므로 주석처리
   //private String phoneNumber;//전화번호
   //private String address; //주소

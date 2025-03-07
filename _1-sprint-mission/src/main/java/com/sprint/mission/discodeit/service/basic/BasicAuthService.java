@@ -19,10 +19,9 @@ public class BasicAuthService implements AuthService {
   public User login(LoginRequest loginRequest) {
     User user = userRepository.findByUsername(loginRequest.username())
         .orElseThrow(() -> new NoSuchElementException("user not found"));
-    if (user != null && user.getPassword().equals(loginRequest.password())) {
-      return user;
-    } else {
+    if (!user.getPassword().equals(loginRequest.password())) {
       throw new NoSuchElementException("Username or password is incorrect");
     }
+    return user;
   }
 }
