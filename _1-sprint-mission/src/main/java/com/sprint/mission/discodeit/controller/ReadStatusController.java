@@ -2,6 +2,7 @@ package com.sprint.mission.discodeit.controller;
 
 import com.sprint.mission.discodeit.api.ReadStatusApi;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateRequest;
+import com.sprint.mission.discodeit.dto.readstatus.ReadStatusDto;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateRequest;
 import com.sprint.mission.discodeit.entity.ReadStatus;
 import com.sprint.mission.discodeit.service.ReadStatusService;
@@ -30,8 +31,9 @@ public class ReadStatusController implements ReadStatusApi {
   //메시지 읽음 상태 생성
   @PostMapping
   @Override
-  public ResponseEntity<ReadStatus> create(@RequestBody ReadStatusCreateRequest readStatusDto) {
-    ReadStatus createdReadStatus = readStatusService.create(readStatusDto);
+  public ResponseEntity<ReadStatusDto> create(
+      @RequestBody ReadStatusCreateRequest readStatusCreateRequest) {
+    ReadStatusDto createdReadStatus = readStatusService.create(readStatusCreateRequest);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdReadStatus);
   }
 

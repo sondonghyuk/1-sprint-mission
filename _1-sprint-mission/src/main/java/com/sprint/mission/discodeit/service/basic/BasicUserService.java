@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import com.sprint.mission.discodeit.dto.user.UserCreateRequst;
 import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
+import com.sprint.mission.discodeit.dto.userstatus.UserStatusDto;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.entity.UserStatus;
@@ -13,6 +14,7 @@ import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.service.UserStatusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +33,11 @@ public class BasicUserService implements UserService {
   private final BinaryContentRepository binaryContentRepository;
   private final UserStatusRepository userStatusRepository;
   private final BinaryContentService binaryContentService;
+  private final UserStatusService userStatusService;
+  private final BasicUserStatusService basicUserStatusService;
 
   @Override
-  public User create(UserCreateRequst userCreateRequst,
+  public UserDto create(UserCreateRequst userCreateRequst,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
     //username,email 중복 확인
     validateUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
@@ -53,7 +57,8 @@ public class BasicUserService implements UserService {
     Instant now = Instant.now();
     UserStatus userStatus = new UserStatus(createdUser.getId(), now);
     userStatusRepository.save(userStatus);
-    return createdUser;
+
+    return this.toDto(createdUser);
   }
 
 
@@ -73,7 +78,7 @@ public class BasicUserService implements UserService {
   }
 
   @Override
-  public User update(UUID userId, UserUpdateRequest userUpdateRequest,
+  public UserStatusDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
@@ -86,8 +91,8 @@ public class BasicUserService implements UserService {
         userUpdateRequest.newPassword(),
         profileId
     );
-
-    return userRepository.save(user);
+    User savedUser = userRepository.save(user);
+    return basicUserStatusService.toDto(savedUser);
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service;
 
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateRequest;
+import com.sprint.mission.discodeit.dto.readstatus.ReadStatusDto;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateRequest;
 import com.sprint.mission.discodeit.entity.ReadStatus;
 
@@ -15,7 +16,7 @@ public interface ReadStatusService {
 
   List<ReadStatus> findAllByUserId(UUID userId);
 
-  ReadStatus update(UUID readStatusId, ReadStatusUpdateRequest readStatusUpdateRequest);
+  ReadStatusDto update(UUID readStatusId, ReadStatusUpdateRequest readStatusUpdateRequest);
 
   void delete(UUID readStatusId);
 }

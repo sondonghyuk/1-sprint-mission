@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateRequest;
+import com.sprint.mission.discodeit.dto.readstatus.ReadStatusDto;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateRequest;
 import com.sprint.mission.discodeit.entity.ReadStatus;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
@@ -23,6 +24,7 @@ public class BasicReadStatusService implements ReadStatusService {
   private final UserRepository userRepository;
   private final ChannelRepository channelRepository;
 
+  @Override
   public ReadStatus create(ReadStatusCreateRequest readStatusCreateRequest) {
     //유저와 채널 존재 여부 확인
     if (!userRepository.existsById(readStatusCreateRequest.userId())) {
@@ -47,17 +49,20 @@ public class BasicReadStatusService implements ReadStatusService {
     return readStatusRepository.save(readStatus);
   }
 
+  @Override
   public ReadStatus findById(UUID readStatusId) {
     return readStatusRepository.findById(readStatusId)
         .orElseThrow(
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
   }
 
+  @Override
   public List<ReadStatus> findAllByUserId(UUID userId) {
     return readStatusRepository.findAllByUserId(userId).stream().toList();
   }
 
-  public ReadStatus update(UUID readStatusId, ReadStatusUpdateRequest readStatusUpdateRequest) {
+  @Override
+  public ReadStatusDto update(UUID readStatusId, ReadStatusUpdateRequest readStatusUpdateRequest) {
     ReadStatus readStatus = readStatusRepository.findById(readStatusId)
         .orElseThrow(
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
@@ -65,6 +70,7 @@ public class BasicReadStatusService implements ReadStatusService {
     return readStatusRepository.save(readStatus);
   }
 
+  @Override
   public void delete(UUID readStatusId) {
     if (!readStatusRepository.existsById(readStatusId)) {
       throw new NoSuchElementException("ReadStatus with id " + readStatusId + " not found");

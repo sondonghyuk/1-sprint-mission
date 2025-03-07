@@ -1,7 +1,9 @@
 package com.sprint.mission.discodeit.service.basic;
 
+import com.sprint.mission.discodeit.dto.userstatus.UserStatusDto;
 import com.sprint.mission.discodeit.dto.userstatus.UserStatusUpdateRequest;
 import com.sprint.mission.discodeit.dto.userstatus.UserStatusCreateRequest;
+import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
@@ -65,13 +67,18 @@ public class BasicUserStatusService implements UserStatusService {
   }
 
   @Override
-  public UserStatus updateByUserId(UUID userId, UserStatusUpdateRequest userStatusUpdateRequest) {
+  public UserStatusDto updateByUserId(UUID userId,
+      UserStatusUpdateRequest userStatusUpdateRequest) {
     UserStatus userStatus = userStatusRepository.findByUserId(userId)
         .orElseThrow(
             () -> new NoSuchElementException("UserStatus with userId " + userId + " not found"));
     userStatus.updateLastActiveAt(userStatus.getLastActiveAt());
 
-    return userStatusRepository.save(userStatus);
+    UserStatus savedUserStatus = userStatusRepository.save(userStatus);
+    User user = userRepository.findById(savedUserStatus.getUserId())
+        .orElseThrow(() -> new NoSuchElementException(
+            "User with id " + savedUserStatus.getUserId() + " not found"));
+    return this.toDto(user);
   }
 
   @Override
@@ -80,5 +87,16 @@ public class BasicUserStatusService implements UserStatusService {
       throw new NoSuchElementException("UserStatus with id " + userStatusId + " not found");
     }
     userStatusRepository.deleteById(userStatusId);
+  }
+
+  public UserStatusDto toDto(User user) {
+    UserStatus userStatus = userStatusRepository.findByUserId(user.getId()).orElseThrow(
+        () -> new NoSuchElementException("User with id " + user.getId() + " not found"));
+
+    return new UserStatusDto(
+        userStatus.getId(),
+        userStatus.getUserId(),
+        userStatus.getLastActiveAt()
+    );
   }
 }
