@@ -35,7 +35,7 @@ public class BasicUserStatusService implements UserStatusService {
 
     UserStatus userStatus = new UserStatus(
         userStatusCreateRequest.userId(),
-        userStatusCreateRequest.lastConnetTime());
+        userStatusCreateRequest.lastActiveAt());
     return userStatusRepository.save(userStatus);
   }
 
@@ -58,7 +58,7 @@ public class BasicUserStatusService implements UserStatusService {
         .orElseThrow(
             () -> new NoSuchElementException("UserStatus with id " + userStatusId + " not found"));
 
-    userStatus.updateLastConnectTime(userStatus.getLastConnectTime());
+    userStatus.updateLastActiveAt(userStatus.getLastActiveAt());
 
     return userStatusRepository.save(userStatus);
 
@@ -69,7 +69,7 @@ public class BasicUserStatusService implements UserStatusService {
     UserStatus userStatus = userStatusRepository.findByUserId(userId)
         .orElseThrow(
             () -> new NoSuchElementException("UserStatus with userId " + userId + " not found"));
-    userStatus.updateLastConnectTime(userStatus.getLastConnectTime());
+    userStatus.updateLastActiveAt(userStatus.getLastActiveAt());
 
     return userStatusRepository.save(userStatus);
   }
