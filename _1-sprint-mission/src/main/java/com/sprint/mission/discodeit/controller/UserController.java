@@ -57,13 +57,13 @@ public class UserController implements UserApi {
   //사용자 수정
   @PatchMapping(path = "{userId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   @Override
-  public ResponseEntity<UserStatusDto> update(
+  public ResponseEntity<UserDto> update(
       @PathVariable("userId") UUID userId,
       @Valid @RequestPart("userUpdateRequest") UserUpdateRequest userUpdateRequest,
       @Valid @RequestPart(value = "profile", required = false) MultipartFile profile) {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
-    UserStatusDto updatedUser = userService.update(userId, userUpdateRequest, profileDto);
+    UserDto updatedUser = userService.update(userId, userUpdateRequest, profileDto);
     return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
   }
 

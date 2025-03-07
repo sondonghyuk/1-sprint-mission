@@ -78,7 +78,7 @@ public class BasicUserService implements UserService {
   }
 
   @Override
-  public UserStatusDto update(UUID userId, UserUpdateRequest userUpdateRequest,
+  public UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
@@ -92,7 +92,7 @@ public class BasicUserService implements UserService {
         profileId
     );
     User savedUser = userRepository.save(user);
-    return basicUserStatusService.toDto(savedUser);
+    return this.toDto(savedUser);
   }
 
   @Override

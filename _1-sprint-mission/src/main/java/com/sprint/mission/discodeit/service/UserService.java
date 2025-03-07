@@ -20,7 +20,7 @@ public interface UserService {
 
   List<UserDto> findAll(); //사용자 모두 조회
 
-  UserStatusDto update(UUID userId, UserUpdateRequest userUpdateRequest,
+  UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateDto);//사용자 수정
 
   void deleteById(UUID userId); //사용자 삭제

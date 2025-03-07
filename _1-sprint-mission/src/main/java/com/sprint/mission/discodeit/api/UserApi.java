@@ -74,10 +74,10 @@ public interface UserApi {
       ),
       @ApiResponse(
           responseCode = "200", description = "User 정보가 성공적으로 수정됨",
-          content = @Content(schema = @Schema(implementation = UserStatusDto.class))
+          content = @Content(schema = @Schema(implementation = UserDto.class))
       )
   })
-  ResponseEntity<UserStatusDto> update(
+  ResponseEntity<UserDto> update(
       @Parameter(description = "수정할 User ID") UUID userId,
       @Parameter(description = "수정할 User 정보") UserUpdateRequest userUpdateRequest,
       @Parameter(description = "수정할 User 프로필 이미지") MultipartFile profile
