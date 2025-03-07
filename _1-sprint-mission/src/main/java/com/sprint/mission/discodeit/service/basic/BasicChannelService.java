@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.dto.channel.ChannelDto;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateRequest;
 import com.sprint.mission.discodeit.dto.channel.PrivateChannelCreateRequest;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateRequest;
+import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.entity.*;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
@@ -22,6 +23,8 @@ public class BasicChannelService implements ChannelService {
   private final ChannelRepository channelRepository;
   private final ReadStatusRepository readStatusRepository;
   private final MessageRepository messageRepository;
+  private final BasicUserService basicUserService;
+  private final BasicUserStatusService basicUserStatusService;
 
   @Override
   public Channel create(PublicChannelCreateRequest publicChannelCreateRequest) {
@@ -108,12 +111,17 @@ public class BasicChannelService implements ChannelService {
           .map(ReadStatus::getUserId)
           .forEach(participantIds::add);
     }
+
+    List<UserDto> participants = participantIds.stream()
+        .map(basicUserService::findById)
+        .toList();
+
     return new ChannelDto(
         channel.getId(),
         channel.getType(),
         channel.getName(),
         channel.getDescription(),
-        participantIds,
+        participants,
         lastMessageAt
     );
   }
