@@ -42,7 +42,7 @@ public interface ReadStatusApi {
           content = @Content(schema = @Schema(implementation = ReadStatusDto.class))
       )
   })
-  ResponseEntity<ReadStatus> create(
+  ResponseEntity<ReadStatusDto> create(
       @Parameter(description = "Message 읽음 상태 생성 정보") ReadStatusCreateRequest request
   );
 
@@ -53,7 +53,7 @@ public interface ReadStatusApi {
       description = "Message 읽음 상태 목록 조회 성공",
       content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReadStatusDto.class)))
   )
-  ResponseEntity<List<ReadStatus>> findAllByUserId(
+  ResponseEntity<List<ReadStatusDto>> findAllByUserId(
       @Parameter(description = "조회할 User ID") UUID userId);
 
   //메시지 읽음 상태 수정
@@ -71,7 +71,7 @@ public interface ReadStatusApi {
           )
       )
   })
-  ResponseEntity<ReadStatus> update(
+  ResponseEntity<ReadStatusDto> update(
       @Parameter(description = "수정할 읽음 상태 ID") UUID readStatusId,
       @Parameter(description = "수정할 읽음 상태 정보") ReadStatusUpdateRequest request
   );

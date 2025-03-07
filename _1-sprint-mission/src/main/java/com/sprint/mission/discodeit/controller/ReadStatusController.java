@@ -40,8 +40,8 @@ public class ReadStatusController implements ReadStatusApi {
   //메시지 읽음 상태 목록 조회
   @GetMapping
   @Override
-  public ResponseEntity<List<ReadStatus>> findAllByUserId(@RequestParam("userId") UUID userId) {
-    List<ReadStatus> readStatuses = readStatusService.findAllByUserId(userId);
+  public ResponseEntity<List<ReadStatusDto>> findAllByUserId(@RequestParam("userId") UUID userId) {
+    List<ReadStatusDto> readStatuses = readStatusService.findAllByUserId(userId);
     return ResponseEntity.status(HttpStatus.OK).body(readStatuses);
   }
 
@@ -49,9 +49,10 @@ public class ReadStatusController implements ReadStatusApi {
   //메시지 읽음 상태 수정
   @PatchMapping("/{readStatusId}")
   @Override
-  public ResponseEntity<ReadStatus> update(@PathVariable("readStatusId") UUID readStatusId,
+  public ResponseEntity<ReadStatusDto> update(@PathVariable("readStatusId") UUID readStatusId,
       @RequestBody ReadStatusUpdateRequest readStatusUpdateRequest) {
-    ReadStatus updatedReadStatus = readStatusService.update(readStatusId, readStatusUpdateRequest);
+    ReadStatusDto updatedReadStatus = readStatusService.update(readStatusId,
+        readStatusUpdateRequest);
     return ResponseEntity.status(HttpStatus.OK).body(updatedReadStatus);
   }
 

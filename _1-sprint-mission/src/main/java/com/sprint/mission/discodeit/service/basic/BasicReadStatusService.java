@@ -25,7 +25,7 @@ public class BasicReadStatusService implements ReadStatusService {
   private final ChannelRepository channelRepository;
 
   @Override
-  public ReadStatus create(ReadStatusCreateRequest readStatusCreateRequest) {
+  public ReadStatusDto create(ReadStatusCreateRequest readStatusCreateRequest) {
     //유저와 채널 존재 여부 확인
     if (!userRepository.existsById(readStatusCreateRequest.userId())) {
       throw new NoSuchElementException(
@@ -45,8 +45,8 @@ public class BasicReadStatusService implements ReadStatusService {
     }
     ReadStatus readStatus = new ReadStatus(readStatusCreateRequest.userId(),
         readStatusCreateRequest.channelId(), readStatusCreateRequest.lastReadAt());
-
-    return readStatusRepository.save(readStatus);
+    ReadStatus savedReadStatus = readStatusRepository.save(readStatus);
+    return this.toDto(savedReadStatus);
   }
 
   @Override
@@ -57,8 +57,9 @@ public class BasicReadStatusService implements ReadStatusService {
   }
 
   @Override
-  public List<ReadStatus> findAllByUserId(UUID userId) {
-    return readStatusRepository.findAllByUserId(userId).stream().toList();
+  public List<ReadStatusDto> findAllByUserId(UUID userId) {
+    List<ReadStatus> readStatuses = readStatusRepository.findAllByUserId(userId).stream().toList();
+    return readStatuses.stream().map(this::toDto).toList();
   }
 
   @Override
@@ -67,7 +68,8 @@ public class BasicReadStatusService implements ReadStatusService {
         .orElseThrow(
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
     readStatus.updateLastReadAt(readStatusUpdateRequest.newLastReadAt());
-    return readStatusRepository.save(readStatus);
+    ReadStatus savedReadStatus = readStatusRepository.save(readStatus);
+    return this.toDto(savedReadStatus);
   }
 
   @Override
@@ -76,5 +78,14 @@ public class BasicReadStatusService implements ReadStatusService {
       throw new NoSuchElementException("ReadStatus with id " + readStatusId + " not found");
     }
     readStatusRepository.deleteById(readStatusId);
+  }
+
+  public ReadStatusDto toDto(ReadStatus readStatus) {
+    return new ReadStatusDto(
+        readStatus.getId(),
+        readStatus.getUserId(),
+        readStatus.getChannelId(),
+        readStatus.getLastReadAt()
+    );
   }
 }
