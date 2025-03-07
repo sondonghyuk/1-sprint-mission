@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
@@ -17,6 +18,7 @@ public class BasicBinaryContentService implements BinaryContentService {
 
   private final BinaryContentRepository binaryContentRepository;
 
+  @Override
   public BinaryContent create(BinaryContentCreateRequest binaryContentCreateRequest) {
     if (binaryContentCreateRequest.fileName() == null
         || binaryContentCreateRequest.contentType() == null) {
@@ -33,6 +35,7 @@ public class BasicBinaryContentService implements BinaryContentService {
     return binaryContentRepository.save(binaryContent);
   }
 
+  @Override
   public BinaryContent findById(UUID binaryContentId) {
     return binaryContentRepository.findById(binaryContentId)
         .orElseThrow(() -> new NoSuchElementException(
@@ -45,10 +48,21 @@ public class BasicBinaryContentService implements BinaryContentService {
         .toList();
   }
 
+  @Override
   public void deleteById(UUID binaryContentId) {
     if (!binaryContentRepository.existsById(binaryContentId)) {
       throw new NoSuchElementException("BinaryContent with id " + binaryContentId + " not found");
     }
     binaryContentRepository.deleteById(binaryContentId);
+  }
+
+  @Override
+  public BinaryContentDto toDto(BinaryContent binaryContent) {
+    return new BinaryContentDto(
+        binaryContent.getId(),
+        binaryContent.getFileName(),
+        binaryContent.getSize(),
+        binaryContent.getContentType()
+    );
   }
 }

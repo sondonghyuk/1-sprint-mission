@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
+import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import com.sprint.mission.discodeit.dto.user.UserCreateRequst;
 import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
@@ -10,6 +11,7 @@ import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
+import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class BasicUserService implements UserService {
 
   private final BinaryContentRepository binaryContentRepository;
   private final UserStatusRepository userStatusRepository;
+  private final BinaryContentService binaryContentService;
 
   @Override
   public User create(UserCreateRequst userCreateRequst,
@@ -129,13 +132,18 @@ public class BasicUserService implements UserService {
     Boolean online = userStatusRepository.findById(user.getId())
         .map(userStatus -> userStatus.isOnline())
         .orElse(null);
+
+    BinaryContent binaryContent = binaryContentRepository.findById(user.getProfileId())
+        .orElseThrow(
+            () -> new NoSuchElementException("User with id " + user.getProfileId() + " not found"));
+
+    BinaryContentDto profile = binaryContentService.toDto(binaryContent);
+
     return new UserDto(
         user.getId(),
-        user.getCreatedAt(),
-        user.getUpdatedAt(),
         user.getUsername(),
         user.getEmail(),
-        user.getProfileId(),
+        profile,
         online
     );
   }
