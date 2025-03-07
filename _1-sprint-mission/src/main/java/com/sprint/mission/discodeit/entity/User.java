@@ -9,7 +9,6 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Getter
-@Setter
 public class User extends Common implements Serializable {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
@@ -46,17 +45,9 @@ public class User extends Common implements Serializable {
     if (!PASSWORD_PATTERN.matcher(password).matches()) {
       throw new IllegalArgumentException("비밀번호는 최소 8자이며 숫자, 문자, 특수문자를 포함해야 합니다.");
     }
-//        if (!PHONE_PATTERN.matcher(phoneNumber).matches()) {
-//            throw new IllegalArgumentException("휴대폰 번호 형식이 올바르지 않습니다. (예: 010-1234-5678 또는 01012345678)");
-//        }
-//        if (address == null || address.trim().isEmpty()) {
-//            throw new IllegalArgumentException("주소는 비어 있을 수 없습니다.");
-//        }
     this.username = username;
     this.email = email;
     this.password = password;
-//        this.phoneNumber = phoneNumber;
-//        this.address = address;
     this.profileId = profileId;
   }
 
@@ -76,14 +67,6 @@ public class User extends Common implements Serializable {
       this.password = newPassword;
       updateTimestamp();
     }
-//        if(newPhoneNumber !=null && !newPassword.trim().isEmpty() && !newPhoneNumber.equals(this.phoneNumber)){
-//            this.phoneNumber = newPhoneNumber;
-//            updateTimestamp();
-//        }
-//        if (newAddress != null && !newAddress.trim().isEmpty() && !newAddress.equals(this.address)) {
-//            this.address = newAddress;
-//            updateTimestamp();
-//        }
     if (newProfileId != null) {
       this.profileId = newProfileId;
       updateTimestamp();
