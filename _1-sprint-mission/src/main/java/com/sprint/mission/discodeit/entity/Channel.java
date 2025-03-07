@@ -21,12 +21,9 @@ public class Channel extends Common implements Serializable {
     if (type == null) {
       throw new IllegalArgumentException("채널 타입은 필수입니다.(PUBLIC,PRIVATE)");
     }
-    if (name == null) {
-      throw new IllegalArgumentException("채널 이름은 필수입니다.");
-    }
-    if (name.trim().isEmpty() || name.length() > 30) {
-      throw new IllegalArgumentException("채널 이름은 1~30자 사이여야 합니다.");
-    }
+//    if (name.trim().isEmpty() || name.length() > 30) {
+//      throw new IllegalArgumentException("채널 이름은 1~30자 사이여야 합니다.");
+//    }
     if (description != null && description.length() > 100) {
       throw new IllegalArgumentException("채널 설명은 최대 100자까지 가능합니다.");
     }

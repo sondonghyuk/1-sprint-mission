@@ -16,10 +16,10 @@ public class UserStatus extends Common {
   private UUID userId; // 사용자 별로 관리하는 데이터
   private Instant lastActiveAt; //사용자의 마지막 접속 시간
 
-  public UserStatus(UUID userId, Instant now) {
+  public UserStatus(UUID userId, Instant lastActiveAt) {
     super(UUID.randomUUID(), Instant.now());
     this.userId = userId;
-    this.lastActiveAt = now;
+    this.lastActiveAt = lastActiveAt;
   }
 
   //마지막 접속 시간 수정

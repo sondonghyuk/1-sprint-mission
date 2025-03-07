@@ -54,7 +54,7 @@ public class UserController implements UserApi {
 
 
   //사용자 수정
-  @PatchMapping(path = "/{userId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+  @PatchMapping(path = "{userId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   @Override
   public ResponseEntity<User> update(
       @PathVariable("userId") UUID userId,
