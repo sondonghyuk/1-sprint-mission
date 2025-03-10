@@ -11,12 +11,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MessageRepository {
-    Message save(Message message);
-    Optional<Message> findById(UUID messageId);
-    List<Message> findAllByChannelId(UUID channelId);
-    boolean existsById(UUID messageId);
-    void deleteById(UUID messageId);
-    void deleteAllByChannelId(UUID channelId);
+public interface MessageRepository extends JpaRepository<Message, UUID> {
+
+  Message save(Message message);
+
+  Optional<Message> findById(UUID messageId);
+
+  List<Message> findAllByChannelId(UUID channelId);
+
+  boolean existsById(UUID messageId);
+
+  void deleteById(UUID messageId);
+
+  void deleteAllByChannelId(UUID channelId);
 }
