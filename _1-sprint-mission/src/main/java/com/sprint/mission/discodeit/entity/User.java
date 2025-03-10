@@ -17,10 +17,10 @@ public class User extends BaseUpdatableEntity implements Serializable {
   private String password;//비밀번호
 
   //BinaryContent 참조 필드
-  BinaryContent profile;
+  private BinaryContent profile;
 
-  //UserStatus 참조 필드
-  UserStatus status;
+  //UserStatus 1:1
+  private UserStatus status;
 
   //private transient String password;//비밀번호
   //프론트 조건에 맞춰야 하므로 주석처리
@@ -37,8 +37,7 @@ public class User extends BaseUpdatableEntity implements Serializable {
       "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$");
 
   //생성자
-  public User(String username, String email, String password, BinaryContent profile,
-      UserStatus status) {
+  public User(String username, String email, String password, BinaryContent profile) {
     super();
     //검증
     if (username == null || username.length() > 20) {
@@ -54,12 +53,12 @@ public class User extends BaseUpdatableEntity implements Serializable {
     this.email = email;
     this.password = password;
     this.profile = profile;
-    this.status = status;
+    this.status = new UserStatus(this, Instant.now());
   }
 
   // update 메소드
   public void update(String newUsername, String newEmail, String newPassword,
-      BinaryContent newProfile, UserStatus newStatus) {
+      BinaryContent newProfile) {
     if (newUsername != null && !newUsername.trim().isEmpty() && !newUsername.equals(
         this.username)) {
       this.username = newUsername;
@@ -76,10 +75,6 @@ public class User extends BaseUpdatableEntity implements Serializable {
     }
     if (newProfile != null && !newProfile.equals(this.profile)) {
       this.profile = newProfile;
-      updateTimestamp();
-    }
-    if (newStatus != null && !newStatus.equals(this.status)) {
-      this.status = newStatus;
       updateTimestamp();
     }
   }

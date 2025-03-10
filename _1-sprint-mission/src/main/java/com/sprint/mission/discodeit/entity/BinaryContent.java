@@ -21,7 +21,7 @@ public class BinaryContent extends Base implements Serializable {
   private byte[] bytes; // 바이너리 데이터
 
   public BinaryContent(String fileName, Long size, String contentType, byte[] bytes) {
-    super(UUID.randomUUID(), Instant.now());
+    super();
     this.fileName = fileName;
     this.size = size;
     this.contentType = contentType;

@@ -3,7 +3,9 @@ package com.sprint.mission.discodeit.service.basic;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusCreateRequest;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusDto;
 import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateRequest;
+import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.ReadStatus;
+import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
@@ -38,13 +40,19 @@ public class BasicReadStatusService implements ReadStatusService {
     //이미 존재하는 경우 예외 발생
     if (readStatusRepository.findAllByUserId(readStatusCreateRequest.userId()).stream()
         .anyMatch(
-            readStatus -> readStatus.getChannelId().equals(readStatusCreateRequest.channelId()))) {
+            readStatus -> readStatus.getChannel().getId()
+                .equals(readStatusCreateRequest.channelId()))) {
       throw new IllegalArgumentException(
           "ReadStatus with userId " + readStatusCreateRequest.userId() + " and channelId "
               + readStatusCreateRequest.channelId() + " already exists");
     }
-    ReadStatus readStatus = new ReadStatus(readStatusCreateRequest.userId(),
-        readStatusCreateRequest.channelId(), readStatusCreateRequest.lastReadAt());
+    User user = userRepository.findById(readStatusCreateRequest.userId()).orElseThrow(
+        () -> new NoSuchElementException(
+            "User with id " + readStatusCreateRequest.userId() + " not found"));
+    Channel channel = channelRepository.findById(readStatusCreateRequest.channelId()).orElseThrow(
+        () -> new NoSuchElementException(
+            "Channel with id " + readStatusCreateRequest.channelId() + " not found"));
+    ReadStatus readStatus = new ReadStatus(user, channel, readStatusCreateRequest.lastReadAt());
     ReadStatus savedReadStatus = readStatusRepository.save(readStatus);
     return this.toDto(savedReadStatus);
   }
@@ -84,8 +92,8 @@ public class BasicReadStatusService implements ReadStatusService {
   public ReadStatusDto toDto(ReadStatus readStatus) {
     return new ReadStatusDto(
         readStatus.getId(),
-        readStatus.getUserId(),
-        readStatus.getChannelId(),
+        readStatus.getUser().getId(),
+        readStatus.getChannel().getId(),
         readStatus.getLastReadAt()
     );
   }

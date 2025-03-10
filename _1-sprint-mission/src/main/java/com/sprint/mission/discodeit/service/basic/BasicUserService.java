@@ -42,19 +42,21 @@ public class BasicUserService implements UserService {
 
     //프로필 이미지 Id 체크
     UUID profileId = profileIdCheck(profileCreateRequest);
+    BinaryContent profile = binaryContentRepository.findById(profileId)
+        .orElseThrow(
+            () -> new NoSuchElementException("Profile with id " + profileId + " not found"));
 
     //User 생성
     User user = new User(
         userCreateRequst.username(),
         userCreateRequst.email(),
         userCreateRequst.password(),
-        profileId);
+        profile
+    );
     User createdUser = userRepository.save(user);
 
     //UserStatus 생성
-    Instant now = Instant.now();
-    UserStatus userStatus = new UserStatus(createdUser.getId(), now);
-    userStatusRepository.save(userStatus);
+    userStatusRepository.save(createdUser.getStatus());
 
     return this.toDto(createdUser);
   }
@@ -82,12 +84,15 @@ public class BasicUserService implements UserService {
         .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
     validateUsernameAndEmail(userUpdateRequest.newUsername(), userUpdateRequest.newEmail());
     UUID profileId = profileIdCheck(profileCreateRequest);
+    BinaryContent profile = binaryContentRepository.findById(profileId)
+        .orElseThrow(
+            () -> new NoSuchElementException("Profile with id " + profileId + " not found"));
 
     user.update(
         userUpdateRequest.newUsername(),
         userUpdateRequest.newEmail(),
         userUpdateRequest.newPassword(),
-        profileId
+        profile
     );
     User savedUser = userRepository.save(user);
     return this.toDto(savedUser);
@@ -98,8 +103,8 @@ public class BasicUserService implements UserService {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
     //관련된 프로필 이미지 삭제
-    if (user.getProfileId() != null) {
-      binaryContentRepository.deleteById(user.getProfileId());
+    if (user.getProfile().getId() != null) {
+      binaryContentRepository.deleteById(user.getProfile().getId());
     }
     //UserStatus 삭제
     userStatusRepository.deleteByUserId(userId);
@@ -137,9 +142,10 @@ public class BasicUserService implements UserService {
         .map(userStatus -> userStatus.isOnline())
         .orElse(null);
 
-    BinaryContent binaryContent = binaryContentRepository.findById(user.getProfileId())
+    BinaryContent binaryContent = binaryContentRepository.findById(user.getProfile().getId())
         .orElseThrow(
-            () -> new NoSuchElementException("User with id " + user.getProfileId() + " not found"));
+            () -> new NoSuchElementException(
+                "User with id " + user.getProfile().getId() + " not found"));
 
     BinaryContentDto profile = binaryContentService.toDto(binaryContent);
 

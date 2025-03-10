@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@Setter
 public class Message extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L; //직렬화 버전

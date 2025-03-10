@@ -7,12 +7,15 @@ import com.sprint.mission.discodeit.dto.message.MessageDto;
 import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
 import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.entity.BinaryContent;
+import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
+import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
+import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
 import java.util.Optional;
@@ -41,13 +44,24 @@ public class BasicMessageService implements MessageService {
     UUID authorId = messageCreateRequest.authorId();
 
     validateIds(channelId, authorId);
-    List<UUID> attachmentIds = saveBinaryContents(binaryContentCreateRequests);
+
+    Channel channel = channelRepository.findById(channelId)
+        .orElseThrow(NoSuchElementException::new);
+    User user = userRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
+
+    List<UUID> attachmentIds = binaryContentCreateRequests.stream()
+        .map(b -> new BinaryContent(b.fileName(), (long) b.bytes().length, b.contentType(),
+            b.bytes()))
+        .map(b -> b.getId())
+        .toList();
+
+    List<BinaryContent> attachments = binaryContentRepository.findAllByIdIn(attachmentIds);
 
     Message message = new Message(
         messageCreateRequest.content(),
-        messageCreateRequest.channelId(),
-        messageCreateRequest.authorId(),
-        attachmentIds
+        channel,
+        user,
+        attachments
     );
     Message savedMessage = messageRepository.save(message);
     return this.toDto(savedMessage);
@@ -82,7 +96,8 @@ public class BasicMessageService implements MessageService {
         .orElseThrow(
             () -> new NoSuchElementException("Message with id " + messageId + " not found"));
     //관련된 BinaryContent 삭제
-    message.getAttachmentIds().forEach(id -> binaryContentRepository.deleteById(id));
+    message.getAttachments()
+        .forEach(binaryContent -> binaryContentRepository.deleteById(binaryContent.getId()));
     //메시지 삭제
     messageRepository.deleteById(messageId);
   }
@@ -96,35 +111,21 @@ public class BasicMessageService implements MessageService {
     }
   }
 
-  public List<UUID> saveBinaryContents(
-      List<BinaryContentCreateRequest> binaryContentCreateRequests) {
-    List<UUID> attachmentIds = binaryContentCreateRequests.stream()
-        .map(attachmentRequest -> {
-          String fileName = attachmentRequest.fileName();
-          String contentType = attachmentRequest.contentType();
-          byte[] bytes = attachmentRequest.bytes();
-
-          BinaryContent binaryContent = new BinaryContent(fileName, (long) bytes.length,
-              contentType,
-              bytes);
-          BinaryContent createdBinaryContent = binaryContentRepository.save(binaryContent);
-          return createdBinaryContent.getId();
-        }).toList();
-    return attachmentIds;
-  }
-
   @Override
   public MessageDto toDto(Message message) {
-    UserDto author = userService.findById(message.getAuthorId());
-    List<BinaryContentDto> attachments = binaryContentService.findAllByIdIn(
-        message.getAttachmentIds());
+    UserDto author = userService.findById(message.getAuthor().getId());
+
+    List<BinaryContentDto> attachments = binaryContentService.findAllByIdIn(message.getAttachments()
+        .stream()
+        .map(b -> b.getId())
+        .toList());
 
     return new MessageDto(
         message.getId(),
         message.getCreatedAt(),
         message.getUpdatedAt(),
         message.getContent(),
-        message.getChannelId(),
+        message.getChannel().getId(),
         author,
         attachments
     );

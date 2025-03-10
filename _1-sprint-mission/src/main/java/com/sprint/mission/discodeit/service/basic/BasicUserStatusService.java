@@ -34,9 +34,11 @@ public class BasicUserStatusService implements UserStatusService {
       throw new IllegalArgumentException(
           "UserStatus with id " + userStatusCreateRequest.userId() + " already exists");
     }
+    User user = userRepository.findById(userStatusCreateRequest.userId())
+        .orElseThrow(() -> new NoSuchElementException(
+            "User with id " + userStatusCreateRequest.userId() + " not found"));
 
-    UserStatus userStatus = new UserStatus(
-        userStatusCreateRequest.userId(),
+    UserStatus userStatus = new UserStatus(user,
         userStatusCreateRequest.lastActiveAt());
     return userStatusRepository.save(userStatus);
   }
@@ -90,7 +92,7 @@ public class BasicUserStatusService implements UserStatusService {
   public UserStatusDto toDto(UserStatus userStatus) {
     return new UserStatusDto(
         userStatus.getId(),
-        userStatus.getUserId(),
+        userStatus.getUser().getId(),
         userStatus.getLastActiveAt()
     );
   }

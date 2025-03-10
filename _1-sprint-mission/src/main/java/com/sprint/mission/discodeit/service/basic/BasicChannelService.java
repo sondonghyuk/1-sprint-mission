@@ -9,6 +9,7 @@ import com.sprint.mission.discodeit.entity.*;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
+import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class BasicChannelService implements ChannelService {
   private final ReadStatusRepository readStatusRepository;
   private final MessageRepository messageRepository;
   private final UserService userService;
+  private final UserRepository userRepository;
 
 
   @Override
@@ -44,7 +46,9 @@ public class BasicChannelService implements ChannelService {
     Channel createdChannel = channelRepository.save(channel);
 
     privateChannelCreateRequest.participantIds().stream()
-        .map(userId -> new ReadStatus(userId, createdChannel.getId(), channel.getCreatedAt()))
+        .map(userId -> new ReadStatus(userRepository.findById(userId)
+            .orElseThrow(() -> new NoSuchElementException("User not found")),
+            channel, channel.getCreatedAt()))
         .forEach(readStatus -> readStatusRepository.save(readStatus));
 
     Channel savedChannel = channelRepository.save(channel);
@@ -64,7 +68,7 @@ public class BasicChannelService implements ChannelService {
   @Override
   public List<ChannelDto> findAllByUserId(UUID userId) {
     List<UUID> mySubscribedChannelIds = readStatusRepository.findAllByUserId(userId).stream()
-        .map(ReadStatus::getChannelId)
+        .map(readStatus -> readStatus.getChannel().getId())
         .toList();
 
     return channelRepository.findAll().stream()
@@ -113,7 +117,7 @@ public class BasicChannelService implements ChannelService {
     if (channel.getType().equals(ChannelType.PRIVATE)) {
       readStatusRepository.findAllByChannelId(channel.getId())
           .stream()
-          .map(ReadStatus::getUserId)
+          .map(readStatus -> readStatus.getUser().getId())
           .forEach(participantIds::add);
     }
 

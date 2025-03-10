@@ -18,8 +18,8 @@ public abstract class Base implements Serializable {
   private Instant createdAt;
 
   //생성자
-  public Base(UUID id, Instant createdAt) {
-    this.id = id != null ? id : UUID.randomUUID();
-    this.createdAt = createdAt != null ? createdAt : Instant.now();
+  public Base() {
+    this.id = UUID.randomUUID();
+    this.createdAt = Instant.now();
   }
 }

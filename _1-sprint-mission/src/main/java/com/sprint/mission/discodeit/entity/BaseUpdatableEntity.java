@@ -5,15 +5,16 @@ import java.time.Instant;
 import java.util.UUID;
 import org.springframework.data.annotation.LastModifiedDate;
 
-public abstract class BaseUpdatableEntity extends Base implements Serializable {
+public abstract class BaseUpdatableEntity extends Base {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
 
   @LastModifiedDate
-  Instant updatedAt;
+  private Instant updatedAt;
 
   public BaseUpdatableEntity() {
-    super(UUID.randomUUID(), Instant.now());
+    super();
+    this.updatedAt = getCreatedAt();
   }
 
   //update 메소드
