@@ -1,10 +1,15 @@
 package com.sprint.mission.discodeit.entity;
 
-import java.io.Serializable;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import java.time.Instant;
-import java.util.UUID;
+import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@Getter
 public abstract class BaseUpdatableEntity extends Base {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
@@ -14,7 +19,7 @@ public abstract class BaseUpdatableEntity extends Base {
 
   public BaseUpdatableEntity() {
     super();
-    this.updatedAt = getCreatedAt();
+    this.updatedAt = super.getCreatedAt();
   }
 
   //update 메소드

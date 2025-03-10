@@ -1,25 +1,45 @@
 package com.sprint.mission.discodeit.entity;
 
+import static org.hibernate.annotations.OnDeleteAction.SET_NULL;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import lombok.NoArgsConstructor;
 
 @Getter
+@Entity
+@Table(name = "users")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
   //필드
+  @Column(nullable = false, unique = true, length = 50)
   private String username; //유저이름
+
+  @Column(nullable = false, unique = true, length = 100)
   private String email; //이메일(아이디)
+
+  @Column(nullable = false, length = 60)
   private String password;//비밀번호
 
-  //BinaryContent 참조 필드
+  @OneToOne
+  @JoinColumn(name = "profile_id")
   private BinaryContent profile;
 
-  //UserStatus 1:1
+  @OneToOne
+  @JoinColumn(name = "user_statuses")
   private UserStatus status;
 
   //private transient String password;//비밀번호
