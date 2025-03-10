@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
