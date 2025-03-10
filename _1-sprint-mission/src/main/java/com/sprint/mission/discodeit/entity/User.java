@@ -2,8 +2,10 @@ package com.sprint.mission.discodeit.entity;
 
 import static org.hibernate.annotations.OnDeleteAction.SET_NULL;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -34,11 +36,11 @@ public class User extends BaseUpdatableEntity implements Serializable {
   @Column(nullable = false, length = 60)
   private String password;//비밀번호
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "profile_id")
   private BinaryContent profile;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "user_statuses")
   private UserStatus status;
 

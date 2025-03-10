@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,15 +28,15 @@ public class Message extends BaseUpdatableEntity implements Serializable {
   @Column(columnDefinition = "TEXT")
   private String content; //메세지내용
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "channel_id", nullable = false)
   private Channel channel;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "author_id")
   private User author;
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "message_id")
   private List<BinaryContent> attachments;
 
