@@ -16,13 +16,16 @@ public class User extends BaseUpdatableEntity implements Serializable {
   private String email; //이메일(아이디)
   private String password;//비밀번호
 
-//  private transient String password;//비밀번호
+  //BinaryContent 참조 필드
+  BinaryContent profile;
+
+  //UserStatus 참조 필드
+  UserStatus status;
+
+  //private transient String password;//비밀번호
   //프론트 조건에 맞춰야 하므로 주석처리
   //private String phoneNumber;//전화번호
   //private String address; //주소
-
-  //BinaryContent 참조 필드
-  private UUID profileId;//프로필 이미지 아이디
 
   //사용자 검사 필드(클래스에서 변경되지 않는 공용 데이터)
   // 전화번호 010-0000-0000 만 허용
@@ -34,7 +37,8 @@ public class User extends BaseUpdatableEntity implements Serializable {
       "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$");
 
   //생성자
-  public User(String username, String email, String password, UUID profileId) {
+  public User(String username, String email, String password, BinaryContent profile,
+      UserStatus status) {
     super();
     //검증
     if (username == null || username.length() > 20) {
@@ -49,11 +53,13 @@ public class User extends BaseUpdatableEntity implements Serializable {
     this.username = username;
     this.email = email;
     this.password = password;
-    this.profileId = profileId;
+    this.profile = profile;
+    this.status = status;
   }
 
   // update 메소드
-  public void update(String newUsername, String newEmail, String newPassword, UUID newProfileId) {
+  public void update(String newUsername, String newEmail, String newPassword,
+      BinaryContent newProfile, UserStatus newStatus) {
     if (newUsername != null && !newUsername.trim().isEmpty() && !newUsername.equals(
         this.username)) {
       this.username = newUsername;
@@ -68,8 +74,12 @@ public class User extends BaseUpdatableEntity implements Serializable {
       this.password = newPassword;
       updateTimestamp();
     }
-    if (newProfileId != null) {
-      this.profileId = newProfileId;
+    if (newProfile != null && !newProfile.equals(this.profile)) {
+      this.profile = newProfile;
+      updateTimestamp();
+    }
+    if (newStatus != null && !newStatus.equals(this.status)) {
+      this.status = newStatus;
       updateTimestamp();
     }
   }

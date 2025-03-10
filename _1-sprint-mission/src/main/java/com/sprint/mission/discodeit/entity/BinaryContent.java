@@ -14,10 +14,6 @@ import java.util.UUID;
 public class BinaryContent extends Base implements Serializable {
 
   private static final long serialVersionUID = 1L;
-
-  private UUID id;
-  private Instant createdAt; //생성 시점
-
   //메타 정보
   private String fileName; // 파일명
   private Long size; //파일 사이즈

@@ -14,12 +14,12 @@ public class UserStatus extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private UUID userId; // 사용자 별로 관리하는 데이터
+  private User user; // 사용자 별로 관리하는 데이터
   private Instant lastActiveAt; //사용자의 마지막 접속 시간
 
-  public UserStatus(UUID userId, Instant lastActiveAt) {
+  public UserStatus(User user, Instant lastActiveAt) {
     super();
-    this.userId = userId;
+    this.user = user;
     this.lastActiveAt = lastActiveAt;
   }
 

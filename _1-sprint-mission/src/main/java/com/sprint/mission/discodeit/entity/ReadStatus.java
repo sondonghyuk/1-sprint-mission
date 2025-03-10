@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
+import javax.xml.stream.events.Comment;
 import lombok.Getter;
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,14 +13,14 @@ public class ReadStatus extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
 
-  private UUID userId;
-  private UUID channelId;
+  private User user;
+  private Channel channel;
   private Instant lastReadAt; // 마지막으로 읽은 시간
 
-  public ReadStatus(UUID userId, UUID channelId, Instant lastReadAt) {
+  public ReadStatus(User user, Channel channel, Instant lastReadAt) {
     super();
-    this.userId = userId;
-    this.channelId = channelId;
+    this.user = user;
+    this.channel = channel;
     this.lastReadAt = lastReadAt;
   }
 

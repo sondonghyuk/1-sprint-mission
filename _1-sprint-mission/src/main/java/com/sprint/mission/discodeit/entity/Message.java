@@ -14,30 +14,29 @@ public class Message extends BaseUpdatableEntity implements Serializable {
   private static final long serialVersionUID = 1L; //직렬화 버전
 
   private String content; //메세지내용
-  private UUID authorId; // 메시지를 보낸 사용자
-  private UUID channelId; // 메시지가 속한 채널
-
+  private Channel channel;
+  private User author;
   //BinaryContent 참조 필드
-  private List<UUID> attachmentIds;
+  private List<BinaryContent> attachments;
 
   //생성자
-  public Message(String content, UUID authorId, UUID channelId, List<UUID> attachmentIds) {
+  public Message(String content, Channel channel, User author, List<BinaryContent> attachments) {
     super();
     // 검증
     if (content == null || content.trim().isEmpty() || content.length() > 500) {
       throw new IllegalArgumentException("메시지 내용은 1~500자 사이여야 합니다.");
     }
-    if (channelId == null) {
+    if (channel.getId() == null) {
       throw new IllegalArgumentException("채널 ID는 필수입니다.");
     }
-    if (authorId == null) {
+    if (author.getId() == null) {
       throw new IllegalArgumentException("작성자 ID는 필수입니다.");
     }
 
     this.content = content;
-    this.authorId = authorId;
-    this.channelId = channelId;
-    this.attachmentIds = attachmentIds;
+    this.channel = channel;
+    this.author = author;
+    this.attachments = attachments;
   }
 
   // update 메소드
