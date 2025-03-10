@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Getter
-public class Channel extends Common implements Serializable {
+public class Channel extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
 
@@ -16,7 +16,7 @@ public class Channel extends Common implements Serializable {
   private String description; // 채널 설명
 
   public Channel(ChannelType type, String name, String description) {
-    super(UUID.randomUUID(), Instant.now());
+    super();
     //검증
     if (type == null) {
       throw new IllegalArgumentException("채널 타입은 필수입니다.(PUBLIC,PRIVATE)");

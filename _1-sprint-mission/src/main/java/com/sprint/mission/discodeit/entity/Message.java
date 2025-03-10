@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class Message extends Common implements Serializable {
+public class Message extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
 
@@ -22,7 +22,7 @@ public class Message extends Common implements Serializable {
 
   //생성자
   public Message(String content, UUID authorId, UUID channelId, List<UUID> attachmentIds) {
-    super(UUID.randomUUID(), Instant.now());
+    super();
     // 검증
     if (content == null || content.trim().isEmpty() || content.length() > 500) {
       throw new IllegalArgumentException("메시지 내용은 1~500자 사이여야 합니다.");

@@ -1,8 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
-import jakarta.persistence.Entity;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -10,7 +8,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Getter
-public class User extends Common implements Serializable {
+public class User extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L; //직렬화 버전
   //필드
@@ -37,7 +35,7 @@ public class User extends Common implements Serializable {
 
   //생성자
   public User(String username, String email, String password, UUID profileId) {
-    super(UUID.randomUUID(), Instant.now());
+    super();
     //검증
     if (username == null || username.length() > 20) {
       throw new IllegalArgumentException("이름은 최대 20자까지 가능합니다.");

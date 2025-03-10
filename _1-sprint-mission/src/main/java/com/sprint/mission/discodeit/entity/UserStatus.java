@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.entity;
 
 
+import java.io.Serializable;
 import lombok.Getter;
 import java.time.Duration;
 import java.time.Instant;
@@ -9,7 +10,7 @@ import java.util.UUID;
 @Getter
 //사용자 별 마지막으로 확인된 접속 시간을 표현하는 도메인 모델
 //사용자의 온라인 상태를 확인하기 위해 활용
-public class UserStatus extends Common {
+public class UserStatus extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -17,7 +18,7 @@ public class UserStatus extends Common {
   private Instant lastActiveAt; //사용자의 마지막 접속 시간
 
   public UserStatus(UUID userId, Instant lastActiveAt) {
-    super(UUID.randomUUID(), Instant.now());
+    super();
     this.userId = userId;
     this.lastActiveAt = lastActiveAt;
   }
