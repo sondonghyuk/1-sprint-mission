@@ -16,6 +16,7 @@ import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
+import com.sprint.mission.discodeit.storage.BinaryContentStorageImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,8 @@ public class BasicUserService implements UserService {
   private final BinaryContentRepository binaryContentRepository;
   private final UserStatusRepository userStatusRepository;
   private final BinaryContentService binaryContentService;
-  private UserMapper userMapper;
-
+  private final UserMapper userMapper;
+  private final BinaryContentStorageImpl binaryContentStorage;
 
   @Transactional
   @Override
@@ -122,11 +123,9 @@ public class BasicUserService implements UserService {
   //프로필 이미지 Id 체크
   public UUID profileIdCheck(Optional<BinaryContentCreateRequest> profileCreateRequest) {
     UUID profileId = profileCreateRequest.map(p -> {
-      String fileName = p.fileName();
-      String contentType = p.contentType();
-      byte[] bytes = p.bytes();
-      BinaryContent binaryContent = new BinaryContent(fileName, (long) bytes.length, contentType,
-          bytes);
+      binaryContentStorage.put(UUID.randomUUID(), p.bytes());
+      BinaryContent binaryContent = new BinaryContent(p.fileName(), (long) p.bytes().length,
+          p.contentType());
       return binaryContentRepository.save(binaryContent).getId();
     }).orElse(null);
     return profileId;

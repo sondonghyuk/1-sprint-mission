@@ -4,6 +4,8 @@ import com.sprint.mission.discodeit.api.BinaryContentApi;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.service.BinaryContentService;
+import com.sprint.mission.discodeit.storage.BinaryContentStorage;
+import com.sprint.mission.discodeit.storage.BinaryContentStorageImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BinaryContentController implements BinaryContentApi {
 
   private final BinaryContentService binaryContentService;
+  private final BinaryContentStorage binaryContentStorage;
 
   //파일 단건 조회
   @GetMapping("/{binaryContentId}")
@@ -39,5 +42,12 @@ public class BinaryContentController implements BinaryContentApi {
       @RequestParam("binaryContentIds") List<UUID> binaryContentIds) {
     List<BinaryContentDto> binaryContents = binaryContentService.findAllByIdIn(binaryContentIds);
     return ResponseEntity.status(HttpStatus.OK).body(binaryContents);
+  }
+
+  //파일 다운로드
+  @GetMapping("/{binaryContentId}/download")
+  public ResponseEntity<?> download(@PathVariable("binaryContentId") UUID binaryContentId) {
+    BinaryContentDto binaryContentDto = binaryContentService.findById(binaryContentId);
+    return binaryContentStorage.download(binaryContentDto);
   }
 }

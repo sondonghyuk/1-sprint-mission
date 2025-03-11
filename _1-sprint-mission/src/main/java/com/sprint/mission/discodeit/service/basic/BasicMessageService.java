@@ -19,6 +19,7 @@ import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class BasicMessageService implements MessageService {
   private final ChannelRepository channelRepository;
   private final BinaryContentRepository binaryContentRepository;
   private final MessageMapper messageMapper;
+  private final BinaryContentStorage binaryContentStorage;
 
   @Transactional
   @Override
@@ -51,13 +53,13 @@ public class BasicMessageService implements MessageService {
         .orElseThrow(NoSuchElementException::new);
     User user = userRepository.findById(authorId).orElseThrow(NoSuchElementException::new);
 
-    List<UUID> attachmentIds = binaryContentCreateRequests.stream()
-        .map(b -> new BinaryContent(b.fileName(), (long) b.bytes().length, b.contentType(),
-            b.bytes()))
-        .map(b -> b.getId())
+    List<BinaryContent> attachments = binaryContentCreateRequests.stream()
+        .map(b -> {
+          UUID attachmentId = UUID.randomUUID();
+          binaryContentStorage.put(attachmentId, b.bytes());
+          return new BinaryContent(b.fileName(), (long) b.bytes().length, b.contentType());
+        })
         .toList();
-
-    List<BinaryContent> attachments = binaryContentRepository.findAllByIdIn(attachmentIds);
 
     Message message = new Message(
         messageCreateRequest.content(),

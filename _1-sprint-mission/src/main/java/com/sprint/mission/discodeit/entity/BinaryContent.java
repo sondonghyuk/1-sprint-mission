@@ -28,15 +28,11 @@ public class BinaryContent extends Base implements Serializable {
   @Column(nullable = false, length = 100)
   private String contentType; // 타입
 
-  @Column(nullable = false)
-  private byte[] bytes; // 바이너리 데이터
-
-  public BinaryContent(String fileName, Long size, String contentType, byte[] bytes) {
+  public BinaryContent(String fileName, Long size, String contentType) {
     super();
     this.fileName = fileName;
     this.size = size;
     this.contentType = contentType;
-    this.bytes = bytes;
   }
 }
 
