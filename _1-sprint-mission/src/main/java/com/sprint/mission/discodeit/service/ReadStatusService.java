@@ -20,5 +20,4 @@ public interface ReadStatusService {
 
   void delete(UUID readStatusId);
 
-  ReadStatusDto toDto(ReadStatus readStatus);
 }

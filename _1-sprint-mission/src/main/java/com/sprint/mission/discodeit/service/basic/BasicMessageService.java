@@ -10,6 +10,7 @@ import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.mapper.MessageMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
@@ -18,6 +19,7 @@ import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,9 +36,9 @@ public class BasicMessageService implements MessageService {
   private final UserRepository userRepository;
   private final ChannelRepository channelRepository;
   private final BinaryContentRepository binaryContentRepository;
-  private final UserService userService;
-  private final BinaryContentService binaryContentService;
+  private final MessageMapper messageMapper;
 
+  @Transactional
   @Override
   public MessageDto create(MessageCreateRequest messageCreateRequest,
       List<BinaryContentCreateRequest> binaryContentCreateRequests) {
@@ -64,7 +66,7 @@ public class BasicMessageService implements MessageService {
         attachments
     );
     Message savedMessage = messageRepository.save(message);
-    return this.toDto(savedMessage);
+    return messageMapper.toDto(savedMessage);
   }
 
   @Override
@@ -86,10 +88,11 @@ public class BasicMessageService implements MessageService {
             () -> new NoSuchElementException("Message with id " + messageId + " not found"));
     message.updateContent(updateMessageDto.newContent());
     Message savedMessage = messageRepository.save(message);
-    return this.toDto(savedMessage);
+    return messageMapper.toDto(savedMessage);
   }
 
 
+  @Transactional
   @Override
   public void delete(UUID messageId) {
     Message message = messageRepository.findById(messageId)
@@ -110,25 +113,4 @@ public class BasicMessageService implements MessageService {
       throw new NoSuchElementException("Author with id " + authorId + " does not exist");
     }
   }
-
-  @Override
-  public MessageDto toDto(Message message) {
-    UserDto author = userService.findById(message.getAuthor().getId());
-
-    List<BinaryContentDto> attachments = binaryContentService.findAllByIdIn(message.getAttachments()
-        .stream()
-        .map(b -> b.getId())
-        .toList());
-
-    return new MessageDto(
-        message.getId(),
-        message.getCreatedAt(),
-        message.getUpdatedAt(),
-        message.getContent(),
-        message.getChannel().getId(),
-        author,
-        attachments
-    );
-  }
-
 }

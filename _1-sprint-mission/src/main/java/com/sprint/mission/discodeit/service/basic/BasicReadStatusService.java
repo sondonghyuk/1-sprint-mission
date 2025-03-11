@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.dto.readstatus.ReadStatusUpdateRequest;
 import com.sprint.mission.discodeit.entity.Channel;
 import com.sprint.mission.discodeit.entity.ReadStatus;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.mapper.ReadStatusMapper;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
@@ -25,6 +26,7 @@ public class BasicReadStatusService implements ReadStatusService {
   private final ReadStatusRepository readStatusRepository;
   private final UserRepository userRepository;
   private final ChannelRepository channelRepository;
+  private final ReadStatusMapper readStatusMapper;
 
   @Override
   public ReadStatusDto create(ReadStatusCreateRequest readStatusCreateRequest) {
@@ -54,7 +56,7 @@ public class BasicReadStatusService implements ReadStatusService {
             "Channel with id " + readStatusCreateRequest.channelId() + " not found"));
     ReadStatus readStatus = new ReadStatus(user, channel, readStatusCreateRequest.lastReadAt());
     ReadStatus savedReadStatus = readStatusRepository.save(readStatus);
-    return this.toDto(savedReadStatus);
+    return readStatusMapper.toDto(savedReadStatus);
   }
 
   @Override
@@ -67,7 +69,7 @@ public class BasicReadStatusService implements ReadStatusService {
   @Override
   public List<ReadStatusDto> findAllByUserId(UUID userId) {
     List<ReadStatus> readStatuses = readStatusRepository.findAllByUserId(userId).stream().toList();
-    return readStatuses.stream().map(this::toDto).toList();
+    return readStatuses.stream().map(readStatusMapper::toDto).toList();
   }
 
   @Override
@@ -77,7 +79,7 @@ public class BasicReadStatusService implements ReadStatusService {
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
     readStatus.updateLastReadAt(readStatusUpdateRequest.newLastReadAt());
     ReadStatus savedReadStatus = readStatusRepository.save(readStatus);
-    return this.toDto(savedReadStatus);
+    return readStatusMapper.toDto(savedReadStatus);
   }
 
   @Override
@@ -88,13 +90,5 @@ public class BasicReadStatusService implements ReadStatusService {
     readStatusRepository.deleteById(readStatusId);
   }
 
-  @Override
-  public ReadStatusDto toDto(ReadStatus readStatus) {
-    return new ReadStatusDto(
-        readStatus.getId(),
-        readStatus.getUser().getId(),
-        readStatus.getChannel().getId(),
-        readStatus.getLastReadAt()
-    );
-  }
+
 }

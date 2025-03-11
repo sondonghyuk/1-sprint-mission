@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit.service.basic;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import com.sprint.mission.discodeit.entity.BinaryContent;
+import com.sprint.mission.discodeit.mapper.BinaryContentMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,13 @@ import java.util.UUID;
 public class BasicBinaryContentService implements BinaryContentService {
 
   private final BinaryContentRepository binaryContentRepository;
+  private final BinaryContentMapper binaryContentMapper;
 
   @Override
   public BinaryContent create(BinaryContentCreateRequest binaryContentCreateRequest) {
     if (binaryContentCreateRequest.fileName() == null
         || binaryContentCreateRequest.contentType() == null) {
-      throw new NoSuchElementException("BinaryContent is null");
+      throw new IllegalArgumentException("File name ane content type is null");
     }
 
     BinaryContent binaryContent = new BinaryContent(
@@ -40,15 +42,14 @@ public class BasicBinaryContentService implements BinaryContentService {
     BinaryContent binaryContent = binaryContentRepository.findById(binaryContentId)
         .orElseThrow(() -> new NoSuchElementException(
             "BinaryContent with id " + binaryContentId + " not found"));
-    return this.toDto(binaryContent);
+    return binaryContentMapper.toDto(binaryContent);
   }
 
   @Override
   public List<BinaryContentDto> findAllByIdIn(List<UUID> binaryContentIds) {
-    List<BinaryContent> binaryContents = binaryContentRepository.findAllByIdIn(binaryContentIds)
-        .stream().toList();
-    return binaryContents.stream()
-        .map(this::toDto)
+    return binaryContentRepository.findAllByIdIn(binaryContentIds)
+        .stream()
+        .map(binaryContentMapper::toDto)
         .toList();
   }
 
@@ -58,15 +59,5 @@ public class BasicBinaryContentService implements BinaryContentService {
       throw new NoSuchElementException("BinaryContent with id " + binaryContentId + " not found");
     }
     binaryContentRepository.deleteById(binaryContentId);
-  }
-
-  @Override
-  public BinaryContentDto toDto(BinaryContent binaryContent) {
-    return new BinaryContentDto(
-        binaryContent.getId(),
-        binaryContent.getFileName(),
-        binaryContent.getSize(),
-        binaryContent.getContentType()
-    );
   }
 }

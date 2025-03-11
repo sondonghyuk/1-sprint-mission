@@ -22,5 +22,4 @@ public interface UserStatusService {
 
   void delete(UUID userStatusId);
 
-  UserStatusDto toDto(UserStatus userStatus);
 }

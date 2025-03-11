@@ -24,6 +24,4 @@ public interface UserService {
       Optional<BinaryContentCreateRequest> profileCreateDto);//사용자 수정
 
   void deleteById(UUID userId); //사용자 삭제
-
-  UserDto toDto(User user);
 }

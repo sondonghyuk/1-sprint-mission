@@ -22,6 +22,4 @@ public interface ChannelService {
   ChannelDto update(UUID channelId, PublicChannelUpdateRequest publicChannelUpdateRequest); // 채널 수정
 
   void deleteById(UUID channelId); // 채널 삭제
-
-  ChannelDto toDto(Channel channel);
 }

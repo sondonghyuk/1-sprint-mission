@@ -22,5 +22,4 @@ public interface MessageService {
 
   void delete(UUID messageId); //메시지 삭제
 
-  MessageDto toDto(Message message);
 }

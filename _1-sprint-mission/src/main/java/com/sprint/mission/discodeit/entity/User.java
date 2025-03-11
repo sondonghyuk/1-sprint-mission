@@ -36,12 +36,11 @@ public class User extends BaseUpdatableEntity implements Serializable {
   @Column(nullable = false, length = 60)
   private String password;//비밀번호
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "profile_id")
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "profile_id") // BinaryContent의 ID를 참조하는 컬럼
   private BinaryContent profile;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "user_statuses")
+  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private UserStatus status;
 
   //private transient String password;//비밀번호

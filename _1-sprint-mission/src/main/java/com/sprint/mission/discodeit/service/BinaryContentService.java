@@ -17,5 +17,4 @@ public interface BinaryContentService {
 
   void deleteById(UUID binaryContentId);
 
-  BinaryContentDto toDto(BinaryContent binaryContent);
 }

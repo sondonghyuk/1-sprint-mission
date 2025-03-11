@@ -26,9 +26,9 @@ public class UserStatus extends BaseUpdatableEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false, unique = true)
-  private User user; // 사용자 별로 관리하는 데이터
+  private User user; // 1:1 관계에서 User 엔티티를 참조
 
   @Column(name = "last_active_at", nullable = false)
   private Instant lastActiveAt; //사용자의 마지막 접속 시간

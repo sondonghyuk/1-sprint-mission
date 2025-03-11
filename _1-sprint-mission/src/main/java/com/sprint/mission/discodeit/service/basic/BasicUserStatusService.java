@@ -5,6 +5,7 @@ import com.sprint.mission.discodeit.dto.userstatus.UserStatusUpdateRequest;
 import com.sprint.mission.discodeit.dto.userstatus.UserStatusCreateRequest;
 import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.entity.UserStatus;
+import com.sprint.mission.discodeit.mapper.UserStatusMapper;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import com.sprint.mission.discodeit.service.UserStatusService;
@@ -22,6 +23,7 @@ public class BasicUserStatusService implements UserStatusService {
 
   private final UserStatusRepository userStatusRepository;
   private final UserRepository userRepository;
+  private final UserStatusMapper userStatusMapper;
 
   @Override
   public UserStatus create(UserStatusCreateRequest userStatusCreateRequest) {
@@ -77,7 +79,7 @@ public class BasicUserStatusService implements UserStatusService {
     userStatus.updateLastActiveAt(userStatus.getLastActiveAt());
 
     UserStatus savedUserStatus = userStatusRepository.save(userStatus);
-    return this.toDto(savedUserStatus);
+    return userStatusMapper.toDto(savedUserStatus);
   }
 
   @Override
@@ -88,12 +90,4 @@ public class BasicUserStatusService implements UserStatusService {
     userStatusRepository.deleteById(userStatusId);
   }
 
-  @Override
-  public UserStatusDto toDto(UserStatus userStatus) {
-    return new UserStatusDto(
-        userStatus.getId(),
-        userStatus.getUser().getId(),
-        userStatus.getLastActiveAt()
-    );
-  }
 }
