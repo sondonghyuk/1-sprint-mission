@@ -13,10 +13,10 @@
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/controller/MessageController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/basic/BasicMessageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/basic/BasicMessageService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/BinaryContentApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/BinaryContentApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/MessageApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/MessageApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicMessageService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +219,7 @@
       <workItem from="1741575002096" duration="20861000" />
       <workItem from="1741651462920" duration="26403000" />
       <workItem from="1741737601835" duration="6295000" />
-      <workItem from="1741744274111" duration="5218000" />
+      <workItem from="1741744274111" duration="5914000" />
     </task>
     <servers />
   </component>

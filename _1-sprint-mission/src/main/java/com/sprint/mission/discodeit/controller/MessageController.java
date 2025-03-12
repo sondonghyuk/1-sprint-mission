@@ -8,6 +8,7 @@ import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
 import com.sprint.mission.discodeit.dto.page.PageResponse;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.mapper.MessageMapper;
+import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,7 @@ public class MessageController implements MessageApi {
 
   private final MessageService messageService;
   private final MessageMapper messageMapper;
+  private final PageResponseMapper pageResponseMapper;
 
   //메시지 생성
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -65,13 +67,8 @@ public class MessageController implements MessageApi {
       @RequestParam("channelId") UUID channelId, @RequestParam("pageable") Pageable pageable) {
     Page<Message> messagesPage = messageService.findAllByChannelId(channelId, pageable);
 
-    PageResponse<Message> response = new PageResponse<>(
-        messagesPage.getContent(),
-        messagesPage.getNumber(),
-        messagesPage.getSize(),
-        messagesPage.hasNext(),
-        messagesPage.getTotalElements()
-    );
+    PageResponseMapper<Message> mapper = new PageResponseMapper<>();
+    PageResponse<Message> response = mapper.fromPage(messagesPage);
 
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
