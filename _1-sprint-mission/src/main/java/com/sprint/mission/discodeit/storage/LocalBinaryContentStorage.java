@@ -1,8 +1,10 @@
 package com.sprint.mission.discodeit.storage;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +16,7 @@ import java.io.InputStream;
 import java.nio.file.*;
 import java.util.UUID;
 
-@Component
+@Configuration
 public class LocalBinaryContentStorage implements BinaryContentStorage {
 
   private final Path root;
@@ -23,7 +25,7 @@ public class LocalBinaryContentStorage implements BinaryContentStorage {
     this.root = Paths.get(rootPath).toAbsolutePath().normalize(); //절대경로를 변환하고 정리해 불필요한 요소 제거
   }
 
-  @Bean
+  @PostConstruct
   public void init() {
     try {
       Files.createDirectories(root);

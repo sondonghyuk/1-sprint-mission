@@ -5,15 +5,19 @@ import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest
 import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
 import com.sprint.mission.discodeit.dto.message.MessageDto;
 import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
+import com.sprint.mission.discodeit.dto.page.PageResponse;
 import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.service.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.data.domain.Pageable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +59,19 @@ public class MessageController implements MessageApi {
   //메시지 목록 조회
   @GetMapping
   @Override
-  public ResponseEntity<List<Message>> findAllByChannelId(
-      @RequestParam("channelId") UUID channelId) {
-    List<Message> messages = messageService.findAllByChannelId(channelId);
-    return ResponseEntity.status(HttpStatus.OK).body(messages);
+  public ResponseEntity<PageResponse<Message>> findAllByChannelId(
+      @RequestParam("channelId") UUID channelId, @RequestParam("pageable") Pageable pageable) {
+    Page<Message> messagesPage = messageService.findAllByChannelId(channelId, pageable);
+
+    PageResponse<Message> response = new PageResponse<>(
+        messagesPage.getContent(),
+        messagesPage.getNumber(),
+        messagesPage.getSize(),
+        messagesPage.hasNext(),
+        messagesPage.getTotalElements()
+    );
+
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   //메시지 수정

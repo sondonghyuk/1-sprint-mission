@@ -36,8 +36,8 @@ public class Message extends BaseUpdatableEntity implements Serializable {
   @JoinColumn(name = "author_id")
   private User author;
 
-  @OneToMany(mappedBy = "message", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "message_id")
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "message_id") // Message에서 외래 키를 관리
   private List<BinaryContent> attachments;
 
   //생성자
