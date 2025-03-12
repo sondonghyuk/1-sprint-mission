@@ -52,7 +52,8 @@ public interface BinaryContentApi {
   @Operation(summary = "파일 다운로드")
   @ApiResponse(
       responseCode = "200",
-      description = "파일 다운로드 성공"
+      description = "파일 다운로드 성공",
+      content = @Content(schema = @Schema(type = "string", format = "binary"))
   )
   ResponseEntity<?> download(@Parameter(description = "다운로드할 파일 ID") UUID binaryContentID);
 }
