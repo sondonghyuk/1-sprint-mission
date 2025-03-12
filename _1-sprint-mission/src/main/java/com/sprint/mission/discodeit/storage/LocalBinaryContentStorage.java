@@ -2,14 +2,16 @@ package com.sprint.mission.discodeit.storage;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +19,10 @@ import java.nio.file.*;
 import java.util.UUID;
 
 @Configuration
+@Slf4j
 public class LocalBinaryContentStorage implements BinaryContentStorage {
+
+  private static final Logger logger = LoggerFactory.getLogger(LocalBinaryContentStorage.class);
 
   private final Path root;
 
@@ -29,7 +34,9 @@ public class LocalBinaryContentStorage implements BinaryContentStorage {
   public void init() {
     try {
       Files.createDirectories(root);
+      logger.info("Root directory created: " + root);
     } catch (IOException e) {
+      logger.error("파일 생성 실패: " + root, e);
       throw new RuntimeException("파일 생성 실패", e);
     }
   }

@@ -28,8 +28,10 @@ spring:
   logging:
     level:
       org.hibernate.SQL: DEBUG  # SQL 실행 로그를 DEBUG 레벨로 출력
+      org.springframework.context: DEBUG
 
+discodeit:
   storage:
     type: local
     local:
-      root-path: /storage/binaryContent
+      root-path: C:/storage/binaryContent
