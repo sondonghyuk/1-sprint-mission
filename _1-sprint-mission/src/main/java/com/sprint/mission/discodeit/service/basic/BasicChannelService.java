@@ -41,7 +41,7 @@ public class BasicChannelService implements ChannelService {
     return channelMapper.toDto(savedChannel);
   }
 
-  //@Transactional
+  @Transactional
   @Override
   public ChannelDto create(PrivateChannelCreateRequest privateChannelCreateRequest) {
     Channel channel = new Channel(ChannelType.PRIVATE, null, null);
@@ -96,7 +96,7 @@ public class BasicChannelService implements ChannelService {
     return channelMapper.toDto(savedChannel);
   }
 
-  //@Transactional
+  @Transactional
   @Override
   public void deleteById(UUID channelId) {
     Channel channel = channelRepository.findById(channelId)
