@@ -41,7 +41,7 @@ public class BasicMessageService implements MessageService {
   private final BinaryContentStorage binaryContentStorage;
   private final PageResponseMapper pageResponseMapper;
 
-  @Transactional
+  //@Transactional
   @Override
   public MessageDto create(MessageCreateRequest messageCreateRequest,
       List<BinaryContentCreateRequest> binaryContentCreateRequests) {
@@ -73,10 +73,11 @@ public class BasicMessageService implements MessageService {
   }
 
   @Override
-  public Message findById(UUID messageId) {
-    return messageRepository.findById(messageId)
+  public MessageDto findById(UUID messageId) {
+    Message findedMessage = messageRepository.findById(messageId)
         .orElseThrow(
             () -> new NoSuchElementException("Message with id " + messageId + " not found"));
+    return messageMapper.toDto(findedMessage);
   }
 
   @Override
@@ -106,7 +107,7 @@ public class BasicMessageService implements MessageService {
   }
 
 
-  @Transactional
+  //@Transactional
   @Override
   public void delete(UUID messageId) {
     Message message = messageRepository.findById(messageId)

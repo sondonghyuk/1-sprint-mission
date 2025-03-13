@@ -16,7 +16,7 @@ public interface MessageService {
   MessageDto create(MessageCreateRequest messageCreateRequest,
       List<BinaryContentCreateRequest> binaryContentCreateRequests); //메시지 생성
 
-  Message findById(UUID messageId); // 메시지 단일 조회
+  MessageDto findById(UUID messageId); // 메시지 단일 조회
 
   Page<Message> findAllByChannelId(UUID channelId, Pageable pageable); // 모든 메시지 조회
 

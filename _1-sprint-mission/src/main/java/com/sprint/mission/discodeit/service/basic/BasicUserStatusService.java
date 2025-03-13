@@ -26,7 +26,7 @@ public class BasicUserStatusService implements UserStatusService {
   private final UserStatusMapper userStatusMapper;
 
   @Override
-  public UserStatus create(UserStatusCreateRequest userStatusCreateRequest) {
+  public UserStatusDto create(UserStatusCreateRequest userStatusCreateRequest) {
     //User 존재하지 않으면 예외 발생
     if (!userRepository.existsById(userStatusCreateRequest.userId())) {
       throw new NoSuchElementException(
@@ -42,31 +42,34 @@ public class BasicUserStatusService implements UserStatusService {
 
     UserStatus userStatus = new UserStatus(user,
         userStatusCreateRequest.lastActiveAt());
-    return userStatusRepository.save(userStatus);
+    UserStatus saved = userStatusRepository.save(userStatus);
+    return userStatusMapper.toDto(saved);
   }
 
   @Override
-  public UserStatus findById(UUID userStatusId) {
-    return userStatusRepository.findById(userStatusId)
+  public UserStatusDto findById(UUID userStatusId) {
+    UserStatus saved = userStatusRepository.findById(userStatusId)
         .orElseThrow(
             () -> new NoSuchElementException("UserStatus with id " + userStatusId + " not found"));
+    return userStatusMapper.toDto(saved);
   }
 
   @Override
-  public List<UserStatus> findAll() {
-    return userStatusRepository.findAll().stream().toList();
+  public List<UserStatusDto> findAll() {
+    return userStatusRepository.findAll().stream().map(userStatusMapper::toDto).toList();
   }
 
 
   @Override
-  public UserStatus update(UUID userStatusId, UserStatusUpdateRequest userStatusUpdateRequest) {
+  public UserStatusDto update(UUID userStatusId, UserStatusUpdateRequest userStatusUpdateRequest) {
     UserStatus userStatus = userStatusRepository.findById(userStatusId)
         .orElseThrow(
             () -> new NoSuchElementException("UserStatus with id " + userStatusId + " not found"));
 
     userStatus.updateLastActiveAt(userStatus.getLastActiveAt());
 
-    return userStatusRepository.save(userStatus);
+    UserStatus saved = userStatusRepository.save(userStatus);
+    return userStatusMapper.toDto(saved);
 
   }
 

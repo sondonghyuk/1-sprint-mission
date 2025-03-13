@@ -17,7 +17,7 @@ public class UserCreateTest {
   private UserRepository userRepository;
 
   @Test
-  @Transactional
+  //@Transactional
   public void userCreateTest() {
     // Given: 새 사용자 생성
     User user_profile_null = new User("testuser", "testuser@example.com", "password123!", null);

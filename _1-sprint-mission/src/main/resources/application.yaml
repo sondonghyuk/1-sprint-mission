@@ -28,6 +28,7 @@ spring:
         hibernate:
           format_sql: true #SQL을 가독성 있게 출력
           highlight_sql: true #SQL 하이라이트
+          dialect: org.hibernate.dialect.PostgreSQLDialect
 
   logging:
     level:

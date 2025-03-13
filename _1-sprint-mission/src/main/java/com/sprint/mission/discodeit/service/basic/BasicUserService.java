@@ -35,7 +35,7 @@ public class BasicUserService implements UserService {
   private final UserMapper userMapper;
   private final BinaryContentStorage binaryContentStorage;
 
-  @Transactional
+  //@Transactional
   @Override
   public UserDto create(UserCreateRequst userCreateRequst,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
@@ -79,7 +79,7 @@ public class BasicUserService implements UserService {
         .toList();
   }
 
-  @Transactional
+  //@Transactional
   @Override
   public UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {

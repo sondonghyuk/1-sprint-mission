@@ -11,6 +11,7 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ReadStatusService;
+import lombok.Locked.Read;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,10 +61,11 @@ public class BasicReadStatusService implements ReadStatusService {
   }
 
   @Override
-  public ReadStatus findById(UUID readStatusId) {
-    return readStatusRepository.findById(readStatusId)
+  public ReadStatusDto findById(UUID readStatusId) {
+    ReadStatus find = readStatusRepository.findById(readStatusId)
         .orElseThrow(
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
+    return readStatusMapper.toDto(find);
   }
 
   @Override

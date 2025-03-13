@@ -23,7 +23,7 @@ public class BasicBinaryContentService implements BinaryContentService {
   private final BinaryContentStorage binaryContentStorage;
 
   @Override
-  public BinaryContent create(BinaryContentCreateRequest binaryContentCreateRequest) {
+  public BinaryContentDto create(BinaryContentCreateRequest binaryContentCreateRequest) {
     if (binaryContentCreateRequest.fileName() == null
         || binaryContentCreateRequest.contentType() == null) {
       throw new IllegalArgumentException("File name ane content type is null");
@@ -35,7 +35,8 @@ public class BasicBinaryContentService implements BinaryContentService {
         binaryContentCreateRequest.contentType()
     );
     binaryContentStorage.put(binaryContent.getId(), binaryContentCreateRequest.bytes());
-    return binaryContentRepository.save(binaryContent);
+    BinaryContent saved = binaryContentRepository.save(binaryContent);
+    return binaryContentMapper.toDto(saved);
   }
 
   @Override
