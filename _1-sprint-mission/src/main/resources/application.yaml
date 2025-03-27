@@ -20,21 +20,14 @@ spring:
     password: discodeit1234
 
   jpa:
-    open-in-view: false #OSIV 비활성화
-    hibernate:
-      ddl-auto: update
-      show-sql: true
-      properties:
-        hibernate:
-          format_sql: true #SQL을 가독성 있게 출력
-          highlight_sql: true #SQL 하이라이트
-          dialect: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
 
   logging:
     level:
       org.hibernate.SQL: DEBUG  # SQL 실행 로그를 DEBUG 레벨로 출력
-      org.springframework.context: DEBUG
-      com.zaxxer.hikari: DEBUG
+      org.hibernate.orm.jdbc.bind: trace
 
 discodeit:
   storage:
