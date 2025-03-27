@@ -1,7 +1,7 @@
 package com.sprint.mission.discodeit.entity;
 
 
-import jakarta.persistence.CascadeType;
+import com.sprint.mission.discodeit.entity.base.BaseUpdatableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,7 +13,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.UUID;
 import lombok.NoArgsConstructor;
 
 @Getter

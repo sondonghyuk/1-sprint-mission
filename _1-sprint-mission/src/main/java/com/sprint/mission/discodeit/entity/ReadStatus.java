@@ -1,20 +1,17 @@
 package com.sprint.mission.discodeit.entity;
 
-import jakarta.persistence.CascadeType;
+import com.sprint.mission.discodeit.entity.base.BaseUpdatableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import javax.xml.stream.events.Comment;
 import lombok.AccessLevel;
 import lombok.Getter;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.UUID;
 import lombok.NoArgsConstructor;
 
 @Getter
