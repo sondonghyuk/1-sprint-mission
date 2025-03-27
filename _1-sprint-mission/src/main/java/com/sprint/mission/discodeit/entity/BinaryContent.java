@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Table(name = "binary_contents")
 //바이너리 데이터(이미지,파일)를 표현하는 도메인 모델
 //사용자의 프로필 이미지,메시지에 첨부된 파일을 저장하기 위해 활용
-public class BinaryContent extends Base implements Serializable {
+public class BinaryContent extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
   //메타 정보

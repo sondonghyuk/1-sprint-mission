@@ -1,26 +1,23 @@
 package com.sprint.mission.discodeit.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import java.time.Instant;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 @Getter
-public abstract class BaseUpdatableEntity extends Base {
-
-  private static final long serialVersionUID = 1L; //직렬화 버전
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@MappedSuperclass
+public abstract class BaseUpdatableEntity extends BaseEntity {
 
   @LastModifiedDate
+  @Column(columnDefinition = "timestamp with time zone")
   private Instant updatedAt;
-
-  public BaseUpdatableEntity() {
-    super();
-    this.updatedAt = super.getCreatedAt();
-  }
 
   //update 메소드
   public void updateTimestamp() {
