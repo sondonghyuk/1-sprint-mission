@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sprint.mission.discodeit.entity.base.BaseUpdatableEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,39 +16,33 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.regex.Pattern;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseUpdatableEntity implements Serializable {
+public class User extends BaseUpdatableEntity {
 
-  private static final long serialVersionUID = 1L; //직렬화 버전
   //필드
-  @Column(nullable = false, unique = true, length = 50)
+  @Column(length = 50, nullable = false, unique = true)
   private String username; //유저이름
 
-  @Column(nullable = false, unique = true, length = 100)
-  private String email; //이메일(아이디)
+  @Column(length = 100, nullable = false, unique = true)
+  private String email; //이메일
 
-  @Column(nullable = false, length = 60)
-  private String password;//비밀번호
+  @Column(length = 60, nullable = false)
+  private String password; //비밀번호
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "profile_id") // BinaryContent의 ID를 참조하는 컬럼
+  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @JoinColumn(name = "profile_id", columnDefinition = "uuid") // BinaryContent의 ID를 참조하는 컬럼
   private BinaryContent profile;
 
-  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference //순환 참조 문제를 해결
+  @Setter(AccessLevel.PROTECTED)
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private UserStatus status;
 
-  //private transient String password;//비밀번호
-  //프론트 조건에 맞춰야 하므로 주석처리
-  //private String phoneNumber;//전화번호
-  //private String address; //주소
-
-  //사용자 검사 필드(클래스에서 변경되지 않는 공용 데이터)
-  // 전화번호 010-0000-0000 만 허용
-  //private static final Pattern PHONE_PATTERN = Pattern.compile("010-\\d{4}-\\d{4}");
   // 기본적인 이메일 형식
   private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
   //비밀번호 : 숫자 하나 이상, 알파벳 하나 이상, 특수문자 하나 이상, 8자 이상
