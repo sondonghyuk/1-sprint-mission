@@ -35,7 +35,7 @@ public class User extends BaseUpdatableEntity {
   private String password; //비밀번호
 
   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-  @JoinColumn(name = "profile_id", columnDefinition = "uuid") // BinaryContent의 ID를 참조하는 컬럼
+  @JoinColumn(name = "profile_id", columnDefinition = "uuid")
   private BinaryContent profile;
 
   @JsonManagedReference //순환 참조 문제를 해결

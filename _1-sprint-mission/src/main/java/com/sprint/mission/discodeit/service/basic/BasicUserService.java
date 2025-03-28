@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
 import com.sprint.mission.discodeit.entity.BinaryContent;
 import com.sprint.mission.discodeit.entity.User;
+import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.mapper.UserMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
@@ -31,7 +32,6 @@ public class BasicUserService implements UserService {
 
   private final BinaryContentRepository binaryContentRepository;
   private final UserStatusRepository userStatusRepository;
-  private final BinaryContentService binaryContentService;
   private final UserMapper userMapper;
   private final BinaryContentStorage binaryContentStorage;
 
@@ -42,11 +42,8 @@ public class BasicUserService implements UserService {
     //username,email 중복 확인
     validateUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
 
-    //프로필 이미지 Id 체크
-    UUID profileId = profileIdCheck(profileCreateRequest);
-    BinaryContent profile = binaryContentRepository.findById(profileId)
-        .orElseThrow(
-            () -> new NoSuchElementException("Profile with id " + profileId + " not found"));
+    //프로필 이미지 체크
+    BinaryContent profile = profileIdCheck(profileCreateRequest);
 
     //User 생성
     User user = new User(
@@ -55,19 +52,20 @@ public class BasicUserService implements UserService {
         userCreateRequst.password(),
         profile
     );
-    User createdUser = userRepository.save(user);
 
-    //UserStatus 생성
-    userStatusRepository.save(createdUser.getStatus());
+    Instant now = Instant.now();
+    UserStatus userStatus = new UserStatus(user, now);
 
-    return userMapper.toDto(createdUser);
+    userRepository.save(user);
+
+    return userMapper.toDto(user);
   }
 
 
   @Override
   public UserDto findById(UUID userId) {
     return userRepository.findById(userId)
-        .map(user -> userMapper.toDto(user))
+        .map(userMapper::toDto)
         .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
   }
 
@@ -75,7 +73,7 @@ public class BasicUserService implements UserService {
   public List<UserDto> findAll() {
     return userRepository.findAll()
         .stream()
-        .map(user -> userMapper.toDto(user))
+        .map(userMapper::toDto)
         .toList();
   }
 
@@ -83,13 +81,13 @@ public class BasicUserService implements UserService {
   @Override
   public UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
+
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
+
     validateUsernameAndEmail(userUpdateRequest.newUsername(), userUpdateRequest.newEmail());
-    UUID profileId = profileIdCheck(profileCreateRequest);
-    BinaryContent profile = binaryContentRepository.findById(profileId)
-        .orElseThrow(
-            () -> new NoSuchElementException("Profile with id " + profileId + " not found"));
+
+    BinaryContent profile = profileIdCheck(profileCreateRequest);
 
     user.update(
         userUpdateRequest.newUsername(),
@@ -97,34 +95,34 @@ public class BasicUserService implements UserService {
         userUpdateRequest.newPassword(),
         profile
     );
-    User savedUser = userRepository.save(user);
-    return userMapper.toDto(savedUser);
+
+    return userMapper.toDto(user);
   }
 
   @Transactional
   @Override
   public void deleteById(UUID userId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
-    //관련된 프로필 이미지 삭제
-    if (user.getProfile().getId() != null) {
-      binaryContentRepository.deleteById(user.getProfile().getId());
+    //User 삭제시 binaryContent, userStatus 삭제
+    if (userRepository.existsById(userId)) {
+      throw new NoSuchElementException("User with id " + userId + " not found");
     }
-    //UserStatus 삭제
-    userStatusRepository.deleteByUserId(user.getId());
-    //유저 삭제
-    userRepository.deleteById(user.getId());
+
+    userRepository.deleteById(userId);
   }
 
-  //프로필 이미지 Id 체크
-  public UUID profileIdCheck(Optional<BinaryContentCreateRequest> profileCreateRequest) {
-    UUID profileId = profileCreateRequest.map(p -> {
-      binaryContentStorage.put(UUID.randomUUID(), p.bytes());
-      BinaryContent binaryContent = new BinaryContent(p.fileName(), (long) p.bytes().length,
-          p.contentType());
-      return binaryContentRepository.save(binaryContent).getId();
-    }).orElse(null);
-    return profileId;
+  //프로필 이미지 체크
+  public BinaryContent profileIdCheck(Optional<BinaryContentCreateRequest> profileCreateRequest) {
+    BinaryContent profile = profileCreateRequest
+        .map(profileRequest -> {
+          String fileName = profileRequest.fileName();
+          String contentType = profileRequest.contentType();
+          byte[] bytes = profileRequest.bytes();
+          BinaryContent binaryContent = new BinaryContent(fileName, (long) bytes.length,
+              contentType);
+          return binaryContent;
+        })
+        .orElse(null);
+    return profile;
   }
 
   //username, email 다른 유저와 같은지 체크
