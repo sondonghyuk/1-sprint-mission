@@ -7,18 +7,15 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.Getter;
-import java.io.Serializable;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Table;
 
 
-@Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "channels")
-public class Channel extends BaseUpdatableEntity implements Serializable {
-
-  private static final long serialVersionUID = 1L; //직렬화 버전
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Channel extends BaseUpdatableEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
@@ -31,14 +28,9 @@ public class Channel extends BaseUpdatableEntity implements Serializable {
   private String description; // 채널 설명
 
   public Channel(ChannelType type, String name, String description) {
-    super();
-    //검증
     if (type == null) {
       throw new IllegalArgumentException("채널 타입은 필수입니다.(PUBLIC,PRIVATE)");
     }
-//    if (name.trim().isEmpty() || name.length() > 30) {
-//      throw new IllegalArgumentException("채널 이름은 1~30자 사이여야 합니다.");
-//    }
     if (description != null && description.length() > 100) {
       throw new IllegalArgumentException("채널 설명은 최대 100자까지 가능합니다.");
     }
