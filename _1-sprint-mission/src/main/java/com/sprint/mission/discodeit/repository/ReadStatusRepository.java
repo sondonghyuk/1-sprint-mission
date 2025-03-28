@@ -13,5 +13,7 @@ import java.util.UUID;
 @Repository
 public interface ReadStatusRepository extends JpaRepository<ReadStatus, UUID> {
 
+  List<ReadStatus> findAllByUserId(UUID userId);
+
   void deleteAllByChannelId(UUID id);
 }
