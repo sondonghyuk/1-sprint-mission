@@ -11,6 +11,7 @@ import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ReadStatusService;
+import java.time.Instant;
 import lombok.Locked.Read;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,61 +31,60 @@ public class BasicReadStatusService implements ReadStatusService {
   private final ChannelRepository channelRepository;
   private final ReadStatusMapper readStatusMapper;
 
+  @Transactional
   @Override
   public ReadStatusDto create(ReadStatusCreateRequest readStatusCreateRequest) {
+    UUID userId = readStatusCreateRequest.userId();
+    UUID channelId = readStatusCreateRequest.channelId();
+
     //유저와 채널 존재 여부 확인
-    if (!userRepository.existsById(readStatusCreateRequest.userId())) {
-      throw new NoSuchElementException(
-          "User with id " + readStatusCreateRequest.userId() + " does not exist");
-    }
-    if (channelRepository.existsById(readStatusCreateRequest.channelId())) {
-      throw new NoSuchElementException(
-          "Channel with id " + readStatusCreateRequest.channelId() + " does not exist");
-    }
+    User user = userRepository.findById(userId)
+        .orElseThrow(
+            () -> new NoSuchElementException("User with id " + userId + " does not exist"));
+    Channel channel = channelRepository.findById(channelId)
+        .orElseThrow(
+            () -> new NoSuchElementException("Channel with id " + channelId + " does not exist")
+        );
+
     //이미 존재하는 경우 예외 발생
-    if (readStatusRepository.findAllByUserId(readStatusCreateRequest.userId()).stream()
-        .anyMatch(
-            readStatus -> readStatus.getChannel().getId()
-                .equals(readStatusCreateRequest.channelId()))) {
+    if (readStatusRepository.existsByUserIdAndChannelId(user.getId(), channel.getId())) {
       throw new IllegalArgumentException(
-          "ReadStatus with userId " + readStatusCreateRequest.userId() + " and channelId "
-              + readStatusCreateRequest.channelId() + " already exists");
+          "ReadStatus with userId " + userId + " and channelId " + channelId + " already exists");
     }
-    User user = userRepository.findById(readStatusCreateRequest.userId()).orElseThrow(
-        () -> new NoSuchElementException(
-            "User with id " + readStatusCreateRequest.userId() + " not found"));
-    Channel channel = channelRepository.findById(readStatusCreateRequest.channelId()).orElseThrow(
-        () -> new NoSuchElementException(
-            "Channel with id " + readStatusCreateRequest.channelId() + " not found"));
-    ReadStatus readStatus = new ReadStatus(user, channel, readStatusCreateRequest.lastReadAt());
-    ReadStatus savedReadStatus = readStatusRepository.save(readStatus);
-    return readStatusMapper.toDto(savedReadStatus);
+
+    Instant lastReadAt = readStatusCreateRequest.lastReadAt();
+    ReadStatus readStatus = new ReadStatus(user, channel, lastReadAt);
+    readStatusRepository.save(readStatus);
+
+    return readStatusMapper.toDto(readStatus);
   }
 
   @Override
   public ReadStatusDto findById(UUID readStatusId) {
-    ReadStatus find = readStatusRepository.findById(readStatusId)
+    return readStatusRepository.findById(readStatusId)
+        .map(readStatusMapper::toDto)
         .orElseThrow(
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
-    return readStatusMapper.toDto(find);
   }
 
   @Override
   public List<ReadStatusDto> findAllByUserId(UUID userId) {
-    List<ReadStatus> readStatuses = readStatusRepository.findAllByUserId(userId).stream().toList();
-    return readStatuses.stream().map(readStatusMapper::toDto).toList();
+    return readStatusRepository.findAllByUserId(userId).stream()
+        .map(readStatusMapper::toDto)
+        .toList();
   }
 
+  @Transactional
   @Override
   public ReadStatusDto update(UUID readStatusId, ReadStatusUpdateRequest readStatusUpdateRequest) {
     ReadStatus readStatus = readStatusRepository.findById(readStatusId)
         .orElseThrow(
             () -> new NoSuchElementException("ReadStatus with id " + readStatusId + " not found"));
     readStatus.updateLastReadAt(readStatusUpdateRequest.newLastReadAt());
-    ReadStatus savedReadStatus = readStatusRepository.save(readStatus);
-    return readStatusMapper.toDto(savedReadStatus);
+    return readStatusMapper.toDto(readStatus);
   }
 
+  @Transactional
   @Override
   public void delete(UUID readStatusId) {
     if (!readStatusRepository.existsById(readStatusId)) {
