@@ -6,41 +6,46 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
+import org.hibernate.annotations.BatchSize;
 
-@Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "messages")
-public class Message extends BaseUpdatableEntity implements Serializable {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Message extends BaseUpdatableEntity {
 
-  private static final long serialVersionUID = 1L; //직렬화 버전
-
-  @Column(columnDefinition = "TEXT")
+  @Column(columnDefinition = "TEXT", nullable = false)
   private String content; //메세지내용
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "channel_id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "channel_id", columnDefinition = "uuid")
   private Channel channel;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "author_id")
+  @JoinColumn(name = "author_id", columnDefinition = "uuid")
   private User author;
 
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "message_id") // Message에서 외래 키를 관리
-  private List<BinaryContent> attachments;
 
-  //생성자
+  @BatchSize(size = 100) // 한 번에 가져오는 데어터 수
+  @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "message_attachments",
+      joinColumns = @JoinColumn(name = "message_id"), //message_attachments 테이블에서 Message 테이블의 외래 키 컬럼 이름을 message_id로 지정
+      inverseJoinColumns = @JoinColumn(name = "attachment_id") // message_attachments 테이블에서 BinaryContent 테이블의 외래 키 컬럼 이름을 attachment_id로 지정
+  )
+  private List<BinaryContent> attachments = new ArrayList<>();
+
   public Message(String content, Channel channel, User author, List<BinaryContent> attachments) {
-    super();
     // 검증
     if (content == null || content.trim().isEmpty() || content.length() > 500) {
       throw new IllegalArgumentException("메시지 내용은 1~500자 사이여야 합니다.");
