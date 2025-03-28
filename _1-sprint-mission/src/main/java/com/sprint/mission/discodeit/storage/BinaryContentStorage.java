@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 //바이너리 데이터의 저장/로드를 담당하는 컴포넌트입니다.
 public interface BinaryContentStorage {
 
-  UUID put(UUID id, byte[] bytes);
+  UUID put(UUID binaryContentId, byte[] bytes);
 
-  InputStream get(UUID id);
+  InputStream get(UUID binaryContentId);
 
   ResponseEntity<?> download(BinaryContentDto binaryContentDto);
 }

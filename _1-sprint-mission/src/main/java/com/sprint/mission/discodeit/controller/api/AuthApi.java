@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.api;
+package com.sprint.mission.discodeit.controller.api;
 
 import com.sprint.mission.discodeit.dto.login.LoginRequest;
 import com.sprint.mission.discodeit.dto.user.UserDto;

@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.api;
+package com.sprint.mission.discodeit.controller.api;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import com.sprint.mission.discodeit.entity.BinaryContent;
@@ -50,10 +50,13 @@ public interface BinaryContentApi {
 
   //파일 다운로드
   @Operation(summary = "파일 다운로드")
-  @ApiResponse(
-      responseCode = "200",
-      description = "파일 다운로드 성공",
-      content = @Content(schema = @Schema(type = "string", format = "binary"))
-  )
-  ResponseEntity<?> download(@Parameter(description = "다운로드할 파일 ID") UUID binaryContentID);
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200", description = "파일 다운로드 성공",
+          content = @Content(schema = @Schema(implementation = Resource.class))
+      )
+  })
+  ResponseEntity<?> download(
+      @Parameter(description = "다운로드할 파일 ID") UUID binaryContentId
+  );
 }

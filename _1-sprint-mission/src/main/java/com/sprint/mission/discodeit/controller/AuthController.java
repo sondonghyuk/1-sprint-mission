@@ -1,9 +1,8 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.api.AuthApi;
+import com.sprint.mission.discodeit.controller.api.AuthApi;
 import com.sprint.mission.discodeit.dto.login.LoginRequest;
 import com.sprint.mission.discodeit.dto.user.UserDto;
-import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

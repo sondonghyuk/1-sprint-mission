@@ -6,8 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/AuthApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/api/AuthApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/BinaryContentApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/api/BinaryContentApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/ChannelApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/api/ChannelApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/MessageApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/api/MessageApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/ReadStatusApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/api/ReadStatusApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/api/UserApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/api/UserApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/BinaryContentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/BinaryContentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/ChannelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/ChannelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/ReadStatusController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/ReadStatusController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/storage/BinaryContentStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/storage/BinaryContentStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/storage/LocalBinaryContentStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/storage/LocalBinaryContentStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/schema.sql" afterDir="false" />
     </list>
     <list id="c3cb6b49-8fd5-4a19-8432-fd4e39d5594c" name="Changes by iuhoo" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -270,7 +284,7 @@
       <workItem from="1741785853652" duration="3649000" />
       <workItem from="1743062953028" duration="722000" />
       <workItem from="1743063701826" duration="5845000" />
-      <workItem from="1743134470196" duration="4712000" />
+      <workItem from="1743134470196" duration="7328000" />
     </task>
     <servers />
   </component>

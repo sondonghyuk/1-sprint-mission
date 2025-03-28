@@ -1,14 +1,12 @@
 package com.sprint.mission.discodeit.controller;
 
-import com.sprint.mission.discodeit.api.UserApi;
+import com.sprint.mission.discodeit.controller.api.UserApi;
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
 import com.sprint.mission.discodeit.dto.user.UserCreateRequst;
 import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
 import com.sprint.mission.discodeit.dto.userstatus.UserStatusDto;
 import com.sprint.mission.discodeit.dto.userstatus.UserStatusUpdateRequest;
-import com.sprint.mission.discodeit.entity.User;
-import com.sprint.mission.discodeit.entity.UserStatus;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
 import jakarta.validation.Valid;

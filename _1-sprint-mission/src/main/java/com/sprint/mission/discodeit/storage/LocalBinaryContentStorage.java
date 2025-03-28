@@ -2,78 +2,92 @@ package com.sprint.mission.discodeit.storage;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentDto;
 import jakarta.annotation.PostConstruct;
+import java.io.OutputStream;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 import java.util.UUID;
+import org.springframework.stereotype.Component;
 
-@Configuration
-@Slf4j
+@ConditionalOnProperty(name = "discodeit.storage.type", havingValue = "local") // 조건부 Bean으로 등록
+@Component
 public class LocalBinaryContentStorage implements BinaryContentStorage {
-
-  private static final Logger logger = LoggerFactory.getLogger(LocalBinaryContentStorage.class);
 
   private final Path root;
 
-  public LocalBinaryContentStorage(@Value("${discodeit.storage.local.root-path}") String rootPath) {
-    this.root = Paths.get(rootPath).toAbsolutePath().normalize(); //절대경로를 변환하고 정리해 불필요한 요소 제거
+  // 설정 정보를 외부에서 주입
+  public LocalBinaryContentStorage(@Value("${discodeit.storage.local.root-path}") Path root) {
+    this.root = root;
   }
 
-  @PostConstruct
-  public void init() {
+  @PostConstruct //Bean 등록 후 자동으로 호출되는 메소드를 정의
+  public void init() { //Path root 디렉토리 초기화
     try {
       Files.createDirectories(root);
-      logger.info("Root directory created: " + root);
     } catch (IOException e) {
-      logger.error("파일 생성 실패: " + root, e);
       throw new RuntimeException("파일 생성 실패", e);
     }
   }
 
-  private Path resolvePath(UUID id) {
-    return root.resolve(id.toString());
+  @Override
+  public UUID put(UUID binaryContentId, byte[] bytes) {
+    Path filePath = resolvePath(binaryContentId);
+    if (Files.exists(filePath)) {
+      throw new IllegalArgumentException("File with key " + binaryContentId + " already exists");
+    }
+    try (OutputStream outputStream = Files.newOutputStream(filePath)) {
+      outputStream.write(bytes);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return binaryContentId;
   }
 
   @Override
-  public UUID put(UUID id, byte[] bytes) {
-    Path path = resolvePath(id);
+  public InputStream get(UUID binaryContentId) {
+    Path filePath = resolvePath(binaryContentId);
+    if (Files.notExists(filePath)) {
+      throw new NoSuchElementException("File with key " + binaryContentId + " does not exist");
+    }
     try {
-      Files.write(path, bytes, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-      return id;
+      return Files.newInputStream(filePath);
     } catch (IOException e) {
-      throw new RuntimeException("파일 저장 실패: " + id, e);
+      e.printStackTrace();
+      throw new RuntimeException(e);
     }
   }
 
-  @Override
-  public InputStream get(UUID id) {
-    Path path = resolvePath(id);
-    try {
-      return Files.newInputStream(path, StandardOpenOption.READ);
-    } catch (IOException e) {
-      throw new RuntimeException("파일 읽기 실패: " + id, e);
-    }
+  private Path resolvePath(UUID key) {
+    return root.resolve(key.toString());
   }
 
+  //파일의 메타 데이터와 바이너리 데이터를 조합해 바로 다운로드할 수 있는 HTTP 응답으로 변환
   @Override
-  public ResponseEntity<?> download(BinaryContentDto binaryContentDto) {
-    Path path = resolvePath(binaryContentDto.id());
-    Resource resource = new FileSystemResource(path.toFile());
+  public ResponseEntity<Resource> download(BinaryContentDto metaData) {
+    InputStream inputStream = get(metaData.id());
+    Resource resource = new InputStreamResource(inputStream);
 
-    return ResponseEntity.ok()
+    return ResponseEntity
+        .status(HttpStatus.OK)
         .header(HttpHeaders.CONTENT_DISPOSITION,
-            "attachment; filename=\"" + binaryContentDto.fileName() + "\"")
+            "attachment; filename=\"" + metaData.fileName() + "\"")
+        .header(HttpHeaders.CONTENT_TYPE, metaData.contentType())
+        .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(metaData.size()))
         .body(resource);
   }
 }

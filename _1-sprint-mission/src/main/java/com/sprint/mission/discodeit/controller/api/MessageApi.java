@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.api;
+package com.sprint.mission.discodeit.controller.api;
 
 import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
 import com.sprint.mission.discodeit.dto.message.MessageDto;
