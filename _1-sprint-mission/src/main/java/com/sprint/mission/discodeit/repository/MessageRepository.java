@@ -13,15 +13,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, UUID> {
 
-  Message save(Message message);
-
-  Optional<Message> findById(UUID messageId);
-
-  List<Message> findAllByChannelId(UUID channelId);
-
-  boolean existsById(UUID messageId);
-
-  void deleteById(UUID messageId);
-
   void deleteAllByChannelId(UUID channelId);
 }

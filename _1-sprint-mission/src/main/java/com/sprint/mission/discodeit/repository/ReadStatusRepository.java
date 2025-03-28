@@ -13,17 +13,5 @@ import java.util.UUID;
 @Repository
 public interface ReadStatusRepository extends JpaRepository<ReadStatus, UUID> {
 
-  ReadStatus save(ReadStatus readStatus);
-
-  Optional<ReadStatus> findById(UUID readStatusId);
-
-  List<ReadStatus> findAllByUserId(UUID userId);
-
-  List<ReadStatus> findAllByChannelId(UUID id);
-
-  boolean existsById(UUID id);
-
-  void deleteById(UUID id);
-
   void deleteAllByChannelId(UUID id);
 }

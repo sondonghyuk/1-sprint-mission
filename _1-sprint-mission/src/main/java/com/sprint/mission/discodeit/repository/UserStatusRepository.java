@@ -11,17 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserStatusRepository extends JpaRepository<UserStatus, UUID> {
 
-  UserStatus save(UserStatus userStatus);
-
-  Optional<UserStatus> findById(UUID userStatusId);
-
   Optional<UserStatus> findByUserId(UUID userId);
 
-  List<UserStatus> findAll();
-
-  boolean existsById(UUID userStatusId);
-
-  void deleteById(UUID userStatusId);
-
-  void deleteByUserId(UUID userId);
 }

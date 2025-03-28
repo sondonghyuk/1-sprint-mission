@@ -10,15 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-  User save(User user);
-
-  Optional<User> findById(UUID userId);
-
   Optional<User> findByUsername(String username);
-
-  List<User> findAll();
-
-  void deleteById(UUID userId);
 
   boolean existsById(UUID userId);
 
