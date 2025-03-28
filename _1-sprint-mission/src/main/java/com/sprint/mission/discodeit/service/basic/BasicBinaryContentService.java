@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +23,12 @@ public class BasicBinaryContentService implements BinaryContentService {
   private final BinaryContentMapper binaryContentMapper;
   private final BinaryContentStorage binaryContentStorage;
 
+  @Transactional
   @Override
   public BinaryContentDto create(BinaryContentCreateRequest binaryContentCreateRequest) {
     if (binaryContentCreateRequest.fileName() == null
         || binaryContentCreateRequest.contentType() == null) {
-      throw new IllegalArgumentException("File name ane content type is null");
+      throw new IllegalArgumentException("File name , content type is null");
     }
 
     BinaryContent binaryContent = new BinaryContent(
@@ -34,27 +36,29 @@ public class BasicBinaryContentService implements BinaryContentService {
         (long) binaryContentCreateRequest.bytes().length,
         binaryContentCreateRequest.contentType()
     );
+    binaryContentRepository.save(binaryContent);
     binaryContentStorage.put(binaryContent.getId(), binaryContentCreateRequest.bytes());
-    BinaryContent saved = binaryContentRepository.save(binaryContent);
-    return binaryContentMapper.toDto(saved);
-  }
-
-  @Override
-  public BinaryContentDto findById(UUID binaryContentId) {
-    BinaryContent binaryContent = binaryContentRepository.findById(binaryContentId)
-        .orElseThrow(() -> new NoSuchElementException(
-            "BinaryContent with id " + binaryContentId + " not found"));
     return binaryContentMapper.toDto(binaryContent);
   }
 
   @Override
+  public BinaryContentDto findById(UUID binaryContentId) {
+    return binaryContentRepository.findById(binaryContentId)
+        .map(binaryContentMapper::toDto)
+        .orElseThrow(() -> new NoSuchElementException(
+            "BinaryContent with id " + binaryContentId + " not found"
+        ));
+  }
+
+  @Override
   public List<BinaryContentDto> findAllByIdIn(List<UUID> binaryContentIds) {
-    return binaryContentRepository.findAllByIdIn(binaryContentIds)
+    return binaryContentRepository.findAllById(binaryContentIds)
         .stream()
         .map(binaryContentMapper::toDto)
         .toList();
   }
 
+  @Transactional
   @Override
   public void deleteById(UUID binaryContentId) {
     if (!binaryContentRepository.existsById(binaryContentId)) {
