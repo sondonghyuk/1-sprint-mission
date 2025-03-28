@@ -17,6 +17,8 @@ import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
+import java.time.Instant;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -93,10 +95,18 @@ public class BasicMessageService implements MessageService {
 
   @Transactional(readOnly = true)
   @Override
-  public PageResponse<MessageDto> findAllByChannelId(UUID channelId, Pageable pageable) {
-    Slice<MessageDto> slice = messageRepository.findAllByChannelId(channelId, pageable)
+  public PageResponse<MessageDto> findAllByChannelId(UUID channelId, Instant createdAt,
+      Pageable pageable) {
+    Slice<MessageDto> slice = messageRepository.findAllByChannelIdWithAuthor(
+            channelId, Optional.ofNullable(createdAt).orElse(Instant.now()), pageable)
         .map(messageMapper::toDto);
-    return pageResponseMapper.fromSlice(slice);
+    Instant nexCursor = null;
+    if (!slice.getContent().isEmpty()) {
+      nexCursor = slice.getContent().get(slice.getContent().size() - 1)
+          .createdAt();
+    }
+
+    return pageResponseMapper.fromSlice(slice, nexCursor);
   }
 
   @Transactional

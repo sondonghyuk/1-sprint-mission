@@ -7,6 +7,7 @@ import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
 import com.sprint.mission.discodeit.dto.page.PageResponse;
 import com.sprint.mission.discodeit.entity.Message;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,8 @@ public interface MessageService {
 
   MessageDto findById(UUID messageId); // 메시지 단일 조회
 
-  PageResponse<MessageDto> findAllByChannelId(UUID channelId, Pageable pageable); // 모든 메시지 조회
+  PageResponse<MessageDto> findAllByChannelId(UUID channelId, Instant cursor,
+      Pageable pageable); // 모든 메시지 조회
 
   MessageDto update(UUID messageId, MessageUpdateRequest messageUpdateRequest); // 메시지 수정
 

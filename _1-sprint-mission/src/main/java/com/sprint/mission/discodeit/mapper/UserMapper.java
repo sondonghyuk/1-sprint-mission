@@ -7,28 +7,13 @@ import com.sprint.mission.discodeit.entity.User;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
-@Component
-public class UserMapper {
+@Mapper(componentModel = "spring", uses = {BinaryContentMapper.class, UserStatusMapper.class})
+public interface UserMapper {
 
-  private final BinaryContentMapper binaryContentMapper;
-  private final UserStatusRepository userStatusRepository;
-
-  public UserDto toDto(User user) {
-    Boolean online = userStatusRepository.findById(user.getId())
-        .map(userStatus -> userStatus.isOnline())
-        .orElse(null);
-
-    BinaryContentDto profile = binaryContentMapper.toDto(user.getProfile());
-
-    return new UserDto(
-        user.getId(),
-        user.getUsername(),
-        user.getEmail(),
-        profile,
-        online
-    );
-  }
+  @Mapping(target = "online", expression = "java(user.getStatus().isOnline())")
+  UserDto toDto(User user);
 }
