@@ -56,7 +56,7 @@ public interface MessageApi {
       description = "Message 목록 조회 성공",
       content = @Content(schema = @Schema(implementation = PageResponse.class))
   )
-  ResponseEntity<PageResponse<Message>> findAllByChannelId(
+  ResponseEntity<PageResponse<MessageDto>> findAllByChannelId(
       @Parameter(description = "조회할 Channel ID") UUID channelId,
       @Parameter(description = "페이징 정보",
           example = "{\"size\": 50, \"page\": 0, \"sort\": \"createdAt,desc\"}") Pageable pageable

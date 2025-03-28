@@ -14,49 +14,39 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
-@Component
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 @RequiredArgsConstructor
-public class ChannelMapper {
+public abstract class ChannelMapper {
 
   private final MessageRepository messageRepository;
   private final ReadStatusRepository readStatusRepository;
   private final UserMapper userMapper;
 
-  public ChannelDto toDto(Channel channel) {
-    Instant lastMessageAt = getLastMessageAt(channel);
+  @Mapping(target = "participants", expression = "java(resolveParticipants(channel))")
+  @Mapping(target = "lastMessageAt", expression = "java(resolveLastMessageAt(channel))")
+  abstract public ChannelDto toDto(Channel channel);
 
+
+  protected Instant resolveLastMessageAt(Channel channel) {
+    return messageRepository.findLastMessageAtByChannelId(
+            channel.getId())
+        .orElse(Instant.MIN);
+  }
+
+  protected List<UserDto> resolveParticipants(Channel channel) {
     List<UserDto> participants = new ArrayList<>();
-
     if (channel.getType().equals(ChannelType.PRIVATE)) {
-      participants = readStatusRepository.findAllByChannelId(channel.getId())
+      readStatusRepository.findAllByChannelIdWithUser(channel.getId())
           .stream()
           .map(ReadStatus::getUser)
           .map(userMapper::toDto)
-          .toList();
+          .forEach(participants::add);
     }
-
-    return new ChannelDto(
-        channel.getId(),
-        channel.getType(),
-        channel.getName(),
-        channel.getDescription(),
-        participants,
-        lastMessageAt
-    );
-  }
-
-  //가장 최근 메시지 시간을 구하는 메서드
-  public Instant getLastMessageAt(Channel channel) {
-    Instant latestMessageTime = messageRepository.findAllByChannelId(channel.getId())
-        .stream()
-        .sorted(Comparator.comparing(Message::getCreatedAt).reversed())
-        .map(Message::getCreatedAt)
-        .limit(1)
-        .findFirst()
-        .orElse(Instant.MIN);
-    return latestMessageTime;
+    return participants;
   }
 
 }

@@ -12,6 +12,8 @@ import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -61,14 +63,17 @@ public class MessageController implements MessageApi {
   //메시지 목록 조회
   @GetMapping
   @Override
-  public ResponseEntity<PageResponse<Message>> findAllByChannelId(
-      @RequestParam("channelId") UUID channelId, @RequestParam("pageable") Pageable pageable) {
-    Page<Message> messagesPage = messageService.findAllByChannelId(channelId, pageable);
+  public ResponseEntity<PageResponse<MessageDto>> findAllByChannelId(
+      @RequestParam("channelId") UUID channelId,
+      @PageableDefault(
+          size = 50,
+          page = 0,
+          sort = "createdAt",
+          direction = Direction.DESC
+      ) Pageable pageable) {
+    PageResponse<MessageDto> messages = messageService.findAllByChannelId(channelId, pageable);
 
-    PageResponseMapper<Message> mapper = new PageResponseMapper<>();
-    PageResponse<Message> response = mapper.fromPage(messagesPage);
-
-    return ResponseEntity.status(HttpStatus.OK).body(response);
+    return ResponseEntity.status(HttpStatus.OK).body(messages);
   }
 
   //메시지 수정

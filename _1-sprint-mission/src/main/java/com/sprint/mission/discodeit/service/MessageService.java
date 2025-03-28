@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest
 import com.sprint.mission.discodeit.dto.message.MessageCreateRequest;
 import com.sprint.mission.discodeit.dto.message.MessageDto;
 import com.sprint.mission.discodeit.dto.message.MessageUpdateRequest;
+import com.sprint.mission.discodeit.dto.page.PageResponse;
 import com.sprint.mission.discodeit.entity.Message;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface MessageService {
 
   MessageDto findById(UUID messageId); // 메시지 단일 조회
 
-  Page<Message> findAllByChannelId(UUID channelId, Pageable pageable); // 모든 메시지 조회
+  PageResponse<MessageDto> findAllByChannelId(UUID channelId, Pageable pageable); // 모든 메시지 조회
 
   MessageDto update(UUID messageId, MessageUpdateRequest messageUpdateRequest); // 메시지 수정
 
