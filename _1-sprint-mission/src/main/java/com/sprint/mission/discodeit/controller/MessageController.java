@@ -12,6 +12,7 @@ import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.service.MessageService;
 import java.time.Instant;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -30,6 +31,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/messages")
 @RequiredArgsConstructor
+@Slf4j
 public class MessageController implements MessageApi {
 
   private final MessageService messageService;
@@ -58,6 +60,7 @@ public class MessageController implements MessageApi {
             .toList())
         .orElse(new ArrayList<>());
     MessageDto createdMessage = messageService.create(messageCreateRequest, attachmentList);
+    log.info("생성된 Message: {}", createdMessage);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdMessage);
   }
 
@@ -86,6 +89,7 @@ public class MessageController implements MessageApi {
       @PathVariable("messageId") UUID messageId,
       @RequestBody MessageUpdateRequest messageUpdateRequest) {
     MessageDto updatedMessage = messageService.update(messageId, messageUpdateRequest);
+    log.info("수정된(업데이트) Message: {}", updatedMessage);
     return ResponseEntity.status(HttpStatus.OK).body(updatedMessage);
   }
 
@@ -94,6 +98,7 @@ public class MessageController implements MessageApi {
   @Override
   public ResponseEntity<Void> delete(@PathVariable("messageId") UUID messageId) {
     messageService.delete(messageId);
+    log.info("삭제된 message: {}", messageId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
