@@ -5,6 +5,9 @@ import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateRequest;
 import com.sprint.mission.discodeit.dto.channel.PrivateChannelCreateRequest;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateRequest;
 import com.sprint.mission.discodeit.entity.*;
+import com.sprint.mission.discodeit.exception.ErrorCode;
+import com.sprint.mission.discodeit.exception.channel.ChannelNotFoundException;
+import com.sprint.mission.discodeit.exception.channel.PrivateChannelCannotBeUpdatedException;
 import com.sprint.mission.discodeit.mapper.ChannelMapper;
 import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.repository.MessageRepository;
@@ -70,7 +73,8 @@ public class BasicChannelService implements ChannelService {
     return channelRepository.findById(channelId)
         .map(channelMapper::toDto)
         .orElseThrow(
-            () -> new NoSuchElementException("Channel with id " + channelId + " not found"));
+            () -> new ChannelNotFoundException(ErrorCode.CHANNEL_NOT_FOUND,
+                Map.of("channelId", channelId)));
   }
 
   //특정 User가 볼 수 있는 Channel 목록을 조회하도록 조회 조건을 추가
@@ -97,13 +101,15 @@ public class BasicChannelService implements ChannelService {
         .orElseThrow(
             () -> {
               log.error("Channel id({})를 찾을 수 없음 ", channelId);
-              return new NoSuchElementException("Channel with id " + channelId + " not found");
+              return new ChannelNotFoundException(ErrorCode.CHANNEL_NOT_FOUND,
+                  Map.of("channelId", channelId));
             }
         );
 
     if (channel.getType().equals(ChannelType.PRIVATE)) {
       log.error("PRIVATE 타입은 업데이트 불가능");
-      throw new IllegalArgumentException("Private channel cannot be updated");
+      throw new PrivateChannelCannotBeUpdatedException(ErrorCode.PRIVATE_CHANNEL_CANNOT_UPDATE,
+          Map.of("channelId", channelId, "channelType", channel.getType()));
     }
 
     channel.updateChannel(channelUpdateDto.newName(), channelUpdateDto.newDescription());
@@ -117,7 +123,8 @@ public class BasicChannelService implements ChannelService {
     log.info("Channel 삭제 시작: {}", channelId);
     if (!channelRepository.existsById(channelId)) {
       log.error("Channel id({})를 찾을 수 없음 ", channelId);
-      throw new NoSuchElementException("Channel with id " + channelId + " not found");
+      throw new ChannelNotFoundException(ErrorCode.CHANNEL_NOT_FOUND,
+          Map.of("channelId", channelId));
     }
 
     //관련된 Message 삭제
