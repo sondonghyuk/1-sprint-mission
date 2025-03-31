@@ -16,6 +16,7 @@ import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,6 +27,7 @@ import java.util.UUID;
 
 @Service // 서비스 Bean
 @RequiredArgsConstructor // 생성자
+@Slf4j
 public class BasicUserService implements UserService {
 
   private final UserRepository userRepository;
@@ -39,6 +41,8 @@ public class BasicUserService implements UserService {
   @Override
   public UserDto create(UserCreateRequst userCreateRequst,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
+    log.info("User creation started for username: {} and email: {}", userCreateRequst.username(),
+        userCreateRequst.email());
     //username,email 중복 확인
     validateUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
 
@@ -57,6 +61,7 @@ public class BasicUserService implements UserService {
     UserStatus userStatus = new UserStatus(user, now);
 
     userRepository.save(user);
+    log.info("User created successfully: {}", user);
 
     return userMapper.toDto(user);
   }
@@ -81,9 +86,13 @@ public class BasicUserService implements UserService {
   @Override
   public UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
+    log.info("Updating user with ID: {}", userId);
 
     User user = userRepository.findById(userId)
-        .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
+        .orElseThrow(() -> {
+          log.error("User with id {} not found", userId);
+          return new NoSuchElementException("User with id " + userId + " not found");
+        });
 
     validateUsernameAndEmail(userUpdateRequest.newUsername(), userUpdateRequest.newEmail());
 
@@ -96,18 +105,24 @@ public class BasicUserService implements UserService {
         profile
     );
 
+    log.info("User updated successfully: {}", userId);
+
     return userMapper.toDto(user);
   }
 
   @Transactional
   @Override
   public void deleteById(UUID userId) {
+    log.info("Deleting user with ID: {}", userId);
+
     //User 삭제시 binaryContent, userStatus 삭제
     if (userRepository.existsById(userId)) {
+      log.error("User with id {} not found", userId);
       throw new NoSuchElementException("User with id " + userId + " not found");
     }
 
     userRepository.deleteById(userId);
+    log.info("User deleted successfully: {}", userId);
   }
 
   //프로필 이미지 체크
@@ -121,6 +136,7 @@ public class BasicUserService implements UserService {
               contentType);
           binaryContentRepository.save(binaryContent);
           binaryContentStorage.put(binaryContent.getId(), bytes);
+          log.info("Binary content saved successfully: {}", binaryContent);
           return binaryContent;
         })
         .orElse(null);
@@ -130,9 +146,11 @@ public class BasicUserService implements UserService {
   //username, email 다른 유저와 같은지 체크
   public void validateUsernameAndEmail(String username, String email) {
     if (userRepository.existsByEmail(email)) {
+      log.error("User with email {} already exists", email);
       throw new IllegalArgumentException("User with email " + email + " already exists");
     }
     if (userRepository.existsByUsername(username)) {
+      log.error("User with username {} already exists", username);
       throw new IllegalArgumentException("User with username " + username + " already exists");
     }
   }

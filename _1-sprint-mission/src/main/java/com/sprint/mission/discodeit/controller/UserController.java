@@ -11,6 +11,7 @@ import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.service.UserStatusService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController implements UserApi {
 
   private final UserService userService;
@@ -39,6 +41,7 @@ public class UserController implements UserApi {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
     UserDto createdUser = userService.create(userCreateRequst, profileDto);
+    log.info("Created user: {}", createdUser);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
   }
 
@@ -62,6 +65,7 @@ public class UserController implements UserApi {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
     UserDto updatedUser = userService.update(userId, userUpdateRequest, profileDto);
+    log.info("Updated user: {}", updatedUser);
     return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
   }
 
@@ -70,6 +74,7 @@ public class UserController implements UserApi {
   @Override
   public ResponseEntity<Void> delete(@PathVariable("userId") UUID userId) {
     userService.deleteById(userId);
+    log.info("Deleted user(userId): {}", userId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); //응답 데이터에 정보가 없음
   }
 

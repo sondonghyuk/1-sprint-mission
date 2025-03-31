@@ -11,19 +11,18 @@
   </appender>
 
   <!-- 로그 파일 경로 설정-->
-  <property name="LOG_PATH" value="C:coding:codeit-bootcamp-spring/.logs"/>
+  <property name="LOG_PATH" value="C:coding:codeit-bootcamp-spring"/>
 
   <!-- 로그 파일 롤링 저장-->
-  <appender name="Rolling_File" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${LOG_PATH}</file>
+  <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH}/.logs</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_PATH}/app.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
     <encoder>
       <pattern>${LOG_PATTERN}</pattern>
     </encoder>
-
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}.%i</fileNamePattern>
-      <maxHistory>30</maxHistory>
-    </rollingPolicy>
   </appender>
 
 </configuration>
