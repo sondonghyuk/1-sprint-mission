@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  config:
+    import: application-secret.yml
+    activate:
+      on-profile: prod
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${PROD.DB.URL}
+    username: ${PROD.DB.USERNAME}
+    password: ${PROD.DB.PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: none  # 프로덕션 환경에서는 자동 DDL 생성을 비활성화
+      show-sql: false  # SQL 쿼리 출력 비활성화
+    open-in-view: false
+
+  servlet:
+    multipart:
+      maxFileSize: 10MB  # 파일 하나의 최대 크기
+      maxRequestSize: 30MB  # 한 번에 최대 업로드 가능 용량
+
+
+discodeit:
+  storage:
+    type: local
+    local:
+      root-path: /prod/storage/binaryContent  # 프로덕션 환경에서는 다른 디렉토리 사용
