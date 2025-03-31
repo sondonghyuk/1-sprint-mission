@@ -8,6 +8,7 @@ import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BasicBinaryContentService implements BinaryContentService {
 
   private final BinaryContentRepository binaryContentRepository;
@@ -26,8 +28,10 @@ public class BasicBinaryContentService implements BinaryContentService {
   @Transactional
   @Override
   public BinaryContentDto create(BinaryContentCreateRequest binaryContentCreateRequest) {
+    log.info("BinaryContent 생성 시작: {}", binaryContentCreateRequest);
     if (binaryContentCreateRequest.fileName() == null
         || binaryContentCreateRequest.contentType() == null) {
+      log.error("파일 이름, 내용 = null");
       throw new IllegalArgumentException("File name , content type is null");
     }
 
@@ -38,6 +42,7 @@ public class BasicBinaryContentService implements BinaryContentService {
     );
     binaryContentRepository.save(binaryContent);
     binaryContentStorage.put(binaryContent.getId(), binaryContentCreateRequest.bytes());
+    log.info("BinaryContent 생성 성공: {}", binaryContent);
     return binaryContentMapper.toDto(binaryContent);
   }
 
