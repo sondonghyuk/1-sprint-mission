@@ -41,7 +41,7 @@ public class BasicUserService implements UserService {
   @Override
   public UserDto create(UserCreateRequst userCreateRequst,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
-    log.info("User creation started for username: {} and email: {}", userCreateRequst.username(),
+    log.info("User 생성 시작 - username: {} and email: {}", userCreateRequst.username(),
         userCreateRequst.email());
     //username,email 중복 확인
     validateUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
@@ -61,7 +61,7 @@ public class BasicUserService implements UserService {
     UserStatus userStatus = new UserStatus(user, now);
 
     userRepository.save(user);
-    log.info("User created successfully: {}", user);
+    log.info("User 생성 성공: {}", user);
 
     return userMapper.toDto(user);
   }
@@ -86,11 +86,11 @@ public class BasicUserService implements UserService {
   @Override
   public UserDto update(UUID userId, UserUpdateRequest userUpdateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
-    log.info("Updating user with ID: {}", userId);
+    log.info("User 업데이트 시작: {}", userId);
 
     User user = userRepository.findById(userId)
         .orElseThrow(() -> {
-          log.error("User with id {} not found", userId);
+          log.error("User ID({}) 를 찾을 수 없음", userId);
           return new NoSuchElementException("User with id " + userId + " not found");
         });
 
@@ -105,7 +105,7 @@ public class BasicUserService implements UserService {
         profile
     );
 
-    log.info("User updated successfully: {}", userId);
+    log.info("User 업데이트 성공: {}", userId);
 
     return userMapper.toDto(user);
   }
@@ -113,16 +113,16 @@ public class BasicUserService implements UserService {
   @Transactional
   @Override
   public void deleteById(UUID userId) {
-    log.info("Deleting user with ID: {}", userId);
+    log.info("User 삭제 시작: {}", userId);
 
     //User 삭제시 binaryContent, userStatus 삭제
     if (userRepository.existsById(userId)) {
-      log.error("User with id {} not found", userId);
+      log.error("User ID({}) 를 찾을 수 없음", userId);
       throw new NoSuchElementException("User with id " + userId + " not found");
     }
 
     userRepository.deleteById(userId);
-    log.info("User deleted successfully: {}", userId);
+    log.info("User 삭제 성공: {}", userId);
   }
 
   //프로필 이미지 체크
@@ -136,7 +136,7 @@ public class BasicUserService implements UserService {
               contentType);
           binaryContentRepository.save(binaryContent);
           binaryContentStorage.put(binaryContent.getId(), bytes);
-          log.info("Binary content saved successfully: {}", binaryContent);
+          log.info("Binary content 저장 성공: {}", binaryContent);
           return binaryContent;
         })
         .orElse(null);
@@ -146,11 +146,11 @@ public class BasicUserService implements UserService {
   //username, email 다른 유저와 같은지 체크
   public void validateUsernameAndEmail(String username, String email) {
     if (userRepository.existsByEmail(email)) {
-      log.error("User with email {} already exists", email);
+      log.error("User email {} 존재", email);
       throw new IllegalArgumentException("User with email " + email + " already exists");
     }
     if (userRepository.existsByUsername(username)) {
-      log.error("User with username {} already exists", username);
+      log.error("User username {} 존재", username);
       throw new IllegalArgumentException("User with username " + username + " already exists");
     }
   }

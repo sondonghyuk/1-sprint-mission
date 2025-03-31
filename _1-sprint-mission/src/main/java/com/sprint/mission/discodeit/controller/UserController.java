@@ -41,7 +41,7 @@ public class UserController implements UserApi {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
     UserDto createdUser = userService.create(userCreateRequst, profileDto);
-    log.info("Created user: {}", createdUser);
+    log.info("생성된 user: {}", createdUser);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
   }
 
@@ -65,7 +65,7 @@ public class UserController implements UserApi {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
     UserDto updatedUser = userService.update(userId, userUpdateRequest, profileDto);
-    log.info("Updated user: {}", updatedUser);
+    log.info("수정한(업데이트) user: {}", updatedUser);
     return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
   }
 
@@ -74,7 +74,7 @@ public class UserController implements UserApi {
   @Override
   public ResponseEntity<Void> delete(@PathVariable("userId") UUID userId) {
     userService.deleteById(userId);
-    log.info("Deleted user(userId): {}", userId);
+    log.info("삭제된 user: {}", userId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); //응답 데이터에 정보가 없음
   }
 

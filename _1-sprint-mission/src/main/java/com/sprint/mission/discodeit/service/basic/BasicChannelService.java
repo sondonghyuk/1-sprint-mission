@@ -11,6 +11,7 @@ import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.repository.ReadStatusRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.*;
 
 @Service //서비스 Bean
 @RequiredArgsConstructor // 생성자
+@Slf4j
 public class BasicChannelService implements ChannelService {
 
   private final ChannelRepository channelRepository;
@@ -29,20 +31,26 @@ public class BasicChannelService implements ChannelService {
   @Transactional
   @Override
   public ChannelDto create(PublicChannelCreateRequest publicChannelCreateRequest) {
+    log.info("Public Channel 생성시작 - name: {}, description: {}", publicChannelCreateRequest.name(),
+        publicChannelCreateRequest.description());
+
     Channel channel = new Channel(
         ChannelType.PUBLIC,
         publicChannelCreateRequest.name(),
         publicChannelCreateRequest.description()
     );
     channelRepository.save(channel);
+    log.info("Public Channel 생성 성공: {}", channel);
     return channelMapper.toDto(channel);
   }
 
   @Transactional
   @Override
   public ChannelDto create(PrivateChannelCreateRequest privateChannelCreateRequest) {
+    log.info("Private Channel 생성 시작");
     Channel channel = new Channel(ChannelType.PRIVATE, null, null);
     channelRepository.save(channel);
+    log.info("Private Channel 생성 성공: {}", channel);
 
     List<ReadStatus> readStatuses = userRepository.findAllById(
             privateChannelCreateRequest.participantIds())
@@ -51,7 +59,7 @@ public class BasicChannelService implements ChannelService {
         .toList();
 
     readStatusRepository.saveAll(readStatuses);
-
+    log.info("ReadStatus 저장 성공");
     return channelMapper.toDto(channel);
   }
 
@@ -84,23 +92,31 @@ public class BasicChannelService implements ChannelService {
   @Transactional
   @Override
   public ChannelDto update(UUID channelId, PublicChannelUpdateRequest channelUpdateDto) {
+    log.info("Channel 업데이트 시작: {}", channelId);
     Channel channel = channelRepository.findById(channelId)
         .orElseThrow(
-            () -> new NoSuchElementException("Channel with id " + channelId + " not found"));
+            () -> {
+              log.error("Channel id({})를 찾을 수 없음 ", channelId);
+              return new NoSuchElementException("Channel with id " + channelId + " not found");
+            }
+        );
 
     if (channel.getType().equals(ChannelType.PRIVATE)) {
+      log.error("PRIVATE 타입은 업데이트 불가능");
       throw new IllegalArgumentException("Private channel cannot be updated");
     }
 
     channel.updateChannel(channelUpdateDto.newName(), channelUpdateDto.newDescription());
-
+    log.info("Channel 수정 성공: {}", channel);
     return channelMapper.toDto(channel);
   }
 
   @Transactional
   @Override
   public void deleteById(UUID channelId) {
+    log.info("Channel 삭제 시작: {}", channelId);
     if (!channelRepository.existsById(channelId)) {
+      log.error("Channel id({})를 찾을 수 없음 ", channelId);
       throw new NoSuchElementException("Channel with id " + channelId + " not found");
     }
 
@@ -112,6 +128,6 @@ public class BasicChannelService implements ChannelService {
 
     //채널 삭제
     channelRepository.deleteById(channelId);
-
+    log.info("Channel 삭제 성공: {}", channelId);
   }
 }

@@ -7,6 +7,7 @@ import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateRequest;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateRequest;
 import com.sprint.mission.discodeit.service.ChannelService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/channels")
 @RequiredArgsConstructor
+@Slf4j
 public class ChannelController implements ChannelApi {
 
   private final ChannelService channelService;
@@ -35,6 +37,7 @@ public class ChannelController implements ChannelApi {
   public ResponseEntity<ChannelDto> create(
       @RequestBody PublicChannelCreateRequest publicChannelDto) {
     ChannelDto publicChannel = channelService.create(publicChannelDto);
+    log.info("생성된 public channel : {}", publicChannel);
     return ResponseEntity.status(HttpStatus.CREATED).body(publicChannel);
   }
 
@@ -44,6 +47,7 @@ public class ChannelController implements ChannelApi {
   public ResponseEntity<ChannelDto> create(
       @RequestBody PrivateChannelCreateRequest privateChannelDto) {
     ChannelDto privateChannel = channelService.create(privateChannelDto);
+    log.info("생성된 private channel: {}", privateChannel);
     return ResponseEntity.status(HttpStatus.CREATED).body(privateChannel);
   }
 
@@ -63,6 +67,7 @@ public class ChannelController implements ChannelApi {
       @PathVariable("channelId") UUID channelId,
       @RequestBody PublicChannelUpdateRequest publicChannelUpdateRequest) {
     ChannelDto updatedChannel = channelService.update(channelId, publicChannelUpdateRequest);
+    log.info("수정한(업데이트) public channel: {}", updatedChannel);
     return ResponseEntity.status(HttpStatus.OK).body(updatedChannel);
   }
 
@@ -71,6 +76,7 @@ public class ChannelController implements ChannelApi {
   @Override
   public ResponseEntity<Void> delete(@PathVariable UUID channelId) {
     channelService.deleteById(channelId);
+    log.info("삭제된 channel: {}", channelId);
     return ResponseEntity
         .status(HttpStatus.NO_CONTENT)
         .build();
