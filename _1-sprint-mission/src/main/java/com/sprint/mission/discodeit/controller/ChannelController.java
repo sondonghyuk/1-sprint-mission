@@ -6,6 +6,7 @@ import com.sprint.mission.discodeit.dto.channel.PrivateChannelCreateRequest;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelCreateRequest;
 import com.sprint.mission.discodeit.dto.channel.PublicChannelUpdateRequest;
 import com.sprint.mission.discodeit.service.ChannelService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class ChannelController implements ChannelApi {
   @PostMapping("/public")
   @Override
   public ResponseEntity<ChannelDto> create(
-      @RequestBody PublicChannelCreateRequest publicChannelDto) {
+      @Valid @RequestBody PublicChannelCreateRequest publicChannelDto) {
     ChannelDto publicChannel = channelService.create(publicChannelDto);
     log.info("생성된 public channel : {}", publicChannel);
     return ResponseEntity.status(HttpStatus.CREATED).body(publicChannel);
@@ -45,7 +46,7 @@ public class ChannelController implements ChannelApi {
   @PostMapping("/private")
   @Override
   public ResponseEntity<ChannelDto> create(
-      @RequestBody PrivateChannelCreateRequest privateChannelDto) {
+      @Valid @RequestBody PrivateChannelCreateRequest privateChannelDto) {
     ChannelDto privateChannel = channelService.create(privateChannelDto);
     log.info("생성된 private channel: {}", privateChannel);
     return ResponseEntity.status(HttpStatus.CREATED).body(privateChannel);
@@ -65,7 +66,7 @@ public class ChannelController implements ChannelApi {
   @Override
   public ResponseEntity<ChannelDto> update(
       @PathVariable("channelId") UUID channelId,
-      @RequestBody PublicChannelUpdateRequest publicChannelUpdateRequest) {
+      @Valid @RequestBody PublicChannelUpdateRequest publicChannelUpdateRequest) {
     ChannelDto updatedChannel = channelService.update(channelId, publicChannelUpdateRequest);
     log.info("수정한(업데이트) public channel: {}", updatedChannel);
     return ResponseEntity.status(HttpStatus.OK).body(updatedChannel);

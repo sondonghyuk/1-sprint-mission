@@ -36,7 +36,7 @@ public class UserController implements UserApi {
   @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   @Override
   public ResponseEntity<UserDto> create(
-      @RequestPart("userCreateRequest") UserCreateRequest userCreateRequest,
+      @Valid @RequestPart("userCreateRequest") UserCreateRequest userCreateRequest,
       @RequestPart(value = "profile", required = false) MultipartFile profile) {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
@@ -61,7 +61,7 @@ public class UserController implements UserApi {
   public ResponseEntity<UserDto> update(
       @PathVariable("userId") UUID userId,
       @Valid @RequestPart("userUpdateRequest") UserUpdateRequest userUpdateRequest,
-      @Valid @RequestPart(value = "profile", required = false) MultipartFile profile) {
+      @RequestPart(value = "profile", required = false) MultipartFile profile) {
     Optional<BinaryContentCreateRequest> profileDto = Optional.ofNullable(profile)
         .flatMap(this::resolveProfileDto);
     UserDto updatedUser = userService.update(userId, userUpdateRequest, profileDto);
@@ -83,7 +83,7 @@ public class UserController implements UserApi {
   @PatchMapping("/{userId}/userStatus")
   @Override
   public ResponseEntity<UserStatusDto> updateUserStatusByUserId(@PathVariable("userId") UUID userId,
-      @RequestBody UserStatusUpdateRequest status) {
+      @Valid @RequestBody UserStatusUpdateRequest status) {
     UserStatusDto updatedUserStatus = userStatusService.updateByUserId(userId, status);
     return ResponseEntity.status(HttpStatus.OK).body(updatedUserStatus);
   }

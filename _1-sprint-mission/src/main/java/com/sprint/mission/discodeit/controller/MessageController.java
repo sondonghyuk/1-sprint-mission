@@ -10,6 +10,7 @@ import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.mapper.MessageMapper;
 import com.sprint.mission.discodeit.mapper.PageResponseMapper;
 import com.sprint.mission.discodeit.service.MessageService;
+import jakarta.validation.Valid;
 import java.time.Instant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class MessageController implements MessageApi {
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   @Override
   public ResponseEntity<MessageDto> create(
-      @RequestPart("messageCreateRequest") MessageCreateRequest messageCreateRequest,
+      @Valid @RequestPart("messageCreateRequest") MessageCreateRequest messageCreateRequest,
       @RequestPart(value = "attachments", required = false) List<MultipartFile> attachments) {
     List<BinaryContentCreateRequest> attachmentList = Optional.ofNullable(attachments)
         .map(files -> files.stream()
@@ -87,7 +88,7 @@ public class MessageController implements MessageApi {
   @Override
   public ResponseEntity<MessageDto> update(
       @PathVariable("messageId") UUID messageId,
-      @RequestBody MessageUpdateRequest messageUpdateRequest) {
+      @Valid @RequestBody MessageUpdateRequest messageUpdateRequest) {
     MessageDto updatedMessage = messageService.update(messageId, messageUpdateRequest);
     log.info("수정된(업데이트) Message: {}", updatedMessage);
     return ResponseEntity.status(HttpStatus.OK).body(updatedMessage);
