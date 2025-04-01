@@ -1,7 +1,7 @@
 package com.sprint.mission.discodeit.service.basic;
 
 import com.sprint.mission.discodeit.dto.binarycontent.BinaryContentCreateRequest;
-import com.sprint.mission.discodeit.dto.user.UserCreateRequst;
+import com.sprint.mission.discodeit.dto.user.UserCreateRequest;
 import com.sprint.mission.discodeit.dto.user.UserDto;
 import com.sprint.mission.discodeit.dto.user.UserUpdateRequest;
 import com.sprint.mission.discodeit.entity.BinaryContent;
@@ -15,7 +15,6 @@ import com.sprint.mission.discodeit.mapper.UserMapper;
 import com.sprint.mission.discodeit.repository.BinaryContentRepository;
 import com.sprint.mission.discodeit.repository.UserRepository;
 import com.sprint.mission.discodeit.repository.UserStatusRepository;
-import com.sprint.mission.discodeit.service.BinaryContentService;
 import com.sprint.mission.discodeit.service.UserService;
 import com.sprint.mission.discodeit.storage.BinaryContentStorage;
 import jakarta.transaction.Transactional;
@@ -26,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,21 +42,21 @@ public class BasicUserService implements UserService {
 
   @Transactional
   @Override
-  public UserDto create(UserCreateRequst userCreateRequst,
+  public UserDto create(UserCreateRequest userCreateRequest,
       Optional<BinaryContentCreateRequest> profileCreateRequest) {
-    log.info("User 생성 시작 - username: {} and email: {}", userCreateRequst.username(),
-        userCreateRequst.email());
+    log.info("User 생성 시작 - username: {} and email: {}", userCreateRequest.username(),
+        userCreateRequest.email());
     //username,email 중복 확인
-    validateUsernameAndEmail(userCreateRequst.username(), userCreateRequst.email());
+    validateUsernameAndEmail(userCreateRequest.username(), userCreateRequest.email());
 
     //프로필 이미지 체크
     BinaryContent profile = profileIdCheck(profileCreateRequest);
 
     //User 생성
     User user = new User(
-        userCreateRequst.username(),
-        userCreateRequst.email(),
-        userCreateRequst.password(),
+        userCreateRequest.username(),
+        userCreateRequest.email(),
+        userCreateRequest.password(),
         profile
     );
 

@@ -4,18 +4,18 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record UserUpdateRequest(
+public record UserCreateRequest(
     @NotNull
     @Size(min = 1, max = 20)
-    String newUsername,
+    String username,
 
     @Email
     @NotNull
-    String newEmail,
+    String email,
 
     @NotNull
     @Size(min = 8)
-    String newPassword
+    String password
 ) {
 
 }
