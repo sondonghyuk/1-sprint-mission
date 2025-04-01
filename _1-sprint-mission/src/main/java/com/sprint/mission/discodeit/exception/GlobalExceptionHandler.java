@@ -3,9 +3,13 @@ package com.sprint.mission.discodeit.exception;
 import com.sprint.mission.discodeit.exception.user.UserException;
 import com.sprint.mission.discodeit.exception.user.UserNotFoundExeption;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.NoSuchElementException;
@@ -37,6 +41,31 @@ public class GlobalExceptionHandler {
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .body(e.getMessage());
   }
+
+  // 검증 실패 시 발생하는 예외처리
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<ErrorResponse> handleException(MethodArgumentNotValidException e) {
+    BindingResult bindingResult = e.getBindingResult();
+
+    // 필드 오류 목록
+    Map<String, Object> validationErrors = bindingResult.getFieldErrors()
+        .stream()
+        .collect(Collectors.toMap(
+            fieldError -> fieldError.getField(), //필드이름
+            fieldError -> fieldError.getDefaultMessage() //오류 메시지
+        ));
+
+    ErrorResponse err = new ErrorResponse(
+        Instant.now(),
+        "VALIDATION_ERROR",
+        "검증 오류가 발생했습니다.",
+        validationErrors, // 필드별 오류 메시지
+        e.getClass().getSimpleName(),
+        HttpStatus.BAD_REQUEST.value()
+    );
+    return new ResponseEntity<>(err, HttpStatus.valueOf(err.getStatus()));
+  }
+
 
   @ExceptionHandler(DiscodeitException.class)
   public ResponseEntity<ErrorResponse> handleException(DiscodeitException e) {
@@ -76,4 +105,5 @@ public class GlobalExceptionHandler {
         return HttpStatus.INTERNAL_SERVER_ERROR.value(); // 500 Internal Server Error
     }
   }
+
 }
