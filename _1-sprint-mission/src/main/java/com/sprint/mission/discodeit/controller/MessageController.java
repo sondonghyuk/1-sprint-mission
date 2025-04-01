@@ -36,8 +36,6 @@ import java.util.UUID;
 public class MessageController implements MessageApi {
 
   private final MessageService messageService;
-  private final MessageMapper messageMapper;
-  private final PageResponseMapper pageResponseMapper;
 
   //메시지 생성
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
