@@ -6,8 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/test/java/com/sprint/mission/discodeit/UserCreateTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/8.12.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/basic/BasicUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/classes/java/main/com/sprint/mission/discodeit/service/basic/BasicUserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/java/com/sprint/mission/discodeit/service/basic/BasicUserService.java" afterDir="false" />
     </list>
     <list id="c3cb6b49-8fd5-4a19-8432-fd4e39d5594c" name="Changes by iuhoo" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,42 +82,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Gradle.Build _1-sprint-mission.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PostgreSQLConnectionTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserCreateTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle._1-sprint-mission [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle._1-sprint-mission [:com.sprint.mission.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.DiscodeitApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;part2-손동혁-sprint7&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/coding/0-sprint-mission-s7-base&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Gradle.Build _1-sprint-mission.executor": "Run",
+    "Gradle.PostgreSQLConnectionTest.executor": "Run",
+    "Gradle.UserCreateTest.executor": "Run",
+    "Gradle.UserServiceTest.testCreateUserWithProfile.executor": "Run",
+    "Gradle.UserServiceTest.testCreateUserWithProfileFail.executor": "Run",
+    "Gradle.UserServiceTest.testCreateUserWithoutProfile.executor": "Run",
+    "Gradle.UserServiceTest.testDeleteUser.executor": "Run",
+    "Gradle.UserServiceTest.testUpdateUserFail_UserNotFound.executor": "Run",
+    "Gradle.UserServiceTest.testUpdateUserWithProfile.executor": "Run",
+    "Gradle._1-sprint-mission [:Main.main()].executor": "Run",
+    "Gradle._1-sprint-mission [:com.sprint.mission.Main.main()].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.DiscodeitApplication.executor": "Run",
+    "git-widget-placeholder": "part2-손동혁-sprint7",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/coding/0-sprint-mission-s7-base",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\coding\codeit-bootcamp-spring\1-sprint-mission\_1-sprint-mission\src\main\resources\static" />
@@ -122,21 +136,8 @@
       <recent name="C:\coding\codeit-bootcamp-spring\1-sprint-mission\_1-sprint-mission\src\main\resources\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.DiscodeitApplication">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sprint.mission.Main" />
-      <module name="_1-sprint-mission.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sprint.mission.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PostgreSQLConnectionTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.UserServiceTest.testDeleteUserFail_UserNotFound">
+    <configuration name="UserServiceTest.testCreateUserWithProfileFail" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/_1-sprint-mission" />
@@ -149,7 +150,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.sprint.mission.discodeit.PostgreSQLConnectionTest&quot;" />
+            <option value="&quot;com.sprint.mission.discodeit.service.UserServiceTest.testCreateUserWithProfileFail&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -160,7 +161,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="UserCreateTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="UserServiceTest.testDeleteUser" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/_1-sprint-mission" />
@@ -173,7 +174,79 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.sprint.mission.discodeit.UserCreateTest&quot;" />
+            <option value="&quot;com.sprint.mission.discodeit.service.UserServiceTest.testDeleteUser&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceTest.testDeleteUserFail_UserNotFound" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/_1-sprint-mission" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.sprint.mission.discodeit.service.UserServiceTest.testDeleteUserFail_UserNotFound&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceTest.testUpdateUserFail_UserNotFound" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/_1-sprint-mission" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.sprint.mission.discodeit.service.UserServiceTest.testUpdateUserFail_UserNotFound&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceTest.testUpdateUserWithProfile" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/_1-sprint-mission" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.sprint.mission.discodeit.service.UserServiceTest.testUpdateUserWithProfile&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -193,9 +266,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.UserCreateTest" />
-        <item itemvalue="Gradle.PostgreSQLConnectionTest" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Gradle.UserServiceTest.testDeleteUserFail_UserNotFound" />
+        <item itemvalue="Gradle.UserServiceTest.testDeleteUser" />
+        <item itemvalue="Gradle.UserServiceTest.testUpdateUserFail_UserNotFound" />
+        <item itemvalue="Gradle.UserServiceTest.testUpdateUserWithProfile" />
+        <item itemvalue="Gradle.UserServiceTest.testCreateUserWithProfileFail" />
       </list>
     </recent_temporary>
   </component>
@@ -273,7 +348,11 @@
       <workItem from="1743134470196" duration="15528000" />
       <workItem from="1743382361475" duration="38035000" />
       <workItem from="1743480812840" duration="6656000" />
-      <workItem from="1743487986643" duration="4695000" />
+      <workItem from="1743487986643" duration="13363000" />
+      <workItem from="1743552103204" duration="10917000" />
+      <workItem from="1743661587953" duration="2605000" />
+      <workItem from="1743752195273" duration="1330000" />
+      <workItem from="1743936082803" duration="5707000" />
     </task>
     <servers />
   </component>
