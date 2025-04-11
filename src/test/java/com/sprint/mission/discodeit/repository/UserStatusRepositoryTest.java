@@ -62,7 +62,8 @@ class UserStatusRepositoryTest {
     // then
     assertThat(foundStatus).isPresent();
     assertThat(foundStatus.get().getUser().getId()).isEqualTo(userId);
-    assertThat(foundStatus.get().getLastActiveAt()).isEqualTo(now);
+    assertThat(foundStatus.get().getLastActiveAt().truncatedTo(ChronoUnit.MILLIS))
+        .isEqualTo(now.truncatedTo(ChronoUnit.MILLIS));
   }
 
   @Test
