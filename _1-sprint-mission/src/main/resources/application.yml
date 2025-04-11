@@ -16,6 +16,10 @@ spring:
     active:
       - dev
 
+logging:
+  level:
+    root: info
+
 discodeit:
   storage:
     type: local

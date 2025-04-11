@@ -25,6 +25,7 @@ spring:
 
 logging:
   level:
+    com.sprint.mission.discodeit: debug
     org.hibernate.SQL: debug  # SQL 실행 로그를 DEBUG 레벨로 출력
     org.hibernate.orm.jdbc.bind: trace
 
