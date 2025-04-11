@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gitignore" afterDir="false" />
-    </list>
+    <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="" />
     <list id="c3cb6b49-8fd5-4a19-8432-fd4e39d5594c" name="Changes by iuhoo" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +266,7 @@
       <workItem from="1741785853652" duration="3649000" />
       <workItem from="1744272395515" duration="169000" />
       <workItem from="1744329946020" duration="4976000" />
-      <workItem from="1744335202045" duration="3488000" />
+      <workItem from="1744335202045" duration="3799000" />
     </task>
     <servers />
   </component>
