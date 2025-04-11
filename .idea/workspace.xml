@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application-prod.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_1-sprint-mission/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/_1-sprint-mission/.gitignore" afterDir="false" />
     </list>
     <list id="c3cb6b49-8fd5-4a19-8432-fd4e39d5594c" name="Changes by iuhoo" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +91,7 @@
     "Spring Boot.DiscodeitApplication.executor": "Run",
     "git-widget-placeholder": "part2-손동혁-sprint8",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/coding/codeit-bootcamp-spring/1-sprint-mission/_1-sprint-mission/src/main/resources/static",
+    "last_opened_file_path": "C:/coding/0-sprint-mission-s7-basic",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -270,7 +269,7 @@
       <workItem from="1741785853652" duration="3649000" />
       <workItem from="1744272395515" duration="169000" />
       <workItem from="1744329946020" duration="4976000" />
-      <workItem from="1744335202045" duration="1886000" />
+      <workItem from="1744335202045" duration="3488000" />
     </task>
     <servers />
   </component>
