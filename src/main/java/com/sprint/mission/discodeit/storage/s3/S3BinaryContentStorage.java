@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.time.Duration;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +32,7 @@ public class S3BinaryContentStorage implements BinaryContentStorage {
   private final String region;
   private final String bucket;
 
+  @Getter
   private final S3Client s3Client;
 
   public S3BinaryContentStorage(String accessKey, String secretKey, String region, String bucket) {
@@ -84,10 +86,6 @@ public class S3BinaryContentStorage implements BinaryContentStorage {
     HttpHeaders headers = new HttpHeaders();
     headers.set(HttpHeaders.LOCATION, presignedUrl);
     return new ResponseEntity<>(headers, HttpStatus.FOUND);
-  }
-
-  public S3Client getS3Client() {
-    return this.s3Client;
   }
 
   public String generatedPresignedUrl(String key, String contentType) {

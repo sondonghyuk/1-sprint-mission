@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4a9f74e0-5f82-4fef-bfc6-712f45c8b5db" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sprint/mission/discodeit/storage/s3/S3BinaryContentStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sprint/mission/discodeit/storage/s3/S3BinaryContentStorage.java" afterDir="false" />
     </list>
     <list id="c3cb6b49-8fd5-4a19-8432-fd4e39d5594c" name="Changes by iuhoo" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,46 +87,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Gradle.1-sprint-mission [:com.sprint.mission.discodeit.storage.s3.AWSS3Test.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build _1-sprint-mission.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.ChannelRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PostgreSQLConnectionTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserCreateTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserStatusRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.UserStatusRepositoryTest.findByUserId_ExistingUserId_ReturnsUserStatus.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle._1-sprint-mission [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle._1-sprint-mission [:com.sprint.mission.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.DiscodeitApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;part2-손동혁-sprint8&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/coding/0-sprint-mission-s7-basic&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Gradle.1-sprint-mission [:com.sprint.mission.discodeit.storage.s3.AWSS3Test.main()].executor": "Run",
+    "Gradle.Build _1-sprint-mission.executor": "Run",
+    "Gradle.ChannelRepositoryTest.executor": "Run",
+    "Gradle.PostgreSQLConnectionTest.executor": "Run",
+    "Gradle.S3BinaryContentStorageTest.testPutAndGet.executor": "Run",
+    "Gradle.UserCreateTest.executor": "Run",
+    "Gradle.UserStatusRepositoryTest.executor": "Run",
+    "Gradle.UserStatusRepositoryTest.findByUserId_ExistingUserId_ReturnsUserStatus.executor": "Run",
+    "Gradle._1-sprint-mission [:Main.main()].executor": "Run",
+    "Gradle._1-sprint-mission [:com.sprint.mission.Main.main()].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.DiscodeitApplication.executor": "Run",
+    "git-widget-placeholder": "part2-손동혁-sprint8",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/coding/0-sprint-mission-s7-basic",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\coding\codeit-bootcamp-spring\1-sprint-mission\_1-sprint-mission\src\main\resources\static" />
@@ -139,7 +140,7 @@
       <recent name="C:\coding\codeit-bootcamp-spring\1-sprint-mission\_1-sprint-mission\src\main\resources\static" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AWSS3Test">
+  <component name="RunManager" selected="Gradle.S3BinaryContentStorageTest.testDownload">
     <configuration name="AWSS3Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sprint.mission.discodeit.storage.s3.AWSS3Test" />
       <module name="discodeit.main" />
@@ -177,10 +178,10 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="UserCreateTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="S3BinaryContentStorageTest.testDownload" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/_1-sprint-mission" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
@@ -190,7 +191,31 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.sprint.mission.discodeit.UserCreateTest&quot;" />
+            <option value="&quot;com.sprint.mission.discodeit.storage.s3.S3BinaryContentStorageTest.testDownload&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="S3BinaryContentStorageTest.testPutAndGet" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.sprint.mission.discodeit.storage.s3.S3BinaryContentStorageTest.testPutAndGet&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -225,30 +250,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="UserStatusRepositoryTest.findByUserId_ExistingUserId_ReturnsUserStatus" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;com.sprint.mission.discodeit.repository.UserStatusRepositoryTest.findByUserId_ExistingUserId_ReturnsUserStatus&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="DiscodeitApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="discodeit.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.sprint.mission.discodeit.DiscodeitApplication" />
@@ -258,11 +259,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.S3BinaryContentStorageTest.testDownload" />
+        <item itemvalue="Gradle.S3BinaryContentStorageTest.testPutAndGet" />
         <item itemvalue="Application.AWSS3Test" />
         <item itemvalue="Gradle.ChannelRepositoryTest" />
         <item itemvalue="Gradle.UserStatusRepositoryTest" />
-        <item itemvalue="Gradle.UserStatusRepositoryTest.findByUserId_ExistingUserId_ReturnsUserStatus" />
-        <item itemvalue="Gradle.UserCreateTest" />
       </list>
     </recent_temporary>
   </component>
@@ -341,7 +342,7 @@
       <workItem from="1744345376345" duration="16254000" />
       <workItem from="1744523179656" duration="18433000" />
       <workItem from="1744553861546" duration="5097000" />
-      <workItem from="1744589453333" duration="7266000" />
+      <workItem from="1744589453333" duration="10874000" />
     </task>
     <servers />
   </component>
