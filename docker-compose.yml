@@ -28,6 +28,7 @@ services:
       - "5432:5432"
     networks:
       - mynetwork
+      -
 
 volumes:
   binary_content_data:
