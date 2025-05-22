@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
@@ -23,6 +25,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth->auth
                 // CSRF 토큰을 발급하는 API는 인증하지 않음
                 .requestMatchers(HttpMethod.GET,"/api/auth/csrf-token").permitAll()
+                // 회원가입 시 회원가입 api는 인증하지 않음
+                .requestMatchers(HttpMethod.POST,"/api/users").permitAll()
                 // /api/** 는 인증 필요
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
@@ -32,5 +36,9 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults()); // 기본 HTTP Basic 인증을 사용
         return http.build();
     }
-
+    // 비밀번호 해시화를 위한 PasswordEncoder
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
