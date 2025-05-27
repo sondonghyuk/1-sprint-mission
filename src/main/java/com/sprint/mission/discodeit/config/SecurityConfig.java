@@ -1,26 +1,36 @@
 package com.sprint.mission.discodeit.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sprint.mission.discodeit.security.JsonUsernamePasswordAuthenticationFilter;
 import com.sprint.mission.discodeit.security.SecurityMatchers;
+import java.util.List;
 import java.util.stream.IntStream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity //Spring Security 활성화
 @Slf4j
 public class SecurityConfig {
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(
+        HttpSecurity http,
+        ObjectMapper objectMapper,
+        AuthenticationManager authenticationManager
+    ) throws Exception {
         http
             .authorizeHttpRequests(authorize->authorize
                 .requestMatchers(
@@ -34,13 +44,33 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             //로그아웃 관련 필터를 제외
-            .logout(AbstractHttpConfigurer::disable);
+            .logout(AbstractHttpConfigurer::disable)
+            //Username~ 가 주입되던 필터 자리에 JsonUser~ 가 포함
+            .addFilterAt(
+                JsonUsernamePasswordAuthenticationFilter.createDefault(objectMapper,authenticationManager),
+                UsernamePasswordAuthenticationFilter.class
+            );
         return http.build();
     }
     //BCryptPasswordEncoder 구현체로 PasswordEncoder 를 Bean으로 정의
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(
+        UserDetailsService userDetailsService,
+        PasswordEncoder passwordEncoder
+    ) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(
+        List<AuthenticationProvider> authenticationProviders) {
+        return new ProviderManager(authenticationProviders);
     }
     //기본 등록되는 필터 목록을 확인하기 위해 임시 등록 Bean
     @Bean
