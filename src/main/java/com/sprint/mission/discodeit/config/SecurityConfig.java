@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sprint.mission.discodeit.entity.Role;
 import com.sprint.mission.discodeit.security.CustomLogoutFilter;
 import com.sprint.mission.discodeit.security.JsonUsernamePasswordAuthenticationFilter;
 import com.sprint.mission.discodeit.security.SecurityMatchers;
@@ -9,6 +10,9 @@ import java.util.stream.IntStream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -69,17 +73,28 @@ public class SecurityConfig {
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(
         UserDetailsService userDetailsService,
-        PasswordEncoder passwordEncoder
+        PasswordEncoder passwordEncoder,
+        RoleHierarchy roleHierarchy
     ) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
+        provider.setAuthoritiesMapper(new RoleHierarchyAuthoritiesMapper(roleHierarchy));
         return provider;
     }
     @Bean
     public AuthenticationManager authenticationManager(
         List<AuthenticationProvider> authenticationProviders) {
         return new ProviderManager(authenticationProviders);
+    }
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        return RoleHierarchyImpl.withDefaultRolePrefix()
+            .role(Role.ADMIN.name())
+            .implies(Role.USER.name(),Role.CHANNEL_MANAGER.name())
+            .role(Role.CHANNEL_MANAGER.name())
+            .implies(Role.USER.name())
+            .build();
     }
     //기본 등록되는 필터 목록을 확인하기 위해 임시 등록 Bean
     @Bean
