@@ -35,7 +35,11 @@ public class SecurityConfig {
             .logout(AbstractHttpConfigurer::disable);
         return http.build();
     }
-
+    //BCryptPasswordEncoder 구현체로 PasswordEncoder 를 Bean으로 정의
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     //기본 등록되는 필터 목록을 확인하기 위해 임시 등록 Bean
     @Bean
     public String debugFilterChain(SecurityFilterChain chain) {
