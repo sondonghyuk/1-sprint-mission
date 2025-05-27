@@ -23,8 +23,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize->authorize
-                //API가 아닌 다른 요청은 인증을 수행하지 않음
-                .requestMatchers(SecurityMatchers.NON_API).permitAll()
+                .requestMatchers(
+                    //API가 아닌 다른 요청은 인증을 수행하지 않음
+                    SecurityMatchers.NON_API,
+                    //CSRF 토큰 발급 API 인증 제외
+                    SecurityMatchers.GET_CSRF_TOKEN
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             //로그아웃 관련 필터를 제외
