@@ -1,6 +1,7 @@
 package com.sprint.mission.discodeit.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sprint.mission.discodeit.security.CustomLogoutFilter;
 import com.sprint.mission.discodeit.security.JsonUsernamePasswordAuthenticationFilter;
 import com.sprint.mission.discodeit.security.SecurityMatchers;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity //Spring Security 활성화
@@ -43,13 +45,20 @@ public class SecurityConfig {
                 ).permitAll()
                 .anyRequest().authenticated()
             )
+            //로그아웃 시엔 CSRF 토큰 인증을 하지 않도록 처리
+            .csrf(csrf->csrf.ignoringRequestMatchers(SecurityMatchers.LOGOUT))
             //로그아웃 관련 필터를 제외
             .logout(AbstractHttpConfigurer::disable)
             //Username~ 가 주입되던 필터 자리에 JsonUser~ 가 포함
             .addFilterAt(
                 JsonUsernamePasswordAuthenticationFilter.createDefault(objectMapper,authenticationManager),
                 UsernamePasswordAuthenticationFilter.class
-            );
+            )
+            .addFilterAt(
+                CustomLogoutFilter.createDefault(),
+                LogoutFilter.class
+            )
+        ;
         return http.build();
     }
     //BCryptPasswordEncoder 구현체로 PasswordEncoder 를 Bean으로 정의
