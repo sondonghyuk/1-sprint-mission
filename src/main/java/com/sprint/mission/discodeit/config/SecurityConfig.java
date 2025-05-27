@@ -27,7 +27,9 @@ public class SecurityConfig {
                     //API가 아닌 다른 요청은 인증을 수행하지 않음
                     SecurityMatchers.NON_API,
                     //CSRF 토큰 발급 API 인증 제외
-                    SecurityMatchers.GET_CSRF_TOKEN
+                    SecurityMatchers.GET_CSRF_TOKEN,
+                    //회원가입 API 인증 제외
+                    SecurityMatchers.SIGN_UP
                 ).permitAll()
                 .anyRequest().authenticated()
             )
